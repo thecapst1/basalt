@@ -45,10 +45,10 @@ jobs:
       # https://github.com/rust-lang/cargo/issues/6669
       - name: cargo test --doc
         run: cargo test --locked --all-features --doc
-  os-check:
+  build_on_all:
     # run cargo test on mac and windows
     runs-on: ubuntu-latest
-    name: ${{ matrix.target }} / stable
+    name: ${{ matrix.platform }} / stable
     strategy:
       fail-fast: false
       matrix:
