@@ -52,7 +52,16 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        target: [x86_64-pc-windows-gnu, x86_64-apple-darwin]
+        include:
+          - platform: "macos-latest" # for Arm based macs (M1 and above).
+            args: "--target aarch64-apple-darwin"
+          - platform: "macos-latest" # for Intel based macs.
+            args: "--target x86_64-apple-darwin"
+          - platform: "ubuntu-22.04"
+            args: ""
+          - platform: "windows-latest"
+            args: ""
+    runs-on: ${{ matrix.platform }}
     steps:
       # if your project needs OpenSSL, uncomment this to fix Windows builds.
       # it's commented out by default as the install command takes 5-10m.
@@ -65,12 +74,19 @@ jobs:
           submodules: true
       - name: Install stable
         uses: dtolnay/rust-toolchain@stable
-      - name: cargo generate-lockfile
-        if: hashFiles('Cargo.lock') == ''
-        run: cargo generate-lockfile
-      - name: mkdir out
-        run: mkdir client/out
-      - name: add ${{ matrix.target }} target
-        run: rustup target add ${{ matrix.target }}
-      - name: cargo test
-        run: cargo build --locked --target ${{ matrix.target }}
+      - name: install Rust stable
+        uses: dtolnay/rust-toolchain@stable # Set this to dtolnay/rust-toolchain@nightly
+        with:
+          # Those targets are only used on macos runners so it's in an `if` to slightly speed up windows and linux builds.
+          targets: ${{ matrix.platform == 'macos-latest' && 'aarch64-apple-darwin,x86_64-apple-darwin' || '' }}
+
+      - name: Rust cache
+        uses: swatinem/rust-cache@v2
+        with:
+          workspaces: "./src-tauri -> target"
+
+      - name: install frontend dependencies
+        # If you don't have `beforeBuildCommand` configured you may want to build your frontend here too.
+        run: npm install # change this to npm or pnpm depending on which one you use.
+      - name: ensure tauri builds
+        run: cargo tauri build
