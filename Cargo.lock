@@ -654,7 +654,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "4ef6b89e5b37196644d8796de5268852ff179b44e96276cf4290264843743bb7"
 
 [[package]]
-name = "embeddable_web_client"
+name = "embeddable-web-client"
 version = "0.1.0"
 
 [[package]]
