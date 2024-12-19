@@ -35,10 +35,10 @@ jobs:
 
       - name: setup node
         uses: actions/setup-node@v4
-        working-directory: ./client
         with:
           node-version: lts/*
           cache: "npm" # Set this to npm, yarn or pnpm.
+          cache-dependency-path: "client/package-lock.json"
 
       - name: install Rust stable
         uses: dtolnay/rust-toolchain@stable # Set this to dtolnay/rust-toolchain@nightly
