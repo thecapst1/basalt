@@ -1,2 +1,2 @@
 [workspace]
-members = ["client/src-tauri", "embeddable_web_client"]
+members = ["client/src-tauri", "embeddable-web-client"]
