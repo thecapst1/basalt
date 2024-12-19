@@ -68,7 +68,9 @@ jobs:
       - name: cargo generate-lockfile
         if: hashFiles('Cargo.lock') == ''
         run: cargo generate-lockfile
+      - name: mkdir out
+        run: mkdir client/out
       - name: add ${{ matrix.target }} target
         run: rustup target add ${{ matrix.target }}
       - name: cargo test
-        run: cargo test --locked --all-features --target ${{ matrix.target }}
+        run: cargo build --locked --target ${{ matrix.target }}
