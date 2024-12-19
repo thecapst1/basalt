@@ -47,7 +47,6 @@ jobs:
         run: cargo test --locked --all-features --doc
   build_on_all:
     # run cargo test on mac and windows
-    runs-on: ubuntu-latest
     name: ${{ matrix.platform }} / stable
     strategy:
       fail-fast: false
@@ -61,6 +60,7 @@ jobs:
             args: ""
           - platform: "windows-latest"
             args: ""
+
     runs-on: ${{ matrix.platform }}
     steps:
       # if your project needs OpenSSL, uncomment this to fix Windows builds.
