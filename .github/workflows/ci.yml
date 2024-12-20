@@ -21,6 +21,44 @@ concurrency:
   cancel-in-progress: true
 name: check
 jobs:
+  prettier:
+    runs-on: ubuntu-latest
+    name: prettier
+    strategy:
+      matrix:
+        node-version: [20.x]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "npm"
+      - uses: actions/checkout@v4
+        with:
+          submodules: true
+      - run: npm ci
+      - name: prettier
+        run: "./.github/workflows/lint.sh"
+  eslint:
+    runs-on: ubuntu-latest
+    name: eslint
+    strategy:
+      matrix:
+        node-version: [20.x]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "npm"
+      - uses: actions/checkout@v4
+        with:
+          submodules: true
+      - run: npm ci
+      - name: eslint
+        run: node .github/workflows/eslint.js
   fmt:
     runs-on: ubuntu-latest
     name: stable / fmt
