@@ -29,17 +29,19 @@ jobs:
         node-version: [20.x]
     steps:
       - uses: actions/checkout@v4
+        with:
+          submodules: true
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
           cache: "npm"
-      - uses: actions/checkout@v4
-        with:
-          submodules: true
+          cache-dependency-path: "client/package-lock.json"
       - run: npm ci
+        working-directory: ./client
       - name: prettier
         run: "./.github/workflows/lint.sh"
+        working-directory: ./client
   eslint:
     runs-on: ubuntu-latest
     name: eslint
@@ -48,17 +50,19 @@ jobs:
         node-version: [20.x]
     steps:
       - uses: actions/checkout@v4
+        with:
+          submodules: true
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
           cache: "npm"
-      - uses: actions/checkout@v4
-        with:
-          submodules: true
+          cache-dependency-path: "client/package-lock.json"
       - run: npm ci
+        working-directory: ./client
       - name: eslint
         run: node .github/workflows/eslint.js
+        working-directory: ./client
   fmt:
     runs-on: ubuntu-latest
     name: stable / fmt
