@@ -41,7 +41,6 @@ jobs:
         working-directory: ./client
       - name: prettier
         run: "./.github/workflows/lint.sh"
-        working-directory: ./client
   eslint:
     runs-on: ubuntu-latest
     name: eslint
@@ -62,7 +61,6 @@ jobs:
         working-directory: ./client
       - name: eslint
         run: node .github/workflows/eslint.js
-        working-directory: ./client
   fmt:
     runs-on: ubuntu-latest
     name: stable / fmt
@@ -127,7 +125,7 @@ jobs:
   build:
     # run cargo test on mac and windows
     name: build / ${{ matrix.platform }}
-    needs: [fmt, clippy]
+    needs: [fmt, clippy, eslint, msrv, prettier]
     strategy:
       fail-fast: false
       matrix:
