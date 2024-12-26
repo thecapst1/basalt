@@ -42,7 +42,7 @@ const eslintConfig = [
                 },
             ],
         },
-        ignores: ['tailwind.config.ts'],
+        ignores: ['**/*.config*'],
     },
 ];
 
