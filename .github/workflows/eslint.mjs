@@ -7,6 +7,8 @@ exec("npx eslint -f json", (err, stdout) => {
     exit(0);
   }
 
+  console.debug(stdout);
+
   const data = JSON.parse(stdout);
 
   for (const v of data) {
