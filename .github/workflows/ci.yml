@@ -60,7 +60,7 @@ jobs:
       - run: npm ci
         working-directory: ./client
       - name: eslint
-        run: node .github/workflows/eslint.js
+        run: node .github/workflows/eslint.mjs
   fmt:
     runs-on: ubuntu-latest
     name: stable / fmt
