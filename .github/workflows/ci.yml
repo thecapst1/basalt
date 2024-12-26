@@ -40,7 +40,8 @@ jobs:
       - run: npm ci
         working-directory: ./client
       - name: prettier
-        run: "./.github/workflows/lint.sh"
+        run: "../.github/workflows/lint.sh"
+        working-directory: ./client
   eslint:
     runs-on: ubuntu-latest
     name: eslint
@@ -60,7 +61,8 @@ jobs:
       - run: npm ci
         working-directory: ./client
       - name: eslint
-        run: node .github/workflows/eslint.mjs
+        run: node ../.github/workflows/eslint.mjs
+        working-directory: ./client
   fmt:
     runs-on: ubuntu-latest
     name: stable / fmt
