@@ -1,6 +1,3 @@
-
 export default function Competitor() {
-    return (
-        <h1>Competitor Panel</h1>
-    )
+    return <h1>Competitor Panel</h1>;
 }
