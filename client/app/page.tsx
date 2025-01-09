@@ -90,9 +90,9 @@ export default function Home() {
                         />
 
                         <div style={{ display: 'flex', justifyContent: 'center' }}>
-                            <Button type="submit" style={{ marginTop: '10px' }}>
-                                <Link href={isHostLogin ? '/host' : '/competitor'}>Login</Link>
-                            </Button>
+                            <Link href={isHostLogin ? '/host' : '/competitor'}>
+                                <Button type="submit" style={{ marginTop: '10px' }}>Login</Button>
+                            </Link>
                         </div>
                     </form>
                 </Form>
