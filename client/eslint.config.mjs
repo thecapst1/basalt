@@ -44,7 +44,7 @@ const eslintConfig = [
         },
     },
     {
-        ignores: ['**/*.config*'],
+        ignores: ['**/*.config*', '.next'],
     },
 ];
 
