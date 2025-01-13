@@ -215,7 +215,7 @@ export default function Host() {
                         </DropdownMenuTrigger>
                         <DropdownMenuContent>
                             <DropdownMenuItem onClick={() => disconnectAllTeams()}>
-                                Disconnect All
+                                Kick All
                             </DropdownMenuItem>
                         </DropdownMenuContent>
                     </DropdownMenu>
@@ -254,7 +254,7 @@ export default function Host() {
                                             <DropdownMenuItem
                                                 onClick={() => handleDisconnectTeam(team.name)}
                                             >
-                                                Disconnect
+                                                Kick
                                             </DropdownMenuItem>
                                         </div>
                                     ) : (
