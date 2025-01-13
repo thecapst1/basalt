@@ -48,7 +48,7 @@ import {
     SelectLabel,
     SelectTrigger,
     SelectValue,
-} from "@/components/ui/select"
+} from '@/components/ui/select';
 import {
     Settings,
     Printer,
@@ -73,7 +73,7 @@ export default function Host() {
     ]);
     const [newQuestionText, setNewQuestionText] = useState('');
     const [newQuestionPoints, setNewQuestionPoints] = useState('');
-    const [selectedLanguage, setSelectedLanguage] = useState("");
+    const [selectedLanguage, setSelectedLanguage] = useState('');
     const [isServerOn, setIsServerOn] = useState<boolean | null>(null);
     const [teamList, setTeamList] = useState([
         { name: 'Team1', password: 'password', points: 300, status: 1 },
@@ -92,13 +92,13 @@ export default function Host() {
         setIsServerOn(true);
     }, []);
 
-    const handleThemeChange = (newTheme : 'light' | 'dark') => {
+    const handleThemeChange = (newTheme: 'light' | 'dark') => {
         setTheme(newTheme);
-    }
+    };
 
     const handleNewQuestionClick = () => {
         if (!newQuestionText || !newQuestionPoints || !selectedLanguage) {
-            setErrorMessage("Please Fill In All Fields");
+            setErrorMessage('Please Fill In All Fields');
             return;
         }
 
@@ -152,12 +152,12 @@ export default function Host() {
         setTeamList((prev) => prev.filter((team) => team.name !== teamName));
     };
 
-    const handleRemoveQuestion = (q : string) => {
+    const handleRemoveQuestion = (q: string) => {
         setQuestions((prev) => prev.filter((question) => question.question !== q));
     };
 
     const handleToggleServer = () => {
-        setIsServerOn(prev => (prev === null ? true : !prev));
+        setIsServerOn((prev) => (prev === null ? true : !prev));
         disconnectAllTeams();
     };
 
@@ -295,7 +295,8 @@ export default function Host() {
                     <p>Server</p>
                     <Button
                         style={{
-                            backgroundColor: isServerOn === null ? 'grey' : isServerOn ? 'red' : 'green',
+                            backgroundColor:
+                                isServerOn === null ? 'grey' : isServerOn ? 'red' : 'green',
                             color: 'black',
                             textTransform: 'lowercase',
                             fontWeight: 'bold',
@@ -303,8 +304,8 @@ export default function Host() {
                             width: 'fit-content',
                             height: 'fit-content',
                             padding: '15px 20px',
-                          }}
-                          onClick={handleToggleServer}
+                        }}
+                        onClick={handleToggleServer}
                     >
                         {isServerOn === null ? 'loading...' : isServerOn ? 'stop' : 'start'}
                     </Button>
@@ -321,6 +322,7 @@ export default function Host() {
                                 display: 'flex',
                                 alignItems: 'center',
                             }}
+                            asChild
                         >
                             <Button
                                 variant={'outline'}
@@ -339,7 +341,7 @@ export default function Host() {
                                     Please enter all the required information for your question
                                     below.
                                 </DialogDescription>
-                                {errorMessage && <p style={{color:"red"}}>{errorMessage}</p>}
+                                {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
                             </DialogHeader>
                             <div>
                                 <Label htmlFor="question">Question</Label>
@@ -356,11 +358,14 @@ export default function Host() {
                                     value={newQuestionPoints}
                                     onChange={(e) => setNewQuestionPoints(e.target.value)}
                                 />
-                                <Select 
+                                <Select
                                     value={selectedLanguage}
-                                    onValueChange={(value) => setSelectedLanguage(value)} 
+                                    onValueChange={(value) => setSelectedLanguage(value)}
                                 >
-                                    <SelectTrigger className="w-[180px]" style={{marginTop:"5px"}}>
+                                    <SelectTrigger
+                                        className="w-[180px]"
+                                        style={{ marginTop: '5px' }}
+                                    >
                                         <SelectValue placeholder="Select a langauge" />
                                         <SelectContent>
                                             <SelectGroup>
@@ -476,9 +481,17 @@ export default function Host() {
                                         : q.question}
                                 </span>
                                 <span className="question-points">({q.points} pts)</span>
-                                <span style={{marginLeft:"auto", textTransform:"uppercase", opacity:"65%"}}>{q.language}</span>
+                                <span
+                                    style={{
+                                        marginLeft: 'auto',
+                                        textTransform: 'uppercase',
+                                        opacity: '65%',
+                                    }}
+                                >
+                                    {q.language}
+                                </span>
                                 <DropdownMenu>
-                                    <DropdownMenuTrigger style={{ paddingLeft:"20px" }}>
+                                    <DropdownMenuTrigger style={{ paddingLeft: '20px' }}>
                                         <Settings />
                                     </DropdownMenuTrigger>
                                     <DropdownMenuContent>
@@ -487,7 +500,9 @@ export default function Host() {
                                             Edit
                                         </DropdownMenuItem>
                                         <DropdownMenuSeparator />
-                                        <DropdownMenuItem onClick={() => handleRemoveQuestion(q.question)}>
+                                        <DropdownMenuItem
+                                            onClick={() => handleRemoveQuestion(q.question)}
+                                        >
                                             <Trash className="menu-icon" />
                                             Delete
                                         </DropdownMenuItem>
