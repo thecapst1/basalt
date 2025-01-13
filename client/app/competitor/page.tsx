@@ -1,36 +1,64 @@
+import './competitor.css';
 import {
     ResizableHandle,
     ResizablePanel,
     ResizablePanelGroup,
-} from "@/components/ui/resizable"
+} from "@/components/ui/resizable";
 
 export default function ResizableDemo() {
+
+    // TODO: need to bring in Question Information from host component as am input for this func
+    function getCurrentQuestion() {
+        return (
+            <div className='question-title'>
+                <h1>
+                    <b>
+                        Question Title
+                    </b>
+                </h1>
+            </div>
+        )
+    }
+
+    // TODO: need to be able to grab info from the text editor and have this func take it as a param
+    function runTest() {
+        return (
+            <div className='test-button'>
+
+            </div>
+        )
+    }
+
+
+
     return (
-        <ResizablePanelGroup
-            direction="horizontal"
-            className="max-w-md rounded-lg border md:min-w-[450px]"
-        >
-            <ResizablePanel defaultSize={50}>
-                <div className="flex h-[200px] items-center justify-center p-6">
-                    <span className="font-semibold">One</span>
-                </div>
-            </ResizablePanel>
-            <ResizableHandle />
-            <ResizablePanel defaultSize={50}>
-                <ResizablePanelGroup direction="vertical">
-                    <ResizablePanel defaultSize={25}>
-                        <div className="flex h-full items-center justify-center p-6">
-                            <span className="font-semibold">Two</span>
-                        </div>
-                    </ResizablePanel>
-                    <ResizableHandle />
-                    <ResizablePanel defaultSize={75}>
-                        <div className="flex h-full items-center justify-center p-6">
-                            <span className="font-semibold">Three</span>
-                        </div>
-                    </ResizablePanel>
-                </ResizablePanelGroup>
-            </ResizablePanel>
-        </ResizablePanelGroup>
-    )
+        <div className='panel-container'>
+            <ResizablePanelGroup
+                direction="horizontal"
+            >
+                <ResizablePanel defaultSize={15}>
+                    <div className="side-panel">
+                        {getCurrentQuestion()}
+                    </div>
+                </ResizablePanel>
+                <ResizableHandle />
+                <ResizablePanel >
+                    <ResizablePanelGroup direction="vertical">
+
+                        <ResizablePanel defaultSize={400} className="side-panel">
+                            <div>
+                                <span>Editor</span>
+                            </div>
+                        </ResizablePanel>
+                        <ResizableHandle />
+                        <ResizablePanel defaultSize={100} className="side-panel">
+                            <div>
+                                <span>Test Suite</span>
+                            </div>
+                        </ResizablePanel>
+                    </ResizablePanelGroup>
+                </ResizablePanel>
+            </ResizablePanelGroup>
+        </div>
+    );
 }

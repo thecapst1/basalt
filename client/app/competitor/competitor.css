@@ -1,4 +1,17 @@
-.editor{
+.panel-container {
+    display: flex;
+    height: 100vh;
+    width: 100%;
+}
+
+.side-panel {
+    padding: 16px;  
+    box-sizing: border-box; 
+}
+
+
+/* Left Side Panel Css */
+.question-title{
     display: flex;
     align-items: center;
     justify-content: center;
