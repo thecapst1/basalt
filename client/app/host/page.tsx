@@ -1,6 +1,6 @@
 'use client';
-import './host.css';
 import React, { useState, useEffect } from 'react';
+import { useTheme } from 'next-themes';
 import { Separator } from '@/components/ui/separator';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -8,12 +8,10 @@ import { Button } from '@/components/ui/button';
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from '@/components/ui/resizable';
 import {
     Menubar,
-    MenubarCheckboxItem,
     MenubarContent,
     MenubarItem,
     MenubarMenu,
     MenubarSeparator,
-    MenubarShortcut,
     MenubarSub,
     MenubarSubContent,
     MenubarSubTrigger,
@@ -65,7 +63,7 @@ import {
 } from 'lucide-react';
 
 export default function Host() {
-    const [theme, setTheme] = useState<'light' | 'dark'>('dark');
+    const { setTheme } = useTheme();
     const [questions, setQuestions] = useState([
         { question: 'Implement a binary search algorithm.', language: 'py', points: '10' },
     ]);
@@ -74,13 +72,13 @@ export default function Host() {
     const [selectedLanguage, setSelectedLanguage] = useState('');
     const [isServerOn, setIsServerOn] = useState<boolean | null>(null);
     const [teamList, setTeamList] = useState([
-        { name: 'Team1', password: 'password', points: 300, status: 1 },
-        { name: 'Team2', password: 'password', points: 100, status: 1 },
-        { name: 'Team3', password: 'password', points: 0, status: 0 },
-        { name: 'Team4', password: 'password', points: 200, status: 1 },
-        { name: 'Team5', password: 'password', points: 0, status: 0 },
-        { name: 'Team6', password: 'password', points: 0, status: 0 },
-        { name: 'Team7', password: 'password', points: 125, status: 1 },
+        { name: 'Team1', password: 'password', points: 300, status: true },
+        { name: 'Team2', password: 'password', points: 100, status: true },
+        { name: 'Team3', password: 'password', points: 0, status: false },
+        { name: 'Team4', password: 'password', points: 200, status: true },
+        { name: 'Team5', password: 'password', points: 0, status: false },
+        { name: 'Team6', password: 'password', points: 0, status: false },
+        { name: 'Team7', password: 'password', points: 125, status: true },
     ]);
     const [newTeamName, setNewTeamName] = useState('');
     const [newTeamPassword, setNewTeamPassword] = useState('');
@@ -89,10 +87,6 @@ export default function Host() {
     useEffect(() => {
         setIsServerOn(true);
     }, []);
-
-    const handleThemeChange = (newTheme: 'light' | 'dark') => {
-        setTheme(newTheme);
-    };
 
     const handleNewQuestionClick = () => {
         if (!newQuestionText || !newQuestionPoints || !selectedLanguage) {
@@ -125,7 +119,7 @@ export default function Host() {
         }
         setTeamList((prev) => [
             ...prev,
-            { name: newTeamName, password: newTeamPassword, points: 0, status: 0 },
+            { name: newTeamName, password: newTeamPassword, points: 0, status: false },
         ]);
         setNewTeamName('');
         setNewTeamPassword('');
@@ -135,14 +129,14 @@ export default function Host() {
     const disconnectAllTeams = () => {
         const updatedTeams = teamList.map((team) => ({
             ...team,
-            status: 0,
+            status: false,
         }));
         setTeamList(updatedTeams);
     };
 
     const handleDisconnectTeam = (teamName: string) => {
         setTeamList((prev) =>
-            prev.map((team) => (team.name === teamName ? { ...team, status: 0 } : team))
+            prev.map((team) => (team.name === teamName ? { ...team, status: false } : team))
         );
     };
 
@@ -160,9 +154,14 @@ export default function Host() {
     };
 
     return (
-        <ResizablePanelGroup direction="horizontal" className="resizeable-panel-group">
-            <ResizablePanel className="left-panel" defaultSize={30} minSize={25} maxSize={40}>
-                <span className="left-panel-menu">
+        <ResizablePanelGroup direction="horizontal" className="flex flex-grow">
+            <ResizablePanel
+                className="flex flex-col p-6"
+                defaultSize={30}
+                minSize={25}
+                maxSize={40}
+            >
+                <span className="flex h-fit w-full items-center justify-evenly">
                     <Dialog>
                         <DialogTrigger>
                             <Plus />
@@ -192,12 +191,7 @@ export default function Host() {
                                 />
                             </div>
                             {errorMessage && (
-                                <div
-                                    className="error-message"
-                                    style={{ color: 'red', marginTop: '10px' }}
-                                >
-                                    {errorMessage}
-                                </div>
+                                <div className="mt-2 text-red-500">{errorMessage}</div>
                             )}
                             <DialogFooter>
                                 <Button type="submit" onClick={handleAddTeam}>
@@ -206,7 +200,7 @@ export default function Host() {
                             </DialogFooter>
                         </DialogContent>
                     </Dialog>
-                    <p>Teams</p>
+                    <p className="px-[50px] text-[120%] uppercase">Teams</p>
                     <DropdownMenu>
                         <DropdownMenuTrigger>
                             <EllipsisVertical />
@@ -218,14 +212,14 @@ export default function Host() {
                         </DropdownMenuContent>
                     </DropdownMenu>
                 </span>
-                <Separator style={{ marginTop: '10px' }} />
-                <div className="team-list">
+                <Separator className="mt-2" />
+                <div className="flex max-h-[250px] flex-col gap-[5px] overflow-y-auto pr-[10px] pt-[10px]">
                     {teamList.map((team, index) => (
                         <span
-                            className="team-block"
+                            className="flex w-full justify-between p-[5px]"
                             key={index}
                             style={{
-                                backgroundColor: team.status === 1 ? 'green' : 'grey',
+                                backgroundColor: team.status === true ? 'green' : 'grey',
                             }}
                         >
                             {team.name}
@@ -234,7 +228,7 @@ export default function Host() {
                                     <CircleEllipsis />
                                 </DropdownMenuTrigger>
                                 <DropdownMenuContent>
-                                    {team.status === 1 ? (
+                                    {team.status === true ? (
                                         <div>
                                             <DropdownMenuItem>Message</DropdownMenuItem>
                                             <DropdownMenuSub>
@@ -269,18 +263,19 @@ export default function Host() {
                         </span>
                     ))}
                 </div>
-                <Separator style={{ marginTop: '10px' }} />
-                <div className="leaderboard">
-                    <p>Leaderboard</p>
-                    <div className="team-list">
+                <Separator className="mt-2" />
+                <div>
+                    <p className="mx-auto my-[10px] text-center text-[18px] uppercase">
+                        Leaderboard
+                    </p>
+                    <div className="flex max-h-[250px] flex-col gap-[5px] overflow-y-auto pr-[10px] pt-[10px]">
                         {[...teamList]
-                            .filter((team) => team.status === 1)
+                            .filter((team) => team.status === true)
                             .sort((a, b) => b.points - a.points)
                             .map((team, index) => (
                                 <div
-                                    className="team-block"
+                                    className="flex w-full justify-between bg-gray-500 p-[5px] text-black"
                                     key={index}
-                                    style={{ backgroundColor: 'grey', color: 'black' }}
                                 >
                                     <span>{team.name}</span>
                                     <span>{team.points} pts</span>
@@ -288,20 +283,14 @@ export default function Host() {
                             ))}
                     </div>
                 </div>
-                <div className="server-control-panel">
-                    <Separator style={{ marginTop: '10px' }} />
-                    <p>Server</p>
+                <div className="mb-[20px] mt-auto flex flex-col items-center justify-center">
+                    <Separator className="mt-2" />
+                    <p className="mx-auto my-[10px] text-[18px] uppercase">Server</p>
                     <Button
+                        className="h-fit w-fit p-[10px_25px] text-[24px] font-bold lowercase text-black"
                         style={{
                             backgroundColor:
                                 isServerOn === null ? 'grey' : isServerOn ? 'red' : 'green',
-                            color: 'black',
-                            textTransform: 'lowercase',
-                            fontWeight: 'bold',
-                            fontSize: '24px',
-                            width: 'fit-content',
-                            height: 'fit-content',
-                            padding: '15px 20px',
                         }}
                         onClick={handleToggleServer}
                     >
@@ -312,23 +301,17 @@ export default function Host() {
 
             <ResizableHandle withHandle />
 
-            <ResizablePanel className="right-panel" defaultSize={70} minSize={60} maxSize={90}>
-                <span className="right-panel-menu">
+            <ResizablePanel
+                className="flex h-full min-h-screen w-full flex-col items-center p-6"
+                defaultSize={70}
+                minSize={60}
+                maxSize={90}
+            >
+                <span className="flex w-full justify-start pb-[10px]">
                     <Dialog>
-                        <DialogTrigger
-                            style={{
-                                display: 'flex',
-                                alignItems: 'center',
-                            }}
-                            asChild
-                        >
-                            <Button
-                                variant={'outline'}
-                                style={{
-                                    marginRight: '5px',
-                                }}
-                            >
-                                <MessageCirclePlus className="menu-icon" />
+                        <DialogTrigger className="flex items-center" asChild>
+                            <Button variant={'outline'} className="mr-[5px]">
+                                <MessageCirclePlus className="pr-[2px]" />
                                 Add Question
                             </Button>
                         </DialogTrigger>
@@ -339,7 +322,7 @@ export default function Host() {
                                     Please enter all the required information for your question
                                     below.
                                 </DialogDescription>
-                                {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
+                                {errorMessage && <p className="text-red-500">{errorMessage}</p>}
                             </DialogHeader>
                             <div>
                                 <Label htmlFor="question">Question</Label>
@@ -360,11 +343,8 @@ export default function Host() {
                                     value={selectedLanguage}
                                     onValueChange={(value) => setSelectedLanguage(value)}
                                 >
-                                    <SelectTrigger
-                                        className="w-[180px]"
-                                        style={{ marginTop: '5px' }}
-                                    >
-                                        <SelectValue placeholder="Select a langauge" />
+                                    <SelectTrigger className="mr-[5px] w-[180px]">
+                                        <SelectValue placeholder="Select a langauge ..." />
                                         <SelectContent>
                                             <SelectGroup>
                                                 <SelectItem value="rs">Rust</SelectItem>
@@ -395,13 +375,13 @@ export default function Host() {
                             <MenubarTrigger>File</MenubarTrigger>
                             <MenubarContent>
                                 <MenubarItem>
-                                    <Import className="menu-icon" />
+                                    <Import className="pr-[2px]" />
                                     Import Questions
                                 </MenubarItem>
                                 <MenubarSeparator />
                                 <MenubarSub>
                                     <MenubarSubTrigger>
-                                        <Printer className="menu-icon" />
+                                        <Printer className="pr-[2px]" />
                                         Print
                                     </MenubarSubTrigger>
                                     <MenubarSubContent>
@@ -410,7 +390,7 @@ export default function Host() {
                                     </MenubarSubContent>
                                 </MenubarSub>
                                 <MenubarItem>
-                                    <Settings className="menu-icon" />
+                                    <Settings className="pr-[2px]" />
                                     Settings
                                 </MenubarItem>
                             </MenubarContent>
@@ -420,31 +400,21 @@ export default function Host() {
                             <MenubarTrigger>View</MenubarTrigger>
                             <MenubarContent>
                                 <MenubarItem>
-                                    <Expand className="menu-icon" />
+                                    <Expand className="pr-[2px]" />
                                     Fullscreen
                                 </MenubarItem>
                                 <MenubarSeparator />
                                 <MenubarSub>
                                     <MenubarSubTrigger>Theme</MenubarSubTrigger>
                                     <MenubarSubContent>
-                                        <MenubarCheckboxItem
-                                            checked={theme === 'light'}
-                                            onCheckedChange={() => handleThemeChange('light')}
-                                        >
-                                            Light{' '}
-                                            <MenubarShortcut>
-                                                <Sun />
-                                            </MenubarShortcut>
-                                        </MenubarCheckboxItem>
-                                        <MenubarCheckboxItem
-                                            checked={theme === 'dark'}
-                                            onCheckedChange={() => handleThemeChange('dark')}
-                                        >
-                                            Dark{' '}
-                                            <MenubarShortcut>
-                                                <Moon />
-                                            </MenubarShortcut>
-                                        </MenubarCheckboxItem>
+                                        <MenubarItem onClick={() => setTheme('light')}>
+                                            <Sun className="pr-[2px]" />
+                                            Light
+                                        </MenubarItem>
+                                        <MenubarItem onClick={() => setTheme('dark')}>
+                                            <Moon className="pr-[2px]" />
+                                            Dark
+                                        </MenubarItem>
                                     </MenubarSubContent>
                                 </MenubarSub>
                             </MenubarContent>
@@ -454,11 +424,11 @@ export default function Host() {
                             <MenubarTrigger>Help</MenubarTrigger>
                             <MenubarContent>
                                 <MenubarItem>
-                                    <BookOpen className="menu-icon" />
+                                    <BookOpen className="pr-[2px]" />
                                     Usage
                                 </MenubarItem>
                                 <MenubarItem>
-                                    <TriangleAlert className="menu-icon" />
+                                    <TriangleAlert className="pr-[2px]" />
                                     Report Issue
                                 </MenubarItem>
                             </MenubarContent>
@@ -468,10 +438,13 @@ export default function Host() {
 
                 <Separator />
 
-                <div className="question-panel">
-                    <ul className="question-list">
+                <div className="flex max-h-full w-full flex-grow flex-col justify-start overflow-y-auto">
+                    <ul className="mt-[10px] flex flex-col gap-[5px]">
                         {questions.map((q, index) => (
-                            <li key={index} className="question-block">
+                            <li
+                                key={index}
+                                className="flex h-fit w-full items-center rounded-[10px] border border-[0.5px] p-[10px_20px]"
+                            >
                                 <span className="question-number">{index + 1}. </span>
                                 <span className="question-text">
                                     {q.question.length > 50
@@ -479,29 +452,21 @@ export default function Host() {
                                         : q.question}
                                 </span>
                                 <span className="question-points">({q.points} pts)</span>
-                                <span
-                                    style={{
-                                        marginLeft: 'auto',
-                                        textTransform: 'uppercase',
-                                        opacity: '65%',
-                                    }}
-                                >
-                                    {q.language}
-                                </span>
+                                <span className="ml-auto pr-[10px] uppercase opacity-65">{q.language}</span>
                                 <DropdownMenu>
-                                    <DropdownMenuTrigger style={{ paddingLeft: '20px' }}>
+                                    <DropdownMenuTrigger>
                                         <Settings />
                                     </DropdownMenuTrigger>
                                     <DropdownMenuContent>
                                         <DropdownMenuItem>
-                                            <Pen className="menu-icon" />
+                                            <Pen className="pr-[2px]" />
                                             Edit
                                         </DropdownMenuItem>
                                         <DropdownMenuSeparator />
                                         <DropdownMenuItem
                                             onClick={() => handleRemoveQuestion(q.question)}
                                         >
-                                            <Trash className="menu-icon" />
+                                            <Trash className="pr-[2px]" />
                                             Delete
                                         </DropdownMenuItem>
                                     </DropdownMenuContent>
