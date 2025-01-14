@@ -218,7 +218,6 @@ export default function Host() {
                         <span
                             className={`flex w-full justify-between p-[5px] ${team.status === true ? 'bg-green-500' : 'bg-gray-500'}`}
                             key={index}
-                            
                         >
                             {team.name}
                             <DropdownMenu>
@@ -446,7 +445,9 @@ export default function Host() {
                                         : q.question}
                                 </span>
                                 <span className="question-points">({q.points} pts)</span>
-                                <span className="ml-auto pr-[10px] uppercase opacity-65">{q.language}</span>
+                                <span className="ml-auto pr-[10px] uppercase opacity-65">
+                                    {q.language}
+                                </span>
                                 <DropdownMenu>
                                     <DropdownMenuTrigger>
                                         <Settings />
