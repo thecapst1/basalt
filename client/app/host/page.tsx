@@ -216,11 +216,9 @@ export default function Host() {
                 <div className="flex max-h-[250px] flex-col gap-[5px] overflow-y-auto pr-[10px] pt-[10px]">
                     {teamList.map((team, index) => (
                         <span
-                            className="flex w-full justify-between p-[5px]"
+                            className={`flex w-full justify-between p-[5px] ${team.status === true ? 'bg-green-500' : 'bg-gray-500'}`}
                             key={index}
-                            style={{
-                                backgroundColor: team.status === true ? 'green' : 'grey',
-                            }}
+                            
                         >
                             {team.name}
                             <DropdownMenu>
@@ -287,11 +285,7 @@ export default function Host() {
                     <Separator className="mt-2" />
                     <p className="mx-auto my-[10px] text-[18px] uppercase">Server</p>
                     <Button
-                        className="h-fit w-fit p-[10px_25px] text-[24px] font-bold lowercase text-black"
-                        style={{
-                            backgroundColor:
-                                isServerOn === null ? 'grey' : isServerOn ? 'red' : 'green',
-                        }}
+                        className={`h-fit w-fit p-[10px_25px] text-[24px] font-bold lowercase text-black ${isServerOn === null ? 'bg-gray-500' : isServerOn ? 'bg-red-600 hover:bg-red-500' : 'bg-green-600 hover:bg-green-500'}`}
                         onClick={handleToggleServer}
                     >
                         {isServerOn === null ? 'loading...' : isServerOn ? 'stop' : 'start'}
