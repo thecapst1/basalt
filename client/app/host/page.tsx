@@ -1,5 +1,8 @@
 'use client';
 import React, { useState, useEffect } from 'react';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
 import { useTheme } from 'next-themes';
 import { Separator } from '@/components/ui/separator';
 import { Input } from '@/components/ui/input';
@@ -62,6 +65,12 @@ import {
     Pen,
 } from 'lucide-react';
 
+const TeamFormSchema = z.object({
+    name: z.string().trim().min(1, 'Team name cannot be empty!'),
+    password: z.string().trim().min(1, 'Password cannot be empty!'),
+});
+type TeamFormValues = z.infer<typeof TeamFormSchema>
+
 export default function Host() {
     const { setTheme } = useTheme();
     const [questions, setQuestions] = useState([
@@ -73,16 +82,22 @@ export default function Host() {
     const [isServerOn, setIsServerOn] = useState<boolean | null>(null);
     const [teamList, setTeamList] = useState([
         { name: 'Team1', password: 'password', points: 300, status: true },
-        { name: 'Team2', password: 'password', points: 100, status: true },
+        { name: 'Team2', password: 'password', points: 126, status: true },
         { name: 'Team3', password: 'password', points: 0, status: false },
-        { name: 'Team4', password: 'password', points: 200, status: true },
-        { name: 'Team5', password: 'password', points: 0, status: false },
-        { name: 'Team6', password: 'password', points: 0, status: false },
-        { name: 'Team7', password: 'password', points: 125, status: true },
+        { name: 'Team4', password: 'password', points: 299, status: true },
+        { name: 'Team5', password: 'password', points: 0, status: true },
+        { name: 'Team6', password: 'password', points: 5, status: false },
+        { name: 'Team7', password: 'password', points: 125, status: true },        
     ]);
-    const [newTeamName, setNewTeamName] = useState('');
-    const [newTeamPassword, setNewTeamPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
+
+    const form = useForm<TeamFormValues>({
+        resolver: zodResolver(TeamFormSchema),
+        defaultValues: {
+            name: '',
+            password: '',
+        },
+    });
 
     useEffect(() => {
         setIsServerOn(true);
@@ -104,25 +119,16 @@ export default function Host() {
         setErrorMessage('');
     };
 
-    const handleAddTeam = () => {
-        if (newTeamName.trim() === '') {
-            setErrorMessage('Team name cannot be empty!');
-            return;
-        }
-        if (newTeamPassword.trim() === '') {
-            setErrorMessage('Password cannot be empty!');
-            return;
-        }
-        if (teamList.some((team) => team.name.toLowerCase() === newTeamName.toLowerCase())) {
+    const handleAddTeam = (data: TeamFormValues) => {
+        if (teamList.some((team) => team.name.toLowerCase() === data.name.toLowerCase())) {
             setErrorMessage('Team name must be unique!');
             return;
         }
         setTeamList((prev) => [
             ...prev,
-            { name: newTeamName, password: newTeamPassword, points: 0, status: false },
+            { name: data.name, password: data.password, points: 0, status: false },
         ]);
-        setNewTeamName('');
-        setNewTeamPassword('');
+        form.reset();
         setErrorMessage('');
     };
 
@@ -156,9 +162,9 @@ export default function Host() {
     return (
         <ResizablePanelGroup direction="horizontal" className="flex flex-grow">
             <ResizablePanel
-                className="flex flex-col p-6"
-                defaultSize={30}
-                minSize={25}
+                className="flex flex-col p-6 justify-center"
+                defaultSize={20}
+                minSize={20}
                 maxSize={40}
             >
                 <span className="flex h-fit w-full items-center justify-evenly">
@@ -174,33 +180,43 @@ export default function Host() {
                                     the team will need them to connect!
                                 </DialogDescription>
                             </DialogHeader>
-                            <div>
-                                <Label htmlFor="name">Name</Label>
-                                <Input
-                                    id="name"
-                                    placeholder="Team Name"
-                                    value={newTeamName}
-                                    onChange={(e) => setNewTeamName(e.target.value)}
-                                />
-                                <Label htmlFor="password">Password</Label>
-                                <Input
-                                    id="password"
-                                    placeholder="Team Password"
-                                    value={newTeamPassword}
-                                    onChange={(e) => setNewTeamPassword(e.target.value)}
-                                />
-                            </div>
-                            {errorMessage && (
-                                <div className="mt-2 text-red-500">{errorMessage}</div>
-                            )}
-                            <DialogFooter>
-                                <Button type="submit" onClick={handleAddTeam}>
-                                    Add
-                                </Button>
-                            </DialogFooter>
+                            <form
+                                onSubmit={form.handleSubmit(handleAddTeam)}
+                                className="flex flex-col gap-4"
+                            >
+                                <div>
+                                    <Label htmlFor="name">Name</Label>
+                                    <Input
+                                        id="name"
+                                        placeholder="Team Name"
+                                        {...form.register('name')}
+                                    />
+                                    {form.formState.errors.name && (
+                                        <p className="text-red-500">{form.formState.errors.name.message}</p>
+                                    )}
+                                </div>
+                                <div>
+                                    <Label htmlFor="password">Password</Label>
+                                    <Input
+                                        id="password"
+                                        type="password"
+                                        placeholder="Team Password"
+                                        {...form.register('password')}
+                                    />
+                                    {form.formState.errors.password && (
+                                        <p className="text-red-500">{form.formState.errors.password.message}</p>
+                                    )}
+                                </div>
+                                {errorMessage && (
+                                    <div className="mt-2 text-red-500">{errorMessage}</div>
+                                )}
+                                <DialogFooter>
+                                    <Button type="submit">Add Team</Button>
+                                </DialogFooter>
+                            </form>
                         </DialogContent>
                     </Dialog>
-                    <p className="px-[50px] text-[120%] uppercase">Teams</p>
+                    <p className="px-14 text-[120%] uppercase">Teams</p>
                     <DropdownMenu>
                         <DropdownMenuTrigger>
                             <EllipsisVertical />
@@ -213,19 +229,19 @@ export default function Host() {
                     </DropdownMenu>
                 </span>
                 <Separator className="mt-2" />
-                <div className="flex max-h-[250px] flex-col gap-[5px] overflow-y-auto pr-[10px] pt-[10px]">
+                <div className="flex h-72 flex-col gap-1.5 overflow-y-auto pt-2.5">
                     {teamList.map((team, index) => (
                         <span
-                            className={`flex w-full justify-between p-[5px] ${team.status === true ? 'bg-green-500' : 'bg-gray-500'}`}
+                            className={`flex w-full justify-between p-1.5 ${team.status ? 'bg-green-500' : 'bg-gray-500'}`}
                             key={index}
                         >
                             {team.name}
                             <DropdownMenu>
-                                <DropdownMenuTrigger>
+                                <DropdownMenuTrigger className="pr-0.5">
                                     <CircleEllipsis />
                                 </DropdownMenuTrigger>
                                 <DropdownMenuContent>
-                                    {team.status === true ? (
+                                    {team.status ? (
                                         <div>
                                             <DropdownMenuItem>Message</DropdownMenuItem>
                                             <DropdownMenuSub>
@@ -262,27 +278,27 @@ export default function Host() {
                 </div>
                 <Separator className="mt-2" />
                 <div>
-                    <p className="mx-auto my-[10px] text-center text-[18px] uppercase">
+                    <p className="mx-auto my-2.5 text-center text-[18px] uppercase">
                         Leaderboard
                     </p>
-                    <div className="flex max-h-[250px] flex-col gap-[5px] overflow-y-auto pr-[10px] pt-[10px]">
+                    <div className="flex h-96 flex-col gap-2 overflow-y-auto pt-2.5">
                         {[...teamList]
                             .filter((team) => team.status === true)
                             .sort((a, b) => b.points - a.points)
                             .map((team, index) => (
                                 <div
-                                    className="flex w-full justify-between bg-gray-500 p-[5px] text-black"
+                                    className="flex w-full justify-between bg-gray-500 p-2 text-black"
                                     key={index}
                                 >
                                     <span>{team.name}</span>
-                                    <span>{team.points} pts</span>
+                                    <span className="pr-0.5">{team.points} pts</span>
                                 </div>
                             ))}
                     </div>
                 </div>
                 <div className="mb-[20px] mt-auto flex flex-col items-center justify-center">
                     <Separator className="mt-2" />
-                    <p className="mx-auto my-[10px] text-[18px] uppercase">Server</p>
+                    <p className="mx-auto my-2.5 text-[18px] uppercase">Server</p>
                     <Button
                         className={`h-fit w-fit p-[10px_25px] text-[24px] font-bold lowercase text-black ${isServerOn === null ? 'bg-gray-500' : isServerOn ? 'bg-red-600 hover:bg-red-500' : 'bg-green-600 hover:bg-green-500'}`}
                         onClick={handleToggleServer}
@@ -296,15 +312,15 @@ export default function Host() {
 
             <ResizablePanel
                 className="flex h-full min-h-screen w-full flex-col items-center p-6"
-                defaultSize={70}
+                defaultSize={75}
                 minSize={60}
-                maxSize={90}
+                maxSize={80}
             >
-                <span className="flex w-full justify-start pb-[10px]">
+                <span className="flex w-full justify-start pb-2.5">
                     <Dialog>
                         <DialogTrigger className="flex items-center" asChild>
-                            <Button variant={'outline'} className="mr-[5px]">
-                                <MessageCirclePlus className="pr-[2px]" />
+                            <Button variant={'outline'} className="mr-1.5">
+                                <MessageCirclePlus className="pr-0.5" />
                                 Add Question
                             </Button>
                         </DialogTrigger>
@@ -320,6 +336,7 @@ export default function Host() {
                             <div>
                                 <Label htmlFor="question">Question</Label>
                                 <Input
+                                    type="text"
                                     id="question"
                                     placeholder="Enter your question"
                                     value={newQuestionText}
@@ -327,6 +344,7 @@ export default function Host() {
                                 />
                                 <Label htmlFor="points">Points</Label>
                                 <Input
+                                    type="number"
                                     id="points"
                                     placeholder="Enter points"
                                     value={newQuestionPoints}
@@ -336,7 +354,7 @@ export default function Host() {
                                     value={selectedLanguage}
                                     onValueChange={(value) => setSelectedLanguage(value)}
                                 >
-                                    <SelectTrigger className="mr-[5px] w-[180px]">
+                                    <SelectTrigger className="mr-1.5 mt-2 w-44">
                                         <SelectValue placeholder="Select a langauge ..." />
                                         <SelectContent>
                                             <SelectGroup>
@@ -368,13 +386,13 @@ export default function Host() {
                             <MenubarTrigger>File</MenubarTrigger>
                             <MenubarContent>
                                 <MenubarItem>
-                                    <Import className="pr-[2px]" />
+                                    <Import className="pr-0.5" />
                                     Import Questions
                                 </MenubarItem>
                                 <MenubarSeparator />
                                 <MenubarSub>
                                     <MenubarSubTrigger>
-                                        <Printer className="pr-[2px]" />
+                                        <Printer className="pr-0.5" />
                                         Print
                                     </MenubarSubTrigger>
                                     <MenubarSubContent>
@@ -383,7 +401,7 @@ export default function Host() {
                                     </MenubarSubContent>
                                 </MenubarSub>
                                 <MenubarItem>
-                                    <Settings className="pr-[2px]" />
+                                    <Settings className="pr-0.5" />
                                     Settings
                                 </MenubarItem>
                             </MenubarContent>
@@ -393,7 +411,7 @@ export default function Host() {
                             <MenubarTrigger>View</MenubarTrigger>
                             <MenubarContent>
                                 <MenubarItem>
-                                    <Expand className="pr-[2px]" />
+                                    <Expand className="pr-0.5" />
                                     Fullscreen
                                 </MenubarItem>
                                 <MenubarSeparator />
@@ -401,11 +419,11 @@ export default function Host() {
                                     <MenubarSubTrigger>Theme</MenubarSubTrigger>
                                     <MenubarSubContent>
                                         <MenubarItem onClick={() => setTheme('light')}>
-                                            <Sun className="pr-[2px]" />
+                                            <Sun className="pr-0.5" />
                                             Light
                                         </MenubarItem>
                                         <MenubarItem onClick={() => setTheme('dark')}>
-                                            <Moon className="pr-[2px]" />
+                                            <Moon className="pr-0.5" />
                                             Dark
                                         </MenubarItem>
                                     </MenubarSubContent>
@@ -417,11 +435,11 @@ export default function Host() {
                             <MenubarTrigger>Help</MenubarTrigger>
                             <MenubarContent>
                                 <MenubarItem>
-                                    <BookOpen className="pr-[2px]" />
+                                    <BookOpen className="pr-0.5" />
                                     Usage
                                 </MenubarItem>
                                 <MenubarItem>
-                                    <TriangleAlert className="pr-[2px]" />
+                                    <TriangleAlert className="pr-0.5" />
                                     Report Issue
                                 </MenubarItem>
                             </MenubarContent>
@@ -432,20 +450,20 @@ export default function Host() {
                 <Separator />
 
                 <div className="flex max-h-full w-full flex-grow flex-col justify-start overflow-y-auto">
-                    <ul className="mt-[10px] flex flex-col gap-[5px]">
+                    <ul className="mt-2.5 flex flex-col gap-1.5">
                         {questions.map((q, index) => (
                             <li
                                 key={index}
-                                className="flex h-fit w-full items-center rounded-[10px] border border-[0.5px] p-[10px_20px]"
+                                className="flex h-fit w-full items-center rounded-2.5 border border-[0.5px] p-[10px_20px]"
                             >
-                                <span className="question-number">{index + 1}. </span>
-                                <span className="question-text">
-                                    {q.question.length > 50
-                                        ? `${q.question.slice(0, 50)}...`
+                                <span className="pr-0.5">{index + 1}. </span>
+                                <span>
+                                    {q.question.length > 60
+                                        ? `${q.question.slice(0, 60)}...`
                                         : q.question}
                                 </span>
                                 <span className="question-points">({q.points} pts)</span>
-                                <span className="ml-auto pr-[10px] uppercase opacity-65">
+                                <span className="ml-auto pr-2.5 uppercase opacity-65">
                                     {q.language}
                                 </span>
                                 <DropdownMenu>
@@ -454,14 +472,14 @@ export default function Host() {
                                     </DropdownMenuTrigger>
                                     <DropdownMenuContent>
                                         <DropdownMenuItem>
-                                            <Pen className="pr-[2px]" />
+                                            <Pen className="pr-0.5" />
                                             Edit
                                         </DropdownMenuItem>
                                         <DropdownMenuSeparator />
                                         <DropdownMenuItem
                                             onClick={() => handleRemoveQuestion(q.question)}
                                         >
-                                            <Trash className="pr-[2px]" />
+                                            <Trash className="pr-0.5" />
                                             Delete
                                         </DropdownMenuItem>
                                     </DropdownMenuContent>
