@@ -1,9 +1,7 @@
 'use client';
 import React, { useState, useEffect } from 'react';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
 import { useTheme } from 'next-themes';
+import AddTeamDialog from '@/components/ui/NewTeamDialog';
 import { Separator } from '@/components/ui/separator';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -58,23 +56,27 @@ import {
     Expand,
     TriangleAlert,
     BookOpen,
-    Plus,
     EllipsisVertical,
     CircleEllipsis,
     Trash,
     Pen,
 } from 'lucide-react';
 
-const TeamFormSchema = z.object({
-    name: z.string().trim().min(1, 'Team name cannot be empty!'),
-    password: z.string().trim().min(1, 'Password cannot be empty!'),
-});
-type TeamFormValues = z.infer<typeof TeamFormSchema>;
-
 export default function Host() {
     const { setTheme } = useTheme();
     const [questions, setQuestions] = useState([
         { question: 'Implement a binary search algorithm.', language: 'py', points: '10' },
+        {
+            question:
+                'Develop a simple number guessing game where the computer picks a random number, and the user tries to guess it.',
+            language: 'java',
+            points: '15',
+        },
+        {
+            question: 'Create a basic to-do list app where users can add and remove tasks.',
+            language: 'rs',
+            points: '25',
+        },
     ]);
     const [newQuestionText, setNewQuestionText] = useState('');
     const [newQuestionPoints, setNewQuestionPoints] = useState('');
@@ -90,14 +92,6 @@ export default function Host() {
         { name: 'Team7', password: 'password', points: 125, status: true },
     ]);
     const [errorMessage, setErrorMessage] = useState('');
-
-    const form = useForm<TeamFormValues>({
-        resolver: zodResolver(TeamFormSchema),
-        defaultValues: {
-            name: '',
-            password: '',
-        },
-    });
 
     useEffect(() => {
         setIsServerOn(true);
@@ -119,17 +113,18 @@ export default function Host() {
         setErrorMessage('');
     };
 
-    const handleAddTeam = (data: TeamFormValues) => {
-        if (teamList.some((team) => team.name.toLowerCase() === data.name.toLowerCase())) {
-            setErrorMessage('Team name must be unique!');
-            return;
+    const handleAddTeam = (data: { name: string; password: string }): boolean => {
+        const isUnique = !teamList.some(
+            (team) => team.name.toLowerCase() === data.name.toLowerCase()
+        );
+
+        if (isUnique) {
+            setTeamList((prevTeams) => [
+                ...prevTeams,
+                { name: data.name, password: data.password, points: 0, status: false },
+            ]);
         }
-        setTeamList((prev) => [
-            ...prev,
-            { name: data.name, password: data.password, points: 0, status: false },
-        ]);
-        form.reset();
-        setErrorMessage('');
+        return isUnique;
     };
 
     const disconnectAllTeams = () => {
@@ -164,62 +159,11 @@ export default function Host() {
             <ResizablePanel
                 className="flex flex-col justify-center p-6"
                 defaultSize={20}
-                minSize={20}
+                minSize={25}
                 maxSize={40}
             >
                 <span className="flex h-fit w-full items-center justify-evenly">
-                    <Dialog>
-                        <DialogTrigger>
-                            <Plus />
-                        </DialogTrigger>
-                        <DialogContent>
-                            <DialogHeader>
-                                <DialogTitle>New Team</DialogTitle>
-                                <DialogDescription>
-                                    Enter a name and password for the new team. Remember these as
-                                    the team will need them to connect!
-                                </DialogDescription>
-                            </DialogHeader>
-                            <form
-                                onSubmit={form.handleSubmit(handleAddTeam)}
-                                className="flex flex-col gap-4"
-                            >
-                                <div>
-                                    <Label htmlFor="name">Name</Label>
-                                    <Input
-                                        id="name"
-                                        placeholder="Team Name"
-                                        {...form.register('name')}
-                                    />
-                                    {form.formState.errors.name && (
-                                        <p className="text-red-500">
-                                            {form.formState.errors.name.message}
-                                        </p>
-                                    )}
-                                </div>
-                                <div>
-                                    <Label htmlFor="password">Password</Label>
-                                    <Input
-                                        id="password"
-                                        type="password"
-                                        placeholder="Team Password"
-                                        {...form.register('password')}
-                                    />
-                                    {form.formState.errors.password && (
-                                        <p className="text-red-500">
-                                            {form.formState.errors.password.message}
-                                        </p>
-                                    )}
-                                </div>
-                                {errorMessage && (
-                                    <div className="mt-2 text-red-500">{errorMessage}</div>
-                                )}
-                                <DialogFooter>
-                                    <Button type="submit">Add Team</Button>
-                                </DialogFooter>
-                            </form>
-                        </DialogContent>
-                    </Dialog>
+                    <AddTeamDialog onAddTeam={handleAddTeam} />
                     <p className="px-14 text-[120%] uppercase">Teams</p>
                     <DropdownMenu>
                         <DropdownMenuTrigger>
