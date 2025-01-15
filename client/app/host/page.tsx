@@ -69,7 +69,7 @@ const TeamFormSchema = z.object({
     name: z.string().trim().min(1, 'Team name cannot be empty!'),
     password: z.string().trim().min(1, 'Password cannot be empty!'),
 });
-type TeamFormValues = z.infer<typeof TeamFormSchema>
+type TeamFormValues = z.infer<typeof TeamFormSchema>;
 
 export default function Host() {
     const { setTheme } = useTheme();
@@ -87,7 +87,7 @@ export default function Host() {
         { name: 'Team4', password: 'password', points: 299, status: true },
         { name: 'Team5', password: 'password', points: 0, status: true },
         { name: 'Team6', password: 'password', points: 5, status: false },
-        { name: 'Team7', password: 'password', points: 125, status: true },        
+        { name: 'Team7', password: 'password', points: 125, status: true },
     ]);
     const [errorMessage, setErrorMessage] = useState('');
 
@@ -162,7 +162,7 @@ export default function Host() {
     return (
         <ResizablePanelGroup direction="horizontal" className="flex flex-grow">
             <ResizablePanel
-                className="flex flex-col p-6 justify-center"
+                className="flex flex-col justify-center p-6"
                 defaultSize={20}
                 minSize={20}
                 maxSize={40}
@@ -192,7 +192,9 @@ export default function Host() {
                                         {...form.register('name')}
                                     />
                                     {form.formState.errors.name && (
-                                        <p className="text-red-500">{form.formState.errors.name.message}</p>
+                                        <p className="text-red-500">
+                                            {form.formState.errors.name.message}
+                                        </p>
                                     )}
                                 </div>
                                 <div>
@@ -204,7 +206,9 @@ export default function Host() {
                                         {...form.register('password')}
                                     />
                                     {form.formState.errors.password && (
-                                        <p className="text-red-500">{form.formState.errors.password.message}</p>
+                                        <p className="text-red-500">
+                                            {form.formState.errors.password.message}
+                                        </p>
                                     )}
                                 </div>
                                 {errorMessage && (
@@ -278,9 +282,7 @@ export default function Host() {
                 </div>
                 <Separator className="mt-2" />
                 <div>
-                    <p className="mx-auto my-2.5 text-center text-[18px] uppercase">
-                        Leaderboard
-                    </p>
+                    <p className="mx-auto my-2.5 text-center text-[18px] uppercase">Leaderboard</p>
                     <div className="flex h-96 flex-col gap-2 overflow-y-auto pt-2.5">
                         {[...teamList]
                             .filter((team) => team.status === true)
@@ -454,14 +456,10 @@ export default function Host() {
                         {questions.map((q, index) => (
                             <li
                                 key={index}
-                                className="flex h-fit w-full items-center rounded-2.5 border border-[0.5px] p-[10px_20px]"
+                                className="rounded-2.5 flex h-fit w-full items-center border border-[0.5px] p-[10px_20px]"
                             >
                                 <span className="pr-0.5">{index + 1}. </span>
-                                <span>
-                                    {q.question.length > 60
-                                        ? `${q.question.slice(0, 60)}...`
-                                        : q.question}
-                                </span>
+                                <span className="w-3/4 truncate">{q.question}</span>
                                 <span className="question-points">({q.points} pts)</span>
                                 <span className="ml-auto pr-2.5 uppercase opacity-65">
                                     {q.language}
