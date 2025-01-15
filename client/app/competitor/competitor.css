@@ -1,6 +1,6 @@
 .panel-container {
     display: flex;
-    height: 100vh;
+    height: 95vh;
     width: 100%;
 }
 
@@ -41,4 +41,11 @@
     gap: 1.25vw;
     justify-content: left;
     padding-top: 2.5vh;
+}
+
+
+.testing{
+    display: flex;
+    height: 100%;
+    width: 100%;
 }
