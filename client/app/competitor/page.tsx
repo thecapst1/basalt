@@ -8,23 +8,23 @@ import { Button } from "@/components/ui/button"
 import { PropsWithChildren } from 'react';
 import Nav from '@/components/Nav';
 import { Textarea } from '@/components/ui/textarea';
+import {
+    Accordion,
+    AccordionContent,
+    AccordionItem,
+    AccordionTrigger,
+} from "@/components/ui/accordion"
+import { ScrollArea } from "@/components/ui/scroll-area"
 
-
-var showTestResults: boolean = false;
-
-function Code({ children }: PropsWithChildren) {
+const Code = ({ children }: PropsWithChildren) => {
     return <code className="bg-slate-800 font-mono py-1 px-2 m-1">{children}</code>;
 }
 
 // TODO: need to bring in Question Information from host component as am input for this func
-function getCurrentQuestion() {
+const getCurrentQuestion = () => {
     return (
         <div className='question-title'>
-            <h1>
-                <b>
-                    Question Title
-                </b>
-            </h1>
+            <h1><b>Question Title</b></h1>
             <h1>Sort</h1>
             <div>
                 <p>
@@ -47,7 +47,6 @@ function getCurrentQuestion() {
                     <div>
                         <strong>Explanation</strong>
                         <div>
-
                             The expected output is
                             <Code>0 2 11 15</Code>
                             because
@@ -61,31 +60,63 @@ function getCurrentQuestion() {
 }
 
 // TODO: need to be able to grab info from the text editor and have this func take it as a param
-function runTest() {
+const runTest = () => {
     return (
         <div className="w-full flex flex-col items-center gap-2 mx-4">
-            <Button className="max-w-72 h-12 bg-blue-700 text-white hover:bg-opacity-90 w-full">
+            <Button variant="outline" className="max-w-72 h-12 text-white hover:bg-opacity-90 w-full">
                 <b>Test</b>
             </Button>
-            <Button className="max-w-72 h-12 bg-green-500 text-white hover:bg-opacity-90 w-full">
+            <Button variant="outline" className="max-w-72 h-12 text-white hover:bg-opacity-90 w-full">
                 <b>Submit</b>
             </Button>
         </div>
     )
 }
 
-function testResults() {
+const testResults = () => {
     return (
-        <div>
+        <div className="w-full">
+            <Accordion type="single" collapsible>
 
+                <AccordionItem value="item-1">
+                    <AccordionTrigger className="justify-between items-center px-8">
+                        <h1><b>Test Case 1</b></h1>
+                        <h1 className="flex text-green-500 justify-center items-center"><b>PASS</b></h1>
+                    </AccordionTrigger>
+                    <AccordionContent className="px-8">
+                        <Code>0 2 11 15</Code>
+                    </AccordionContent>
+                </AccordionItem>
+
+                <AccordionItem value="item-2">
+                    <AccordionTrigger className="justify-between items-center px-8">
+                        <h1><b>Test Case 2</b></h1>
+                        <h1 className="flex text-red-700 justify-center items-center"><b>FAIL</b></h1>
+                    </AccordionTrigger>
+                    <AccordionContent className="px-8">
+                        <Code>2 11 15 0</Code>
+                    </AccordionContent>
+                </AccordionItem>
+
+                <AccordionItem value="item-3">
+                    <AccordionTrigger className="justify-between items-center px-8">
+                        <h1><b>Test Case 3</b></h1>
+                        <h1 className="flex text-red-700 justify-center items-center"><b>FAIL</b></h1>
+                    </AccordionTrigger>
+                    <AccordionContent className="px-8">
+                        <Code>2 15 15 0</Code>
+                    </AccordionContent>
+                </AccordionItem>
+
+            </Accordion>
         </div>
     )
 }
 
 export default function Competitor() {
     return (
-        <div>
-            <Nav/>
+        <div className='h-full'>
+            <Nav />
 
             <div className='panel-container'>
                 <ResizablePanelGroup
@@ -107,13 +138,19 @@ export default function Competitor() {
                     <ResizablePanel >
                         <ResizablePanelGroup direction="vertical">
                             <ResizablePanel defaultSize={400} >
-                                <div className='flex h-full overflow-hidden'>
+                                <div className='flex h-full'>
                                     <Textarea />
                                 </div>
                             </ResizablePanel>
-                            <ResizableHandle withHandle />
+                            <ResizableHandle />
                             <ResizablePanel defaultSize={100}>
+                                <ScrollArea className="h-full w-full">
+                                    <div>
+                                        {testResults()}
+                                    </div>
+                                </ScrollArea>
                             </ResizablePanel>
+
                         </ResizablePanelGroup>
                     </ResizablePanel>
                 </ResizablePanelGroup>

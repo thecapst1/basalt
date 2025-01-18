@@ -31,7 +31,7 @@ import {
 
 export default function Nav() {
     return (
-        <div className="min-w-full flex justify-between item-center p-2">
+        <div className="min-w-full flex justify-between item-center p-1.5">
             <Menubar>
                 <MenubarMenu>
                     <MenubarTrigger>File</MenubarTrigger>
@@ -87,12 +87,12 @@ export default function Nav() {
                 </NavigationMenuList>
             </NavigationMenu>
 
-            <div className="min-w-20">
+            <div className="w-35">
                 <Select>
                     <SelectTrigger>
-                        <SelectValue placeholder="Programming Language"/>
+                        <SelectValue placeholder="Programming Language" />
                     </SelectTrigger>
-                    <SelectContent className="min-w-8">
+                    <SelectContent className="min-w-20">
                         <SelectGroup>
                             <SelectLabel>Languages</SelectLabel>
                             <SelectItem value="Python">Python</SelectItem>
@@ -102,6 +102,7 @@ export default function Nav() {
                     </SelectContent>
                 </Select>
             </div>
+
         </div>
     )
 }
