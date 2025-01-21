@@ -1,23 +1,12 @@
 'use client';
 import React, { useState, useEffect } from 'react';
 import { useTheme } from 'next-themes';
-import AddTeamDialog from '@/components/ui/NewTeamDialog';
+import AddTeamDialog from '@/app/host/NewTeamDialog';
 import { Separator } from '@/components/ui/separator';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from '@/components/ui/resizable';
-import {
-    Menubar,
-    MenubarContent,
-    MenubarItem,
-    MenubarMenu,
-    MenubarSeparator,
-    MenubarSub,
-    MenubarSubContent,
-    MenubarSubTrigger,
-    MenubarTrigger,
-} from '@/components/ui/menubar';
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -47,16 +36,12 @@ import {
     SelectValue,
 } from '@/components/ui/select';
 import {
+    Ellipsis,
     Settings,
-    Printer,
     MessageCirclePlus,
-    Import,
     Moon,
     Sun,
-    Expand,
-    TriangleAlert,
-    BookOpen,
-    EllipsisVertical,
+    SunMoon,
     CircleEllipsis,
     Trash,
     Pen,
@@ -155,19 +140,14 @@ export default function Host() {
     };
 
     return (
-        <ResizablePanelGroup direction="horizontal" className="flex flex-grow">
-            <ResizablePanel
-                className="flex flex-col justify-center p-6"
-                defaultSize={20}
-                minSize={25}
-                maxSize={40}
-            >
-                <span className="flex h-fit w-full items-center justify-evenly">
+        <ResizablePanelGroup direction="horizontal" className="flex max-h-screen flex-grow">
+            <ResizablePanel className="flex flex-col justify-center" defaultSize={30} maxSize={50}>
+                <div className="flex h-fit w-full justify-evenly pb-2 pt-4">
                     <AddTeamDialog onAddTeam={handleAddTeam} />
-                    <p className="px-14 text-[120%] uppercase">Teams</p>
+                    <p className="px-14 text-2xl uppercase">Teams</p>
                     <DropdownMenu>
                         <DropdownMenuTrigger>
-                            <EllipsisVertical />
+                            <Ellipsis />
                         </DropdownMenuTrigger>
                         <DropdownMenuContent>
                             <DropdownMenuItem onClick={() => disconnectAllTeams()}>
@@ -175,78 +155,72 @@ export default function Host() {
                             </DropdownMenuItem>
                         </DropdownMenuContent>
                     </DropdownMenu>
-                </span>
-                <Separator className="mt-2" />
-                <div className="flex h-72 flex-col gap-1.5 overflow-y-auto pt-2.5">
-                    {teamList.map((team, index) => (
-                        <span
-                            className={`flex w-full justify-between p-1.5 ${team.status ? 'bg-green-500' : 'bg-gray-500'}`}
-                            key={index}
-                        >
-                            {team.name}
-                            <DropdownMenu>
-                                <DropdownMenuTrigger className="pr-0.5">
-                                    <CircleEllipsis />
-                                </DropdownMenuTrigger>
-                                <DropdownMenuContent>
-                                    {team.status ? (
-                                        <div>
-                                            <DropdownMenuItem>Message</DropdownMenuItem>
-                                            <DropdownMenuSub>
-                                                <DropdownMenuSubTrigger>
-                                                    Edit
-                                                </DropdownMenuSubTrigger>
-                                                <DropdownMenuPortal>
-                                                    <DropdownMenuSubContent>
-                                                        <DropdownMenuItem>Name</DropdownMenuItem>
-                                                        <DropdownMenuItem>Points</DropdownMenuItem>
-                                                    </DropdownMenuSubContent>
-                                                </DropdownMenuPortal>
-                                            </DropdownMenuSub>
-                                            <DropdownMenuSeparator />
-                                            <DropdownMenuItem
-                                                onClick={() => handleDisconnectTeam(team.name)}
-                                            >
-                                                Kick
-                                            </DropdownMenuItem>
-                                        </div>
-                                    ) : (
-                                        <div>
-                                            <DropdownMenuItem
-                                                onClick={() => handleRemoveTeam(team.name)}
-                                            >
-                                                Delete
-                                            </DropdownMenuItem>
-                                        </div>
-                                    )}
-                                </DropdownMenuContent>
-                            </DropdownMenu>
-                        </span>
-                    ))}
                 </div>
                 <Separator className="mt-2" />
-                <div>
-                    <p className="mx-auto my-2.5 text-center text-[18px] uppercase">Leaderboard</p>
-                    <div className="flex h-96 flex-col gap-2 overflow-y-auto pt-2.5">
-                        {[...teamList]
-                            .filter((team) => team.status === true)
-                            .sort((a, b) => b.points - a.points)
-                            .map((team, index) => (
-                                <div
-                                    className="flex w-full justify-between bg-gray-500 p-2 text-black"
-                                    key={index}
-                                >
-                                    <span>{team.name}</span>
-                                    <span className="pr-0.5">{team.points} pts</span>
-                                </div>
-                            ))}
-                    </div>
+                <div className="flex flex-col gap-1.5 overflow-y-auto pt-2.5">
+                    {teamList
+                        .sort((a, b) => b.points - a.points)
+                        .map((team, index) => (
+                            <span
+                                className={`flex w-full justify-between p-1.5 ${team.status ? 'bg-green-500' : 'bg-gray-500'}`}
+                                key={index}
+                            >
+                                <p className="w-1/2 truncate">{team.name}</p>
+                                <p>{team.points} pts</p>
+                                <DropdownMenu>
+                                    <DropdownMenuTrigger className="pr-0.5">
+                                        <CircleEllipsis />
+                                    </DropdownMenuTrigger>
+                                    <DropdownMenuContent>
+                                        {team.status ? (
+                                            <div>
+                                                <DropdownMenuItem>Message</DropdownMenuItem>
+                                                <DropdownMenuSub>
+                                                    <DropdownMenuSubTrigger>
+                                                        Edit
+                                                    </DropdownMenuSubTrigger>
+                                                    <DropdownMenuPortal>
+                                                        <DropdownMenuSubContent>
+                                                            <DropdownMenuItem>
+                                                                Name
+                                                            </DropdownMenuItem>
+                                                            <DropdownMenuItem>
+                                                                Password
+                                                            </DropdownMenuItem>
+                                                            <DropdownMenuItem>
+                                                                Points
+                                                            </DropdownMenuItem>
+                                                        </DropdownMenuSubContent>
+                                                    </DropdownMenuPortal>
+                                                </DropdownMenuSub>
+                                                <DropdownMenuSeparator />
+                                                <DropdownMenuItem
+                                                    onClick={() => handleDisconnectTeam(team.name)}
+                                                >
+                                                    Kick
+                                                </DropdownMenuItem>
+                                            </div>
+                                        ) : (
+                                            <div>
+                                                <DropdownMenuItem
+                                                    onClick={() => handleRemoveTeam(team.name)}
+                                                >
+                                                    Delete
+                                                </DropdownMenuItem>
+                                            </div>
+                                        )}
+                                    </DropdownMenuContent>
+                                </DropdownMenu>
+                            </span>
+                        ))}
                 </div>
-                <div className="mb-[20px] mt-auto flex flex-col items-center justify-center">
+                <Separator className="mt-2" />
+
+                <div className="mb-5 mt-auto flex flex-col items-center justify-center">
                     <Separator className="mt-2" />
-                    <p className="mx-auto my-2.5 text-[18px] uppercase">Server</p>
+                    <p className="mx-auto my-2.5 text-2xl uppercase">Server</p>
                     <Button
-                        className={`h-fit w-fit p-[10px_25px] text-[24px] font-bold lowercase text-black ${isServerOn === null ? 'bg-gray-500' : isServerOn ? 'bg-red-600 hover:bg-red-500' : 'bg-green-600 hover:bg-green-500'}`}
+                        className={`h-fit w-fit px-5 py-3 text-2xl font-bold lowercase text-black ${isServerOn === null ? 'bg-gray-500' : isServerOn ? 'bg-red-600 hover:bg-red-500' : 'bg-green-600 hover:bg-green-500'}`}
                         onClick={handleToggleServer}
                     >
                         {isServerOn === null ? 'loading...' : isServerOn ? 'stop' : 'start'}
@@ -258,9 +232,7 @@ export default function Host() {
 
             <ResizablePanel
                 className="flex h-full min-h-screen w-full flex-col items-center p-6"
-                defaultSize={75}
-                minSize={60}
-                maxSize={80}
+                defaultSize={70}
             >
                 <span className="flex w-full justify-start pb-2.5">
                     <Dialog>
@@ -327,70 +299,26 @@ export default function Host() {
                             </DialogFooter>
                         </DialogContent>
                     </Dialog>
-                    <Menubar>
-                        <MenubarMenu>
-                            <MenubarTrigger>File</MenubarTrigger>
-                            <MenubarContent>
-                                <MenubarItem>
-                                    <Import className="pr-0.5" />
-                                    Import Questions
-                                </MenubarItem>
-                                <MenubarSeparator />
-                                <MenubarSub>
-                                    <MenubarSubTrigger>
-                                        <Printer className="pr-0.5" />
-                                        Print
-                                    </MenubarSubTrigger>
-                                    <MenubarSubContent>
-                                        <MenubarItem>Question Packet</MenubarItem>
-                                        <MenubarItem>Answer Key</MenubarItem>
-                                    </MenubarSubContent>
-                                </MenubarSub>
-                                <MenubarItem>
-                                    <Settings className="pr-0.5" />
-                                    Settings
-                                </MenubarItem>
-                            </MenubarContent>
-                        </MenubarMenu>
-
-                        <MenubarMenu>
-                            <MenubarTrigger>View</MenubarTrigger>
-                            <MenubarContent>
-                                <MenubarItem>
-                                    <Expand className="pr-0.5" />
-                                    Fullscreen
-                                </MenubarItem>
-                                <MenubarSeparator />
-                                <MenubarSub>
-                                    <MenubarSubTrigger>Theme</MenubarSubTrigger>
-                                    <MenubarSubContent>
-                                        <MenubarItem onClick={() => setTheme('light')}>
-                                            <Sun className="pr-0.5" />
-                                            Light
-                                        </MenubarItem>
-                                        <MenubarItem onClick={() => setTheme('dark')}>
-                                            <Moon className="pr-0.5" />
-                                            Dark
-                                        </MenubarItem>
-                                    </MenubarSubContent>
-                                </MenubarSub>
-                            </MenubarContent>
-                        </MenubarMenu>
-
-                        <MenubarMenu>
-                            <MenubarTrigger>Help</MenubarTrigger>
-                            <MenubarContent>
-                                <MenubarItem>
-                                    <BookOpen className="pr-0.5" />
-                                    Usage
-                                </MenubarItem>
-                                <MenubarItem>
-                                    <TriangleAlert className="pr-0.5" />
-                                    Report Issue
-                                </MenubarItem>
-                            </MenubarContent>
-                        </MenubarMenu>
-                    </Menubar>
+                    <div className="ml-auto">
+                        <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                                <Button variant={'outline'}>
+                                    <SunMoon />
+                                    Theme
+                                </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent>
+                                <DropdownMenuItem onClick={() => setTheme('light')}>
+                                    <Sun className="pr-0.5" />
+                                    Light
+                                </DropdownMenuItem>
+                                <DropdownMenuItem onClick={() => setTheme('dark')}>
+                                    <Moon className="pr-0.5" />
+                                    Dark
+                                </DropdownMenuItem>
+                            </DropdownMenuContent>
+                        </DropdownMenu>
+                    </div>
                 </span>
 
                 <Separator />
@@ -400,10 +328,10 @@ export default function Host() {
                         {questions.map((q, index) => (
                             <li
                                 key={index}
-                                className="rounded-2.5 flex h-fit w-full items-center border border-[0.5px] p-[10px_20px]"
+                                className="border-0.5 flex h-fit w-full items-center rounded border px-3 py-2.5"
                             >
                                 <span className="pr-0.5">{index + 1}. </span>
-                                <span className="w-3/4 truncate">{q.question}</span>
+                                <span className="w-2/3 truncate">{q.question}</span>
                                 <span className="question-points">({q.points} pts)</span>
                                 <span className="ml-auto pr-2.5 uppercase opacity-65">
                                     {q.language}

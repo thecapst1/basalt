@@ -18,7 +18,11 @@ import {
 } from '@/components/ui/dialog';
 
 const TeamFormSchema = z.object({
-    name: z.string().trim().min(1, 'Team name cannot be empty!'),
+    name: z
+        .string()
+        .trim()
+        .min(1, 'Team name cannot be empty!')
+        .max(15, 'Team name cannot be more than 15 characters!'),
     password: z.string().trim().min(1, 'Password cannot be empty!'),
 });
 type TeamFormValues = z.infer<typeof TeamFormSchema>;
@@ -27,6 +31,7 @@ interface AddTeamDialogProps {
 }
 
 const AddTeamDialog: React.FC<AddTeamDialogProps> = ({ onAddTeam }) => {
+    const [isOpen, setIsOpen] = useState(false);
     const [errorMessage, setErrorMessage] = useState<string>('');
 
     const form = useForm<TeamFormValues>({
@@ -44,12 +49,13 @@ const AddTeamDialog: React.FC<AddTeamDialogProps> = ({ onAddTeam }) => {
         } else {
             form.reset();
             setErrorMessage('');
+            setIsOpen(false);
         }
     };
 
     return (
-        <Dialog>
-            <DialogTrigger>
+        <Dialog open={isOpen} onOpenChange={setIsOpen}>
+            <DialogTrigger onClick={() => setIsOpen(true)}>
                 <Plus />
             </DialogTrigger>
             <DialogContent>
