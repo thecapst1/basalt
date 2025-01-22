@@ -46,6 +46,12 @@ import {
     Pen,
 } from 'lucide-react';
 
+export enum Status {
+    LOADING = 'loading',
+    START = 'start',
+    STOP = 'stop',
+}
+
 export default function Host() {
     const { setTheme } = useTheme();
     const [questions, setQuestions] = useState([
@@ -65,7 +71,7 @@ export default function Host() {
     const [newQuestionText, setNewQuestionText] = useState('');
     const [newQuestionPoints, setNewQuestionPoints] = useState('');
     const [selectedLanguage, setSelectedLanguage] = useState('');
-    const [isServerOn, setIsServerOn] = useState<boolean | null>(null);
+    const [serverStatus, setServerStatus] = useState<Status>(Status.LOADING);
     const [teamList, setTeamList] = useState([
         { name: 'Team1', password: 'password', points: 300, status: true },
         { name: 'Team2', password: 'password', points: 126, status: true },
@@ -78,7 +84,7 @@ export default function Host() {
     const [errorMessage, setErrorMessage] = useState('');
 
     useEffect(() => {
-        setIsServerOn(true);
+        setServerStatus(Status.STOP);
     }, []);
 
     const handleNewQuestionClick = () => {
@@ -134,14 +140,14 @@ export default function Host() {
     };
 
     const handleToggleServer = () => {
-        setIsServerOn((prev) => (prev === null ? true : !prev));
+        setServerStatus((prev) => (prev === Status.START ? Status.STOP : Status.START));
         disconnectAllTeams();
     };
 
     return (
         <ResizablePanelGroup direction="horizontal" className="flex max-h-screen flex-grow">
             <ResizablePanel className="flex flex-col justify-center" defaultSize={30} maxSize={50}>
-                <div className="flex h-fit w-full justify-evenly pb-2 pt-4">
+                <div className="flex h-fit w-full justify-between pl-3 pr-3 pt-4">
                     <AddTeamDialog onAddTeam={handleAddTeam} />
                     <p className="px-14 text-2xl uppercase">Teams</p>
                     <DropdownMenu>
@@ -213,19 +219,18 @@ export default function Host() {
                             </span>
                         ))}
                 </div>
-                <Separator className="mt-2" />
 
                 <div className="mb-5 mt-auto flex flex-col items-center justify-center">
                     <Separator className="mt-2" />
                     <p className="mx-auto my-2.5 text-2xl uppercase">Server</p>
                     <Button
-                        className={`h-fit w-fit px-5 py-3 text-2xl font-bold lowercase text-black ${isServerOn === null ? 'bg-gray-500' : isServerOn ? 'bg-red-600 hover:bg-red-500' : 'bg-green-600 hover:bg-green-500'}`}
+                        className={`h-fit w-fit px-5 py-3 text-2xl font-bold uppercase text-black ${serverStatus === Status.LOADING ? 'bg-gray-500' : serverStatus === Status.STOP ? 'bg-red-600 hover:bg-red-500' : 'bg-green-600 hover:bg-green-500'}`}
                         onClick={handleToggleServer}
                     >
-                        {isServerOn === null ? 'loading...' : isServerOn ? 'stop' : 'start'}
+                        {serverStatus}
                     </Button>
                     <p
-                        className={`mt-1 text-xl ${isServerOn === null || !isServerOn ? 'text-gray-400' : 'text-green-500'}`}
+                        className={`mt-1 text-xl ${serverStatus === Status.LOADING || serverStatus === Status.START ? 'text-gray-400' : 'text-green-500'}`}
                     >
                         00:00:00
                     </p>
