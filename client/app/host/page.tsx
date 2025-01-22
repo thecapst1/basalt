@@ -2,9 +2,8 @@
 import React, { useState, useEffect } from 'react';
 import { useTheme } from 'next-themes';
 import AddTeamDialog from '@/app/host/NewTeamDialog';
+import AddQuestionDialog from './NewQuestionDialog';
 import { Separator } from '@/components/ui/separator';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from '@/components/ui/resizable';
 import {
@@ -18,39 +17,7 @@ import {
     DropdownMenuSubTrigger,
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import {
-    Dialog,
-    DialogContent,
-    DialogDescription,
-    DialogFooter,
-    DialogHeader,
-    DialogTitle,
-    DialogTrigger,
-} from '@/components/ui/dialog';
-import {
-    Select,
-    SelectContent,
-    SelectGroup,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-} from '@/components/ui/select';
-import {
-    Ellipsis,
-    Settings,
-    MessageCirclePlus,
-    Moon,
-    Sun,
-    SunMoon,
-    Trash,
-    Pen,
-} from 'lucide-react';
-
-export enum Status {
-    LOADING = 'loading',
-    START = 'start',
-    STOP = 'stop',
-}
+import { Ellipsis, Settings, Moon, Sun, SunMoon, Trash, Pen } from 'lucide-react';
 
 export default function Host() {
     const { setTheme } = useTheme();
@@ -68,10 +35,7 @@ export default function Host() {
             points: '25',
         },
     ]);
-    const [newQuestionText, setNewQuestionText] = useState('');
-    const [newQuestionPoints, setNewQuestionPoints] = useState('');
-    const [selectedLanguage, setSelectedLanguage] = useState('');
-    const [serverStatus, setServerStatus] = useState<Status>(Status.LOADING);
+    const [serverStatus, setServerStatus] = useState<'loading' | 'stop' | 'start'>('loading');
     const [teamList, setTeamList] = useState([
         { name: 'Team1', password: 'password', points: 300, status: true },
         { name: 'Team2', password: 'password', points: 126, status: true },
@@ -81,26 +45,36 @@ export default function Host() {
         { name: 'Team6', password: 'password', points: 5, status: false },
         { name: 'Team7', password: 'password', points: 125, status: true },
     ]);
-    const [errorMessage, setErrorMessage] = useState('');
 
     useEffect(() => {
-        setServerStatus(Status.STOP);
+        setServerStatus('stop');
     }, []);
 
-    const handleNewQuestionClick = () => {
-        if (!newQuestionText || !newQuestionPoints || !selectedLanguage) {
-            setErrorMessage('Please Fill In All Fields');
-            return;
-        }
+    const handleNewQuestionClick = (data: {
+        question: string;
+        points: string;
+        language: string;
+    }) => {
+        setQuestions((prevQuestions) => {
+            const isDuplicate = prevQuestions.some(
+                (q) =>
+                    q.question.toLowerCase() === data.question.toLowerCase() &&
+                    q.language.toLowerCase() === data.language.toLowerCase()
+            );
+            if (isDuplicate) {
+                return prevQuestions;
+            }
+            return [
+                ...prevQuestions,
+                { question: data.question, language: data.language, points: data.points },
+            ];
+        });
 
-        setQuestions((prevQuestions) => [
-            ...prevQuestions,
-            { question: newQuestionText, language: selectedLanguage, points: newQuestionPoints },
-        ]);
-        setNewQuestionText('');
-        setNewQuestionPoints('');
-        setSelectedLanguage('');
-        setErrorMessage('');
+        return !questions.some(
+            (q) =>
+                q.question.toLowerCase() === data.question.toLowerCase() &&
+                q.language.toLowerCase() === data.language.toLowerCase()
+        );
     };
 
     const handleAddTeam = (data: { name: string; password: string }): boolean => {
@@ -140,7 +114,7 @@ export default function Host() {
     };
 
     const handleToggleServer = () => {
-        setServerStatus((prev) => (prev === Status.START ? Status.STOP : Status.START));
+        setServerStatus((prev) => (prev === 'start' ? 'stop' : 'start'));
         disconnectAllTeams();
     };
 
@@ -224,13 +198,13 @@ export default function Host() {
                     <Separator className="mt-2" />
                     <p className="mx-auto my-2.5 text-2xl uppercase">Server</p>
                     <Button
-                        className={`h-fit w-fit px-5 py-3 text-2xl font-bold uppercase text-black ${serverStatus === Status.LOADING ? 'bg-gray-500' : serverStatus === Status.STOP ? 'bg-red-600 hover:bg-red-500' : 'bg-green-600 hover:bg-green-500'}`}
+                        className={`h-fit w-fit px-5 py-3 text-2xl font-bold uppercase text-black ${serverStatus === 'loading' ? 'bg-gray-500' : serverStatus === 'stop' ? 'bg-red-600 hover:bg-red-500' : 'bg-green-600 hover:bg-green-500'}`}
                         onClick={handleToggleServer}
                     >
                         {serverStatus}
                     </Button>
                     <p
-                        className={`mt-1 text-xl ${serverStatus === Status.LOADING || serverStatus === Status.START ? 'text-gray-400' : 'text-green-500'}`}
+                        className={`mt-1 text-xl ${serverStatus === 'loading' || serverStatus === 'start' ? 'text-gray-400' : 'text-green-500'}`}
                     >
                         00:00:00
                     </p>
@@ -244,70 +218,7 @@ export default function Host() {
                 defaultSize={70}
             >
                 <span className="flex w-full justify-start pb-2.5">
-                    <Dialog>
-                        <DialogTrigger className="flex items-center" asChild>
-                            <Button variant={'outline'} className="mr-1.5">
-                                <MessageCirclePlus className="pr-0.5" />
-                                Add Question
-                            </Button>
-                        </DialogTrigger>
-                        <DialogContent>
-                            <DialogHeader>
-                                <DialogTitle>New Question</DialogTitle>
-                                <DialogDescription>
-                                    Please enter all the required information for your question
-                                    below.
-                                </DialogDescription>
-                                {errorMessage && <p className="text-red-500">{errorMessage}</p>}
-                            </DialogHeader>
-                            <div>
-                                <Label htmlFor="question">Question</Label>
-                                <Input
-                                    type="text"
-                                    id="question"
-                                    placeholder="Enter your question"
-                                    value={newQuestionText}
-                                    onChange={(e) => setNewQuestionText(e.target.value)}
-                                />
-                                <Label htmlFor="points">Points</Label>
-                                <Input
-                                    type="number"
-                                    id="points"
-                                    placeholder="Enter points"
-                                    value={newQuestionPoints}
-                                    onChange={(e) => setNewQuestionPoints(e.target.value)}
-                                />
-                                <Select
-                                    value={selectedLanguage}
-                                    onValueChange={(value) => setSelectedLanguage(value)}
-                                >
-                                    <SelectTrigger className="mr-1.5 mt-2 w-44">
-                                        <SelectValue placeholder="Select a langauge ..." />
-                                        <SelectContent>
-                                            <SelectGroup>
-                                                <SelectItem value="rs">Rust</SelectItem>
-                                                <SelectItem value="py">Python</SelectItem>
-                                                <SelectItem value="java">Java</SelectItem>
-                                                <SelectItem value="js">JavaScript</SelectItem>
-                                            </SelectGroup>
-                                        </SelectContent>
-                                    </SelectTrigger>
-                                </Select>
-                            </div>
-                            <DialogFooter>
-                                <Button
-                                    type="submit"
-                                    onClick={() => {
-                                        handleNewQuestionClick();
-                                        setNewQuestionText('');
-                                        setNewQuestionPoints('');
-                                    }}
-                                >
-                                    Add Question
-                                </Button>
-                            </DialogFooter>
-                        </DialogContent>
-                    </Dialog>
+                    <AddQuestionDialog onAddQuestion={handleNewQuestionClick} />
                     <div className="ml-auto">
                         <DropdownMenu>
                             <DropdownMenuTrigger asChild>
