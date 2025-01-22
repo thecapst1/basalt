@@ -42,7 +42,6 @@ import {
     Moon,
     Sun,
     SunMoon,
-    CircleEllipsis,
     Trash,
     Pen,
 } from 'lucide-react';
@@ -169,7 +168,7 @@ export default function Host() {
                                 <p>{team.points} pts</p>
                                 <DropdownMenu>
                                     <DropdownMenuTrigger className="pr-0.5">
-                                        <CircleEllipsis />
+                                        <Ellipsis />
                                     </DropdownMenuTrigger>
                                     <DropdownMenuContent>
                                         {team.status ? (
@@ -225,6 +224,11 @@ export default function Host() {
                     >
                         {isServerOn === null ? 'loading...' : isServerOn ? 'stop' : 'start'}
                     </Button>
+                    <p
+                        className={`mt-1 text-xl ${isServerOn === null || !isServerOn ? 'text-gray-400' : 'text-green-500'}`}
+                    >
+                        00:00:00
+                    </p>
                 </div>
             </ResizablePanel>
 
