@@ -12,11 +12,11 @@ import {
 import { ScrollArea } from '@/components/ui/scroll-area';
 
 const Code = ({ children }: PropsWithChildren) => {
-    return <code className="m-1 bg-slate-800 px-2 py-1 font-mono">{children}</code>;
+    return <code className="m-1 bg-slate-800 px-2 py-1 font-mono rounded-sm">{children}</code>;
 };
 
 // TODO: need to bring in Question Information from host component as am input for this func
-const getCurrentQuestion = () => {
+const GetCurrentQuestion = () => {
     return (
         <div className="flex flex-col items-center justify-center gap-[2vh]">
             <h1>
@@ -29,19 +29,23 @@ const getCurrentQuestion = () => {
                 <div className="flex flex-col gap-2">
                     <div>
                         <strong>Input</strong>
-                        <pre className="bg-slate-800 px-4 py-2 font-mono">2 11 15 0</pre>
+                        <pre className="bg-slate-800 px-4 py-2 font-mono rounded-sm">2 11 15 0</pre>
                     </div>
                     <div>
                         <strong>Output</strong>
-                        <pre className="bg-slate-800 px-4 py-2 font-mono">0 2 11 15</pre>
+                        <pre className="bg-slate-800 px-4 py-2 font-mono rounded-sm">0 2 11 15</pre>
                     </div>
                     <div>
                         <strong>Explanation</strong>
                         <div>
                             The expected output is
-                            <Code>0 2 11 15</Code>
+                            <p className='whitespace-nowrap'>
+                                <Code>0 2 11 15</Code>
+                            </p>
                             because
-                            <Code>0 &lt; 2 &lt; 11 &lt; 15</Code>
+                            <p className='whitespace-nowrap'>
+                                <Code>0 &lt; 2 &lt; 11 &lt; 15</Code>
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -51,7 +55,7 @@ const getCurrentQuestion = () => {
 };
 
 // TODO: need to be able to grab info from the text editor and have this func take it as a param
-const runTest = () => {
+const RunTest = () => {
     return (
         <div className="mx-4 flex w-full flex-col items-center gap-2">
             <Button
@@ -70,7 +74,7 @@ const runTest = () => {
     );
 };
 
-const testResults = () => {
+const TestResults = () => {
     return (
         <div className="w-full">
             <Accordion type="single" collapsible>
@@ -83,9 +87,16 @@ const testResults = () => {
                             <b>PASS</b>
                         </h1>
                     </AccordionTrigger>
-                    <AccordionContent className="px-8">
-                        <Code>0 2 11 15</Code>
+                    <AccordionContent className="flex flex-row justify-between px-8">
+                        <div className="items-center ">
+                            <Code>0 2 11 15</Code>
+                        </div>
+                        <div className="items-center h-full">
+                            <b>Expected Results:</b>
+                            <Code>0 2 11 15</Code>
+                        </div>
                     </AccordionContent>
+
                 </AccordionItem>
 
                 <AccordionItem value="item-2">
@@ -97,8 +108,14 @@ const testResults = () => {
                             <b>FAIL</b>
                         </h1>
                     </AccordionTrigger>
-                    <AccordionContent className="px-8">
-                        <Code>2 11 15 0</Code>
+                    <AccordionContent className="flex flex-row justify-between px-8">
+                        <div className="items-center h-full">
+                            <Code>2 11 15 0</Code>
+                        </div>
+                        <div className="items-center h-full">
+                            <b>Expected Results:</b>
+                            <Code>0 2 11 15</Code>
+                        </div>
                     </AccordionContent>
                 </AccordionItem>
 
@@ -111,8 +128,14 @@ const testResults = () => {
                             <b>FAIL</b>
                         </h1>
                     </AccordionTrigger>
-                    <AccordionContent className="px-8">
-                        <Code>2 15 15 0</Code>
+                    <AccordionContent className="flex flex-row justify-between px-8">
+                        <div className="items-center h-full">
+                            <Code>2 15 15 0</Code>
+                        </div>
+                        <div className="items-center h-full">
+                            <b>Expected Results:</b>
+                            <Code>0 2 11 15</Code>
+                        </div>
                     </AccordionContent>
                 </AccordionItem>
             </Accordion>
@@ -131,10 +154,10 @@ export default function Competitor() {
                         <ResizablePanelGroup direction="vertical">
                             <div className="flex h-full flex-col justify-between py-8">
                                 <div className="box-border flex flex-col p-4">
-                                    {getCurrentQuestion()}
+                                    <GetCurrentQuestion />
                                 </div>
                                 <div className="flex w-full flex-row justify-center">
-                                    {runTest()}
+                                    <RunTest />
                                 </div>
                             </div>
                         </ResizablePanelGroup>
@@ -150,7 +173,9 @@ export default function Competitor() {
                             <ResizableHandle />
                             <ResizablePanel defaultSize={100}>
                                 <ScrollArea className="h-full w-full">
-                                    <div>{testResults()}</div>
+                                    <div>
+                                        <TestResults />
+                                    </div>
                                 </ScrollArea>
                             </ResizablePanel>
                         </ResizablePanelGroup>
