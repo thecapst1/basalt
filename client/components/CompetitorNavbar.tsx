@@ -1,9 +1,8 @@
-
 import {
     NavigationMenu,
     NavigationMenuItem,
     NavigationMenuList,
-} from "@/components/ui/navigation-menu"
+} from '@/components/ui/navigation-menu';
 import {
     Select,
     SelectContent,
@@ -12,7 +11,7 @@ import {
     SelectLabel,
     SelectTrigger,
     SelectValue,
-} from "@/components/ui/select"
+} from '@/components/ui/select';
 import {
     Menubar,
     MenubarContent,
@@ -22,34 +21,24 @@ import {
     MenubarRadioItem,
     MenubarSeparator,
     MenubarTrigger,
-} from "@/components/ui/menubar"
-import {
-    Tabs,
-    TabsList,
-    TabsTrigger
-} from "@/components/ui/tabs"
+} from '@/components/ui/menubar';
+import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 export default function CompetitorNavbar() {
     return (
-        <div className="min-w-full flex justify-between item-center p-1.5">
+        <div className="item-center flex min-w-full justify-between p-1.5">
             <Menubar>
                 <MenubarMenu>
                     <MenubarTrigger>File</MenubarTrigger>
                     <MenubarContent>
-                        <MenubarItem>
-                            Import File
-                        </MenubarItem>
+                        <MenubarItem>Import File</MenubarItem>
                     </MenubarContent>
                 </MenubarMenu>
                 <MenubarMenu>
                     <MenubarTrigger>Edit</MenubarTrigger>
                     <MenubarContent>
-                        <MenubarItem>
-                            Undo
-                        </MenubarItem>
-                        <MenubarItem>
-                            Redo
-                        </MenubarItem>
+                        <MenubarItem>Undo</MenubarItem>
+                        <MenubarItem>Redo</MenubarItem>
                         <MenubarItem>Cut</MenubarItem>
                         <MenubarItem>Copy</MenubarItem>
                         <MenubarItem>Paste</MenubarItem>
@@ -74,16 +63,14 @@ export default function CompetitorNavbar() {
 
             <NavigationMenu>
                 <NavigationMenuList>
-
                     <NavigationMenuItem>
                         <Tabs>
                             <TabsList>
-                                <TabsTrigger value='Text Editor'>Text Editor</TabsTrigger>
-                                <TabsTrigger value='Leaderboard'>Leaderboard</TabsTrigger>
+                                <TabsTrigger value="Text Editor">Text Editor</TabsTrigger>
+                                <TabsTrigger value="Leaderboard">Leaderboard</TabsTrigger>
                             </TabsList>
                         </Tabs>
                     </NavigationMenuItem>
-
                 </NavigationMenuList>
             </NavigationMenu>
 
@@ -102,7 +89,6 @@ export default function CompetitorNavbar() {
                     </SelectContent>
                 </Select>
             </div>
-
         </div>
-    )
+    );
 }
