@@ -121,9 +121,9 @@ export default function Host() {
     return (
         <ResizablePanelGroup direction="horizontal" className="flex max-h-screen flex-grow">
             <ResizablePanel className="flex flex-col justify-center" defaultSize={30} maxSize={50}>
-                <div className="flex h-fit w-full justify-between pl-3 pr-3 pt-4">
+                <div className="flex h-fit justify-between pl-3 pr-3 pt-4">
                     <AddTeamDialog onAddTeam={handleAddTeam} />
-                    <p className="px-14 text-2xl uppercase">Teams</p>
+                    <p className="text-2xl uppercase">Teams</p>
                     <DropdownMenu>
                         <DropdownMenuTrigger>
                             <Ellipsis />
@@ -136,12 +136,12 @@ export default function Host() {
                     </DropdownMenu>
                 </div>
                 <Separator className="mt-2" />
-                <div className="flex flex-col gap-1.5 overflow-y-auto pt-2.5">
+                <div className="flex flex-col gap-1.5 overflow-y-auto p-2.5">
                     {teamList
                         .sort((a, b) => b.points - a.points)
                         .map((team, index) => (
                             <span
-                                className={`flex w-full justify-between p-1.5 ${team.status ? 'bg-green-500' : 'bg-gray-500'}`}
+                                className={`flex w-full justify-between p-1.5 ${team.status ? 'bg-green-500' : 'bg-gray-300 dark:bg-gray-500'}`}
                                 key={index}
                             >
                                 <p className="w-1/2 truncate">{team.name}</p>
