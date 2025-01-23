@@ -1,4 +1,3 @@
-import './competitor.css';
 import {
     ResizableHandle,
     ResizablePanel,
@@ -6,7 +5,7 @@ import {
 } from "@/components/ui/resizable";
 import { Button } from "@/components/ui/button"
 import { PropsWithChildren } from 'react';
-import Nav from '@/components/Nav';
+import CompetitorNavbar from "@/components/CompetitorNavbar";
 import { Textarea } from '@/components/ui/textarea';
 import {
     Accordion,
@@ -23,7 +22,7 @@ const Code = ({ children }: PropsWithChildren) => {
 // TODO: need to bring in Question Information from host component as am input for this func
 const getCurrentQuestion = () => {
     return (
-        <div className='question-title'>
+        <div className='flex flex-col gap-[2vh] items-center justify-center'>
             <h1><b>Question Title</b></h1>
             <h1>Sort</h1>
             <div>
@@ -116,16 +115,16 @@ const testResults = () => {
 export default function Competitor() {
     return (
         <div className='h-full'>
-            <Nav />
+            <CompetitorNavbar />
 
-            <div className='panel-container'>
+            <div className='flex h-[95vh] w-full'>
                 <ResizablePanelGroup
                     direction="horizontal"
                 >
                     <ResizablePanel defaultSize={15}>
                         <ResizablePanelGroup direction="vertical">
                             <div className="flex flex-col justify-between h-full py-8">
-                                <div className="side-panel">
+                                <div className="flex flex-col p-4 box-border">
                                     {getCurrentQuestion()}
                                 </div>
                                 <div className="w-full flex flex-row justify-center">

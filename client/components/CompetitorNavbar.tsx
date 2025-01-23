@@ -29,7 +29,7 @@ import {
     TabsTrigger
 } from "@/components/ui/tabs"
 
-export default function Nav() {
+export default function CompetitorNavbar() {
     return (
         <div className="min-w-full flex justify-between item-center p-1.5">
             <Menubar>
@@ -87,7 +87,7 @@ export default function Nav() {
                 </NavigationMenuList>
             </NavigationMenu>
 
-            <div className="w-35">
+            <div className="min-w-[10vw]">
                 <Select>
                     <SelectTrigger>
                         <SelectValue placeholder="Programming Language" />
