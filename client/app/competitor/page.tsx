@@ -12,7 +12,7 @@ import {
 import { ScrollArea } from '@/components/ui/scroll-area';
 
 const Code = ({ children }: PropsWithChildren) => {
-    return <code className="m-1 bg-slate-800 px-2 py-1 font-mono rounded-sm">{children}</code>;
+    return <code className="m-1 rounded-sm bg-slate-800 px-2 py-1 font-mono">{children}</code>;
 };
 
 // TODO: need to bring in Question Information from host component as am input for this func
@@ -29,21 +29,21 @@ const GetCurrentQuestion = () => {
                 <div className="flex flex-col gap-2">
                     <div>
                         <strong>Input</strong>
-                        <pre className="bg-slate-800 px-4 py-2 font-mono rounded-sm">2 11 15 0</pre>
+                        <pre className="rounded-sm bg-slate-800 px-4 py-2 font-mono">2 11 15 0</pre>
                     </div>
                     <div>
                         <strong>Output</strong>
-                        <pre className="bg-slate-800 px-4 py-2 font-mono rounded-sm">0 2 11 15</pre>
+                        <pre className="rounded-sm bg-slate-800 px-4 py-2 font-mono">0 2 11 15</pre>
                     </div>
                     <div>
                         <strong>Explanation</strong>
                         <div>
                             The expected output is
-                            <p className='whitespace-nowrap'>
+                            <p className="whitespace-nowrap">
                                 <Code>0 2 11 15</Code>
                             </p>
                             because
-                            <p className='whitespace-nowrap'>
+                            <p className="whitespace-nowrap">
                                 <Code>0 &lt; 2 &lt; 11 &lt; 15</Code>
                             </p>
                         </div>
@@ -88,15 +88,14 @@ const TestResults = () => {
                         </h1>
                     </AccordionTrigger>
                     <AccordionContent className="flex flex-row justify-between px-8">
-                        <div className="items-center ">
+                        <div className="items-center">
                             <Code>0 2 11 15</Code>
                         </div>
-                        <div className="items-center h-full">
+                        <div className="h-full items-center">
                             <b>Expected Results:</b>
                             <Code>0 2 11 15</Code>
                         </div>
                     </AccordionContent>
-
                 </AccordionItem>
 
                 <AccordionItem value="item-2">
@@ -109,10 +108,10 @@ const TestResults = () => {
                         </h1>
                     </AccordionTrigger>
                     <AccordionContent className="flex flex-row justify-between px-8">
-                        <div className="items-center h-full">
+                        <div className="h-full items-center">
                             <Code>2 11 15 0</Code>
                         </div>
-                        <div className="items-center h-full">
+                        <div className="h-full items-center">
                             <b>Expected Results:</b>
                             <Code>0 2 11 15</Code>
                         </div>
@@ -129,10 +128,10 @@ const TestResults = () => {
                         </h1>
                     </AccordionTrigger>
                     <AccordionContent className="flex flex-row justify-between px-8">
-                        <div className="items-center h-full">
+                        <div className="h-full items-center">
                             <Code>2 15 15 0</Code>
                         </div>
-                        <div className="items-center h-full">
+                        <div className="h-full items-center">
                             <b>Expected Results:</b>
                             <Code>0 2 11 15</Code>
                         </div>
