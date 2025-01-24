@@ -12,7 +12,7 @@ import {
 import { ScrollArea } from '@/components/ui/scroll-area';
 
 const Code = ({ children }: PropsWithChildren) => {
-    return <code className="m-1 rounded-sm bg-slate-800 px-2 py-1 font-mono ">{children}</code>;
+    return <code className="m-1 rounded-sm bg-slate-800 px-2 py-1 font-mono">{children}</code>;
 };
 
 // TODO: need to bring in Question Information from host component as am input for this func
@@ -29,11 +29,15 @@ const GetCurrentQuestion = () => {
                 <div className="flex flex-col gap-2">
                     <div>
                         <strong>Input</strong>
-                        <pre className="rounded-sm bg-slate-800 px-4 py-2 font-mono text-white">2 11 15 0</pre>
+                        <pre className="rounded-sm bg-slate-800 px-4 py-2 font-mono text-white">
+                            2 11 15 0
+                        </pre>
                     </div>
                     <div>
                         <strong>Output</strong>
-                        <pre className="rounded-sm bg-slate-800 px-4 py-2 font-mono text-white">0 2 11 15</pre>
+                        <pre className="rounded-sm bg-slate-800 px-4 py-2 font-mono text-white">
+                            0 2 11 15
+                        </pre>
                     </div>
                     <div>
                         <strong>Explanation</strong>
@@ -58,16 +62,10 @@ const GetCurrentQuestion = () => {
 const RunTest = () => {
     return (
         <div className="mx-4 flex w-full flex-col items-center gap-2">
-            <Button
-                variant="outline"
-                className="h-12 w-full max-w-72"
-            >
+            <Button variant="outline" className="h-12 w-full max-w-72">
                 <b>Test</b>
             </Button>
-            <Button
-                variant="outline"
-                className="h-12 w-full max-w-72 "
-            >
+            <Button variant="outline" className="h-12 w-full max-w-72">
                 <b>Submit</b>
             </Button>
         </div>
@@ -88,21 +86,21 @@ const TestResults = () => {
                         </h1>
                     </AccordionTrigger>
                     <AccordionContent className="flex flex-row gap-[10vw] px-8">
-                        <div className="h-full items-center flex flex-col">
+                        <div className="flex h-full flex-col items-center">
                             <b>Your Input</b>
-                            <span className='text-white'>
+                            <span className="text-white">
                                 <Code>2 15 15 0</Code>
                             </span>
                         </div>
-                        <div className="h-full items-center flex flex-col">
+                        <div className="flex h-full flex-col items-center">
                             <b>Your Output:</b>
-                            <span className='text-white'>
+                            <span className="text-white">
                                 <Code>0 2 11 15</Code>
                             </span>
                         </div>
-                        <div className="h-full items-center flex flex-col">
+                        <div className="flex h-full flex-col items-center">
                             <b>Expected Output:</b>
-                            <span className='text-white'>
+                            <span className="text-white">
                                 <Code>0 2 11 15</Code>
                             </span>
                         </div>
@@ -119,21 +117,21 @@ const TestResults = () => {
                         </h1>
                     </AccordionTrigger>
                     <AccordionContent className="flex flex-row gap-[10vw] px-8">
-                        <div className="h-full items-center flex flex-col">
+                        <div className="flex h-full flex-col items-center">
                             <b>Your Input</b>
-                            <span className='text-white'>
+                            <span className="text-white">
                                 <Code>2 15 15 0</Code>
                             </span>
                         </div>
-                        <div className="h-full items-center flex flex-col">
+                        <div className="flex h-full flex-col items-center">
                             <b>Your Output:</b>
-                            <span className='text-white'>
+                            <span className="text-white">
                                 <Code>0 7 9 9</Code>
                             </span>
                         </div>
-                        <div className="h-full items-center flex flex-col">
+                        <div className="flex h-full flex-col items-center">
                             <b>Expected Output:</b>
-                            <span className='text-white'>
+                            <span className="text-white">
                                 <Code>0 2 11 15</Code>
                             </span>
                         </div>
@@ -150,21 +148,21 @@ const TestResults = () => {
                         </h1>
                     </AccordionTrigger>
                     <AccordionContent className="flex flex-row gap-[10vw] px-8">
-                        <div className="h-full items-center flex flex-col">
+                        <div className="flex h-full flex-col items-center">
                             <b>Your Input</b>
-                            <span className='text-white'>
+                            <span className="text-white">
                                 <Code>2 15 15 0</Code>
                             </span>
                         </div>
-                        <div className="h-full items-center flex flex-col">
+                        <div className="flex h-full flex-col items-center">
                             <b>Your Output:</b>
-                            <span className='text-white'>
+                            <span className="text-white">
                                 <Code>0 2 15 11</Code>
                             </span>
                         </div>
-                        <div className="h-full items-center flex flex-col">
+                        <div className="flex h-full flex-col items-center">
                             <b>Expected Output:</b>
-                            <span className='text-white'>
+                            <span className="text-white">
                                 <Code>0 2 11 15</Code>
                             </span>
                         </div>
@@ -182,8 +180,11 @@ export default function Competitor() {
 
             <div className="flex h-[95vh] w-full">
                 <ResizablePanelGroup direction="horizontal">
-
-                    <ResizablePanel defaultSize={20} maxSize={25} className=" border-t border-gray-300">
+                    <ResizablePanel
+                        defaultSize={20}
+                        maxSize={25}
+                        className="border-t border-gray-300"
+                    >
                         <ResizablePanelGroup direction="vertical">
                             <div className="flex h-full flex-col justify-between py-8">
                                 <div className="box-border flex flex-col p-4">
