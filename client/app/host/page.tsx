@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { useTheme } from 'next-themes';
 import AddTeamDialog from '@/app/host/NewTeamDialog';
 import AddQuestionDialog from './NewQuestionDialog';
+import QuestionAccordion from './QuestionAccordion';
 import { Separator } from '@/components/ui/separator';
 import { Button } from '@/components/ui/button';
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from '@/components/ui/resizable';
@@ -17,7 +18,7 @@ import {
     DropdownMenuSubTrigger,
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { Ellipsis, Settings, Moon, Sun, SunMoon, Trash, Pen } from 'lucide-react';
+import { Ellipsis, Moon, Sun, SunMoon } from 'lucide-react';
 
 export default function Host() {
     const { setTheme } = useTheme();
@@ -50,11 +51,7 @@ export default function Host() {
         setServerStatus('stop');
     }, []);
 
-    const handleNewQuestionClick = (data: {
-        question: string;
-        points: string;
-        language: string;
-    }) => {
+    const handleAddQuestion = (data: { question: string; points: string; language: string }) => {
         setQuestions((prevQuestions) => {
             const isDuplicate = prevQuestions.some(
                 (q) =>
@@ -109,8 +106,10 @@ export default function Host() {
         setTeamList((prev) => prev.filter((team) => team.name !== teamName));
     };
 
-    const handleRemoveQuestion = (q: string) => {
-        setQuestions((prev) => prev.filter((question) => question.question !== q));
+    const handleRemoveQuestion = (questionToRemove: string) => {
+        setQuestions((prevQuestions) =>
+            prevQuestions.filter((q) => q.question !== questionToRemove)
+        );
     };
 
     const handleToggleServer = () => {
@@ -218,7 +217,7 @@ export default function Host() {
                 defaultSize={70}
             >
                 <span className="flex w-full justify-start pb-2.5">
-                    <AddQuestionDialog onAddQuestion={handleNewQuestionClick} />
+                    <AddQuestionDialog onAddQuestion={handleAddQuestion} />
                     <div className="ml-auto">
                         <DropdownMenu>
                             <DropdownMenuTrigger asChild>
@@ -244,38 +243,11 @@ export default function Host() {
                 <Separator />
 
                 <div className="flex max-h-full w-full flex-grow flex-col justify-start overflow-y-auto">
-                    <ul className="mt-2.5 flex flex-col gap-1.5">
-                        {questions.map((q, index) => (
-                            <li
-                                key={index}
-                                className="border-0.5 flex h-fit w-full items-center rounded border px-3 py-2.5"
-                            >
-                                <span className="pr-0.5">{index + 1}. </span>
-                                <span className="w-2/3 truncate">{q.question}</span>
-                                <span className="question-points">({q.points} pts)</span>
-                                <span className="ml-auto pr-2.5 uppercase opacity-65">
-                                    {q.language}
-                                </span>
-                                <DropdownMenu>
-                                    <DropdownMenuTrigger>
-                                        <Settings />
-                                    </DropdownMenuTrigger>
-                                    <DropdownMenuContent>
-                                        <DropdownMenuItem>
-                                            <Pen className="pr-0.5" />
-                                            Edit
-                                        </DropdownMenuItem>
-                                        <DropdownMenuSeparator />
-                                        <DropdownMenuItem
-                                            onClick={() => handleRemoveQuestion(q.question)}
-                                        >
-                                            <Trash className="pr-0.5" />
-                                            Delete
-                                        </DropdownMenuItem>
-                                    </DropdownMenuContent>
-                                </DropdownMenu>
-                            </li>
-                        ))}
+                    <ul className="mt-2.5 flex flex-col">
+                        <QuestionAccordion
+                            questions={questions}
+                            onRemoveQuestion={handleRemoveQuestion}
+                        />
                     </ul>
                 </div>
             </ResizablePanel>
