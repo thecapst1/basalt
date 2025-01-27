@@ -11,9 +11,13 @@ import {
 } from '@/components/ui/accordion';
 import { ScrollArea } from '@/components/ui/scroll-area';
 
-const Code = ({ children }: PropsWithChildren) => <p>
-    <code className="m-1 rounded-sm bg-slate-800 px-2 py-1/2 font-mono text-white">{children}</code>
-</p>;
+const Code = ({ children }: PropsWithChildren) => (
+    <p>
+        <code className="py-1/2 m-1 rounded-sm bg-slate-800 px-2 font-mono text-white">
+            {children}
+        </code>
+    </p>
+);
 
 // TODO: need to bring in Question Information from host component as am input for this func
 const GetCurrentQuestion = () => {
@@ -82,37 +86,44 @@ const TestResults = () => {
                         </h1>
                     </AccordionTrigger>
                     <AccordionContent className="flex flex-row gap-4 px-8">
-                        <div className="flex h-full flex-col flex-grow gap-2">
+                        <div className="flex h-full flex-grow flex-col gap-2">
                             <b>Input</b>
-                            <pre className="rounded-sm bg-slate-800 px-4 py-2 font-mono text-white w-full">
+                            <pre className="w-full rounded-sm bg-slate-800 px-4 py-2 font-mono text-white">
                                 2 11 15 0<br />
                                 2 11 15 0<br />
                                 2 11 15 0<br />
                                 2 11 15 0<br />
-                                2 11 15 0<br />
-                                2 11 15 0
+                                2 11 15 0<br />2 11 15 0
                             </pre>
                         </div>
-                        <div className="flex h-full flex-col flex-grow gap-2">
+                        <div className="flex h-full flex-grow flex-col gap-2">
                             <b>Expected Output</b>
-                            <pre className="rounded-sm bg-slate-800 px-4 py-2 font-mono text-white w-full">
-                                0 2 11 15<br />
-                                0 2 11 15<br />
-                                0 2 11 15<br />
-                                0 2 11 15<br />
-                                0 2 11 15<br />
+                            <pre className="w-full rounded-sm bg-slate-800 px-4 py-2 font-mono text-white">
                                 0 2 11 15
+                                <br />
+                                0 2 11 15
+                                <br />
+                                0 2 11 15
+                                <br />
+                                0 2 11 15
+                                <br />
+                                0 2 11 15
+                                <br />0 2 11 15
                             </pre>
                         </div>
-                        <div className="flex h-full flex-col flex-grow gap-2">
+                        <div className="flex h-full flex-grow flex-col gap-2">
                             <b>Expected Output</b>
-                            <pre className="rounded-sm bg-slate-800 px-4 py-2 font-mono text-white w-full">
-                                0 2 11 15<br />
-                                0 2 11 15<br />
-                                0 2 11 15<br />
-                                0 2 11 15<br />
-                                0 2 11 15<br />
+                            <pre className="w-full rounded-sm bg-slate-800 px-4 py-2 font-mono text-white">
                                 0 2 11 15
+                                <br />
+                                0 2 11 15
+                                <br />
+                                0 2 11 15
+                                <br />
+                                0 2 11 15
+                                <br />
+                                0 2 11 15
+                                <br />0 2 11 15
                             </pre>
                         </div>
                     </AccordionContent>
@@ -128,37 +139,39 @@ const TestResults = () => {
                         </h1>
                     </AccordionTrigger>
                     <AccordionContent className="flex flex-row gap-[10vw] px-8">
-                        <div className="flex h-full flex-col flex-grow gap-2">
+                        <div className="flex h-full flex-grow flex-col gap-2">
                             <b>Input</b>
-                            <pre className="rounded-sm bg-slate-800 px-4 py-2 font-mono text-white w-full">
+                            <pre className="w-full rounded-sm bg-slate-800 px-4 py-2 font-mono text-white">
                                 2 11 15 0<br />
                                 2 11 15 0<br />
                                 2 11 15 0<br />
                                 2 11 15 0<br />
-                                2 11 15 0<br />
-                                2 11 15 0
+                                2 11 15 0<br />2 11 15 0
                             </pre>
                         </div>
-                        <div className="flex h-full flex-col flex-grow gap-2">
+                        <div className="flex h-full flex-grow flex-col gap-2">
                             <b>Your Output</b>
-                            <pre className="rounded-sm bg-slate-800 px-4 py-2 font-mono text-white w-full">
+                            <pre className="w-full rounded-sm bg-slate-800 px-4 py-2 font-mono text-white">
                                 2 11 15 0<br />
                                 2 11 15 0<br />
                                 2 11 15 0<br />
                                 2 11 15 0<br />
-                                2 11 15 0<br />
-                                2 11 15 0
+                                2 11 15 0<br />2 11 15 0
                             </pre>
                         </div>
-                        <div className="flex h-full flex-col flex-grow gap-2">
+                        <div className="flex h-full flex-grow flex-col gap-2">
                             <b>Expected Output</b>
-                            <pre className="rounded-sm bg-slate-800 px-4 py-2 font-mono text-white w-full">
-                                0 2 11 15<br />
-                                0 2 11 15<br />
-                                0 2 11 15<br />
-                                0 2 11 15<br />
-                                0 2 11 15<br />
+                            <pre className="w-full rounded-sm bg-slate-800 px-4 py-2 font-mono text-white">
                                 0 2 11 15
+                                <br />
+                                0 2 11 15
+                                <br />
+                                0 2 11 15
+                                <br />
+                                0 2 11 15
+                                <br />
+                                0 2 11 15
+                                <br />0 2 11 15
                             </pre>
                         </div>
                     </AccordionContent>
@@ -174,20 +187,19 @@ const TestResults = () => {
                         </h1>
                     </AccordionTrigger>
                     <AccordionContent className="flex flex-row gap-[10vw] px-8">
-                        <div className="flex h-full flex-col flex-grow gap-2">
+                        <div className="flex h-full flex-grow flex-col gap-2">
                             <b>Input</b>
-                            <pre className="rounded-sm bg-slate-800 px-4 py-2 font-mono text-white w-full">
+                            <pre className="w-full rounded-sm bg-slate-800 px-4 py-2 font-mono text-white">
                                 2 11 15 0<br />
                                 2 11 15 0<br />
                                 2 11 15 0<br />
                                 2 11 15 0<br />
-                                2 11 15 0<br />
-                                2 11 15 0
+                                2 11 15 0<br />2 11 15 0
                             </pre>
                         </div>
-                        <div className="flex h-full flex-col flex-grow gap-2">
+                        <div className="flex h-full flex-grow flex-col gap-2">
                             <b>Your Output</b>
-                            <pre className="rounded-sm bg-slate-800 px-4 py-2 font-mono text-white w-full">
+                            <pre className="w-full rounded-sm bg-slate-800 px-4 py-2 font-mono text-white">
                                 11 15 0 2<br />
                                 11 15 0 2<br />
                                 11 15 0 2<br />
@@ -196,15 +208,19 @@ const TestResults = () => {
                                 11 15 0 2
                             </pre>
                         </div>
-                        <div className="flex h-full flex-col flex-grow gap-2">
+                        <div className="flex h-full flex-grow flex-col gap-2">
                             <b>Expected Output</b>
-                            <pre className="rounded-sm bg-slate-800 px-4 py-2 font-mono text-white w-full">
-                                0 2 11 15<br />
-                                0 2 11 15<br />
-                                0 2 11 15<br />
-                                0 2 11 15<br />
-                                0 2 11 15<br />
+                            <pre className="w-full rounded-sm bg-slate-800 px-4 py-2 font-mono text-white">
                                 0 2 11 15
+                                <br />
+                                0 2 11 15
+                                <br />
+                                0 2 11 15
+                                <br />
+                                0 2 11 15
+                                <br />
+                                0 2 11 15
+                                <br />0 2 11 15
                             </pre>
                         </div>
                     </AccordionContent>
@@ -219,7 +235,6 @@ export default function Competitor() {
         <div className="h-screen">
             <div>
                 <CompetitorNavbar />
-
             </div>
             <div className="flex h-[95vh]">
                 <div className="flex-grow">
@@ -227,7 +242,7 @@ export default function Competitor() {
                         <ResizablePanel
                             defaultSize={20}
                             maxSize={25}
-                            className="border-t border-black-300 h-full"
+                            className="border-black-300 h-full border-t"
                         >
                             <ResizablePanelGroup direction="vertical" className="h-full">
                                 <div className="flex h-full flex-col justify-between py-8">
@@ -262,6 +277,5 @@ export default function Competitor() {
                 </div>
             </div>
         </div>
-
     );
 }
