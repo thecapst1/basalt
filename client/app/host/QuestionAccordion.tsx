@@ -30,7 +30,7 @@ interface QuestionAccordionProps {
 
 const QuestionAccordion: React.FC<QuestionAccordionProps> = ({ questions, onRemoveQuestion }) => {
     return (
-        <Accordion type="single" collapsible className="w-full">
+        <Accordion type="single" collapsible className="w-full pl-2 pr-2">
             {questions.map((q, index) => (
                 <AccordionItem
                     key={index}

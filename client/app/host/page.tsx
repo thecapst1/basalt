@@ -1,8 +1,6 @@
 'use client';
 import React, { useState, useEffect } from 'react';
 import { useTheme } from 'next-themes';
-import AddTeamDialog from '@/app/host/NewTeamDialog';
-import AddQuestionDialog from './NewQuestionDialog';
 import QuestionAccordion from './QuestionAccordion';
 import { Separator } from '@/components/ui/separator';
 import { Button } from '@/components/ui/button';
@@ -18,12 +16,18 @@ import {
     DropdownMenuSubTrigger,
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { Ellipsis, Moon, Sun, SunMoon } from 'lucide-react';
+import { Ellipsis, Moon, Sun, SunMoon, Copy } from 'lucide-react';
+import HeaderMenu from './HeaderMenu';
 
 export default function Host() {
     const { setTheme } = useTheme();
     const [questions, setQuestions] = useState([
-        { question: 'Implement a binary search algorithm.', language: 'py', points: '10' },
+        {
+            question:
+                'Create a function that takes an array of numbers as inputs and returns it order from least to greatest.',
+            language: 'py',
+            points: '10',
+        },
         {
             question:
                 'Develop a simple number guessing game where the computer picks a random number, and the user tries to guess it.',
@@ -38,55 +42,18 @@ export default function Host() {
     ]);
     const [serverStatus, setServerStatus] = useState<'loading' | 'stop' | 'start'>('loading');
     const [teamList, setTeamList] = useState([
-        { name: 'Team1', password: 'password', points: 300, status: true },
-        { name: 'Team2', password: 'password', points: 126, status: true },
-        { name: 'Team3', password: 'password', points: 0, status: false },
-        { name: 'Team4', password: 'password', points: 299, status: true },
-        { name: 'Team5', password: 'password', points: 0, status: true },
-        { name: 'Team6', password: 'password', points: 5, status: false },
-        { name: 'Team7', password: 'password', points: 125, status: true },
+        { name: 'Team1', password: 'password1', points: 300, status: true },
+        { name: 'Team2', password: 'password2', points: 126, status: true },
+        { name: 'Team3', password: 'password3', points: 0, status: false },
+        { name: 'Team4', password: 'password4', points: 299, status: true },
+        { name: 'Team5', password: 'password5', points: 0, status: true },
+        { name: 'Team6', password: 'password6', points: 5, status: false },
+        { name: 'Team7', password: 'password7handleCopyPassword', points: 125, status: true },
     ]);
 
     useEffect(() => {
         setServerStatus('stop');
     }, []);
-
-    const handleAddQuestion = (data: { question: string; points: string; language: string }) => {
-        setQuestions((prevQuestions) => {
-            const isDuplicate = prevQuestions.some(
-                (q) =>
-                    q.question.toLowerCase() === data.question.toLowerCase() &&
-                    q.language.toLowerCase() === data.language.toLowerCase()
-            );
-            if (isDuplicate) {
-                return prevQuestions;
-            }
-            return [
-                ...prevQuestions,
-                { question: data.question, language: data.language, points: data.points },
-            ];
-        });
-
-        return !questions.some(
-            (q) =>
-                q.question.toLowerCase() === data.question.toLowerCase() &&
-                q.language.toLowerCase() === data.language.toLowerCase()
-        );
-    };
-
-    const handleAddTeam = (data: { name: string; password: string }): boolean => {
-        const isUnique = !teamList.some(
-            (team) => team.name.toLowerCase() === data.name.toLowerCase()
-        );
-
-        if (isUnique) {
-            setTeamList((prevTeams) => [
-                ...prevTeams,
-                { name: data.name, password: data.password, points: 0, status: false },
-            ]);
-        }
-        return isUnique;
-    };
 
     const disconnectAllTeams = () => {
         const updatedTeams = teamList.map((team) => ({
@@ -120,8 +87,8 @@ export default function Host() {
     return (
         <ResizablePanelGroup direction="horizontal" className="flex max-h-screen flex-grow">
             <ResizablePanel className="flex flex-col justify-center" defaultSize={30} maxSize={50}>
-                <div className="flex h-fit justify-between pl-3 pr-3 pt-4">
-                    <AddTeamDialog onAddTeam={handleAddTeam} />
+                <div className="flex h-fit items-center justify-between p-2">
+                    <div></div>
                     <p className="text-2xl uppercase">Teams</p>
                     <DropdownMenu>
                         <DropdownMenuTrigger>
@@ -134,7 +101,7 @@ export default function Host() {
                         </DropdownMenuContent>
                     </DropdownMenu>
                 </div>
-                <Separator className="mt-2" />
+                <Separator className="mt-2mt-2" />
                 <div className="flex flex-col gap-1.5 overflow-y-auto p-2.5">
                     {teamList
                         .sort((a, b) => b.points - a.points)
@@ -155,18 +122,19 @@ export default function Host() {
                                                 <DropdownMenuItem>Message</DropdownMenuItem>
                                                 <DropdownMenuSub>
                                                     <DropdownMenuSubTrigger>
-                                                        Edit
+                                                        Info
                                                     </DropdownMenuSubTrigger>
                                                     <DropdownMenuPortal>
                                                         <DropdownMenuSubContent>
-                                                            <DropdownMenuItem>
-                                                                Name
-                                                            </DropdownMenuItem>
-                                                            <DropdownMenuItem>
+                                                            <DropdownMenuItem
+                                                                onClick={() => {
+                                                                    navigator.clipboard.writeText(
+                                                                        team.password
+                                                                    );
+                                                                }}
+                                                            >
+                                                                <Copy />
                                                                 Password
-                                                            </DropdownMenuItem>
-                                                            <DropdownMenuItem>
-                                                                Points
                                                             </DropdownMenuItem>
                                                         </DropdownMenuSubContent>
                                                     </DropdownMenuPortal>
@@ -180,6 +148,17 @@ export default function Host() {
                                             </div>
                                         ) : (
                                             <div>
+                                                <DropdownMenuItem
+                                                    onClick={() => {
+                                                        navigator.clipboard.writeText(
+                                                            team.password
+                                                        );
+                                                    }}
+                                                >
+                                                    <Copy />
+                                                    Password
+                                                </DropdownMenuItem>
+                                                <DropdownMenuSeparator />
                                                 <DropdownMenuItem
                                                     onClick={() => handleRemoveTeam(team.name)}
                                                 >
@@ -213,11 +192,11 @@ export default function Host() {
             <ResizableHandle withHandle />
 
             <ResizablePanel
-                className="flex h-full min-h-screen w-full flex-col items-center p-6"
+                className="flex h-full min-h-screen w-full flex-col items-center"
                 defaultSize={70}
             >
-                <span className="flex w-full justify-start pb-2.5">
-                    <AddQuestionDialog onAddQuestion={handleAddQuestion} />
+                <span className="flex w-full justify-start p-1.5">
+                    <HeaderMenu />
                     <div className="ml-auto">
                         <DropdownMenu>
                             <DropdownMenuTrigger asChild>
