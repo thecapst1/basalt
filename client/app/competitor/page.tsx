@@ -43,9 +43,9 @@ const GetCurrentQuestion = () => {
                         <strong>Explanation</strong>
                         <div>
                             The expected output is
-                                <Code>0 2 11 15</Code>
+                            <Code>0 2 11 15</Code>
                             because
-                                <Code>0 &lt; 2 &lt; 11 &lt; 15</Code>
+                            <Code>0 &lt; 2 &lt; 11 &lt; 15</Code>
                         </div>
                     </div>
                 </div>
@@ -85,34 +85,34 @@ const TestResults = () => {
                         <div className="flex h-full flex-col flex-grow gap-2">
                             <b>Input</b>
                             <pre className="rounded-sm bg-slate-800 px-4 py-2 font-mono text-white w-full">
-                                2 11 15 0<br/>
-                                2 11 15 0<br/>
-                                2 11 15 0<br/>
-                                2 11 15 0<br/>
-                                2 11 15 0<br/>
-                                2 11 15 0
-                            </pre>
-                        </div>
-                        <div className="flex h-full flex-col flex-grow gap-2">
-                            <b>Your Output</b>
-                            <pre className="rounded-sm bg-slate-800 px-4 py-2 font-mono text-white w-full">
-                                2 11 15 0<br/>
-                                2 11 15 0<br/>
-                                2 11 15 0<br/>
-                                2 11 15 0<br/>
-                                2 11 15 0<br/>
+                                2 11 15 0<br />
+                                2 11 15 0<br />
+                                2 11 15 0<br />
+                                2 11 15 0<br />
+                                2 11 15 0<br />
                                 2 11 15 0
                             </pre>
                         </div>
                         <div className="flex h-full flex-col flex-grow gap-2">
                             <b>Expected Output</b>
                             <pre className="rounded-sm bg-slate-800 px-4 py-2 font-mono text-white w-full">
-                                2 11 15 0<br/>
-                                2 11 15 0<br/>
-                                2 11 15 0<br/>
-                                2 11 15 0<br/>
-                                2 11 15 0<br/>
-                                2 11 15 0
+                                0 2 11 15<br />
+                                0 2 11 15<br />
+                                0 2 11 15<br />
+                                0 2 11 15<br />
+                                0 2 11 15<br />
+                                0 2 11 15
+                            </pre>
+                        </div>
+                        <div className="flex h-full flex-col flex-grow gap-2">
+                            <b>Expected Output</b>
+                            <pre className="rounded-sm bg-slate-800 px-4 py-2 font-mono text-white w-full">
+                                0 2 11 15<br />
+                                0 2 11 15<br />
+                                0 2 11 15<br />
+                                0 2 11 15<br />
+                                0 2 11 15<br />
+                                0 2 11 15
                             </pre>
                         </div>
                     </AccordionContent>
@@ -128,23 +128,38 @@ const TestResults = () => {
                         </h1>
                     </AccordionTrigger>
                     <AccordionContent className="flex flex-row gap-[10vw] px-8">
-                        <div className="flex h-full flex-col items-center">
-                            <b>Your Input</b>
-                            <span className="text-white">
-                                <Code>2 15 15 0</Code>
-                            </span>
+                        <div className="flex h-full flex-col flex-grow gap-2">
+                            <b>Input</b>
+                            <pre className="rounded-sm bg-slate-800 px-4 py-2 font-mono text-white w-full">
+                                2 11 15 0<br />
+                                2 11 15 0<br />
+                                2 11 15 0<br />
+                                2 11 15 0<br />
+                                2 11 15 0<br />
+                                2 11 15 0
+                            </pre>
                         </div>
-                        <div className="flex h-full flex-col items-center">
-                            <b>Your Output:</b>
-                            <span className="text-white">
-                                <Code>0 7 9 9</Code>
-                            </span>
+                        <div className="flex h-full flex-col flex-grow gap-2">
+                            <b>Your Output</b>
+                            <pre className="rounded-sm bg-slate-800 px-4 py-2 font-mono text-white w-full">
+                                2 11 15 0<br />
+                                2 11 15 0<br />
+                                2 11 15 0<br />
+                                2 11 15 0<br />
+                                2 11 15 0<br />
+                                2 11 15 0
+                            </pre>
                         </div>
-                        <div className="flex h-full flex-col items-center">
-                            <b>Expected Output:</b>
-                            <span className="text-white">
-                                <Code>0 2 11 15</Code>
-                            </span>
+                        <div className="flex h-full flex-col flex-grow gap-2">
+                            <b>Expected Output</b>
+                            <pre className="rounded-sm bg-slate-800 px-4 py-2 font-mono text-white w-full">
+                                0 2 11 15<br />
+                                0 2 11 15<br />
+                                0 2 11 15<br />
+                                0 2 11 15<br />
+                                0 2 11 15<br />
+                                0 2 11 15
+                            </pre>
                         </div>
                     </AccordionContent>
                 </AccordionItem>
@@ -159,23 +174,38 @@ const TestResults = () => {
                         </h1>
                     </AccordionTrigger>
                     <AccordionContent className="flex flex-row gap-[10vw] px-8">
-                        <div className="flex h-full flex-col items-center">
-                            <b>Your Input</b>
-                            <span className="text-white">
-                                <Code>2 15 15 0</Code>
-                            </span>
+                        <div className="flex h-full flex-col flex-grow gap-2">
+                            <b>Input</b>
+                            <pre className="rounded-sm bg-slate-800 px-4 py-2 font-mono text-white w-full">
+                                2 11 15 0<br />
+                                2 11 15 0<br />
+                                2 11 15 0<br />
+                                2 11 15 0<br />
+                                2 11 15 0<br />
+                                2 11 15 0
+                            </pre>
                         </div>
-                        <div className="flex h-full flex-col items-center">
-                            <b>Your Output:</b>
-                            <span className="text-white">
-                                <Code>0 2 15 11</Code>
-                            </span>
+                        <div className="flex h-full flex-col flex-grow gap-2">
+                            <b>Your Output</b>
+                            <pre className="rounded-sm bg-slate-800 px-4 py-2 font-mono text-white w-full">
+                                11 15 0 2<br />
+                                11 15 0 2<br />
+                                11 15 0 2<br />
+                                11 15 0 2<br />
+                                11 15 0 2<br />
+                                11 15 0 2
+                            </pre>
                         </div>
-                        <div className="flex h-full flex-col items-center">
-                            <b>Expected Output:</b>
-                            <span className="text-white">
-                                <Code>0 2 11 15</Code>
-                            </span>
+                        <div className="flex h-full flex-col flex-grow gap-2">
+                            <b>Expected Output</b>
+                            <pre className="rounded-sm bg-slate-800 px-4 py-2 font-mono text-white w-full">
+                                0 2 11 15<br />
+                                0 2 11 15<br />
+                                0 2 11 15<br />
+                                0 2 11 15<br />
+                                0 2 11 15<br />
+                                0 2 11 15
+                            </pre>
                         </div>
                     </AccordionContent>
                 </AccordionItem>
@@ -186,47 +216,52 @@ const TestResults = () => {
 
 export default function Competitor() {
     return (
-        <div className="h-full">
-            <CompetitorNavbar />
+        <div className="h-screen">
+            <div>
+                <CompetitorNavbar />
 
-            <div className="flex h-[95vh] w-full">
-                <ResizablePanelGroup direction="horizontal">
-                    <ResizablePanel
-                        defaultSize={20}
-                        maxSize={25}
-                        className="border-t border-gray-300"
-                    >
-                        <ResizablePanelGroup direction="vertical">
-                            <div className="flex h-full flex-col justify-between py-8">
-                                <div className="box-border flex flex-col p-4">
-                                    <GetCurrentQuestion />
-                                </div>
-                                <div className="flex w-full flex-row justify-center">
-                                    <RunTest />
-                                </div>
-                            </div>
-                        </ResizablePanelGroup>
-                    </ResizablePanel>
-                    <ResizableHandle withHandle />
-                    <ResizablePanel>
-                        <ResizablePanelGroup direction="vertical">
-                            <ResizablePanel defaultSize={400}>
-                                <div className="flex h-full">
-                                    <Textarea />
-                                </div>
-                            </ResizablePanel>
-                            <ResizableHandle />
-                            <ResizablePanel defaultSize={100}>
-                                <ScrollArea className="h-full w-full">
-                                    <div>
-                                        <TestResults />
+            </div>
+            <div className="flex h-[95vh]">
+                <div className="flex-grow">
+                    <ResizablePanelGroup direction="horizontal">
+                        <ResizablePanel
+                            defaultSize={20}
+                            maxSize={25}
+                            className="border-t border-black-300 h-full"
+                        >
+                            <ResizablePanelGroup direction="vertical" className="h-full">
+                                <div className="flex h-full flex-col justify-between py-8">
+                                    <div className="box-border flex flex-col p-4">
+                                        <GetCurrentQuestion />
                                     </div>
-                                </ScrollArea>
-                            </ResizablePanel>
-                        </ResizablePanelGroup>
-                    </ResizablePanel>
-                </ResizablePanelGroup>
+                                    <div className="flex w-full flex-row justify-center">
+                                        <RunTest />
+                                    </div>
+                                </div>
+                            </ResizablePanelGroup>
+                        </ResizablePanel>
+                        <ResizableHandle withHandle />
+                        <ResizablePanel className="">
+                            <ResizablePanelGroup direction="vertical" className="h-full">
+                                <ResizablePanel defaultSize={400} className="h-full">
+                                    <div className="flex h-full">
+                                        <Textarea />
+                                    </div>
+                                </ResizablePanel>
+                                <ResizableHandle />
+                                <ResizablePanel defaultSize={100} className="h-full">
+                                    <ScrollArea className="h-full w-full">
+                                        <div>
+                                            <TestResults />
+                                        </div>
+                                    </ScrollArea>
+                                </ResizablePanel>
+                            </ResizablePanelGroup>
+                        </ResizablePanel>
+                    </ResizablePanelGroup>
+                </div>
             </div>
         </div>
+
     );
 }
