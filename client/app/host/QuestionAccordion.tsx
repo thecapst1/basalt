@@ -1,24 +1,12 @@
 'use client';
-import { Button } from '@/components/ui/button';
-import { Switch } from "@/components/ui/switch";
+import { Switch } from '@/components/ui/switch';
 import {
     Accordion,
     AccordionContent,
     AccordionItem,
     AccordionTrigger,
 } from '@/components/ui/accordion';
-import {
-    AlertDialog,
-    AlertDialogAction,
-    AlertDialogCancel,
-    AlertDialogContent,
-    AlertDialogDescription,
-    AlertDialogFooter,
-    AlertDialogHeader,
-    AlertDialogTitle,
-    AlertDialogTrigger,
-} from '@/components/ui/alert-dialog';
-    
+
 interface QuestionAccordionProps {
     questions: {
         question: string;
@@ -34,17 +22,21 @@ interface QuestionAccordionProps {
     handleQuestionSwitch: (question: string) => void;
 }
 
-const QuestionAccordion: React.FC<QuestionAccordionProps> = ({ questions, handleQuestionSwitch }) => {
-
+const QuestionAccordion: React.FC<QuestionAccordionProps> = ({
+    questions,
+    handleQuestionSwitch,
+}) => {
     return (
         <Accordion type="single" collapsible className="w-full pl-2 pr-2">
             {questions.map((q, index) => (
                 <AccordionItem
                     key={index}
                     value={`question-${index}`}
-                    className={`mb-1 rounded border px-2.5}`}
+                    className={`px-2.5} mb-1 rounded border`}
                 >
-                    <AccordionTrigger className={`flex max-w-full px-1.5 ${q.enabled ? '':'bg-[#666a] opacity-50'}`}>
+                    <AccordionTrigger
+                        className={`flex max-w-full px-1.5 ${q.enabled ? '' : 'bg-[#666a] opacity-50'}`}
+                    >
                         <p className="w-2/3 truncate">
                             {index + 1}. {q.question}
                         </p>
@@ -87,8 +79,8 @@ const QuestionAccordion: React.FC<QuestionAccordionProps> = ({ questions, handle
                                     ))}
                                 </Accordion>
                             </div>
-                            <div className="mt-4 px-2 flex justify-end">
-                                <Switch 
+                            <div className="mt-4 flex justify-end px-2">
+                                <Switch
                                     checked={q.enabled}
                                     onCheckedChange={() => handleQuestionSwitch(q.question)}
                                 />

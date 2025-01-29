@@ -95,8 +95,8 @@ export default function Host() {
     };
 
     const handleQuestionSwitch = (question: string) => {
-        setQuestions((prev) => 
-            prev.map((q) => (q.question === question ? { ...q, enabled: !q.enabled} : q))
+        setQuestions((prev) =>
+            prev.map((q) => (q.question === question ? { ...q, enabled: !q.enabled } : q))
         );
     };
 
