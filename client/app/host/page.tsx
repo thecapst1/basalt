@@ -23,21 +23,42 @@ export default function Host() {
     const { setTheme } = useTheme();
     const [questions, setQuestions] = useState([
         {
-            question:
-                'Create a function that takes an array of numbers as inputs and returns it order from least to greatest.',
-            language: 'py',
+            question: 'Sort an Array of Integers',
+            description: 'Sort an array of integers in ascending order and return it.',
+            language: 'py, java, rs',
             points: '10',
+            tests: [
+                { input: '2 11 15 0', output: '0 2 11 15' },
+                { input: '0 11 2 15', output: '0 2 11 15' },
+                { input: '15 11 2 0', output: '0 2 11 15' },
+            ],
+            enabled: true,
         },
         {
-            question:
-                'Develop a simple number guessing game where the computer picks a random number, and the user tries to guess it.',
-            language: 'java',
+            question: 'Sort an Array of Characters Alphabetically',
+            description:
+                'Sort an array of characters alphabetically and return them as a single string.',
+            language: 'java, py',
             points: '15',
+            tests: [
+                { input: 'a e h f', output: 'aefh' },
+                { input: 'd a l b', output: 'abdl' },
+                { input: 'p y r g', output: 'gpry' },
+            ],
+            enabled: false,
         },
         {
-            question: 'Create a basic to-do list app where users can add and remove tasks.',
-            language: 'rs',
+            question: 'Hexidecimal in Reverse Order',
+            description:
+                'Convert characters to hexadecimal values and return them in reverse order.',
+            language: 'rs, java',
             points: '25',
+            tests: [
+                { input: 'A B C D', output: '13 12 11 10' },
+                { input: 'E D A C', output: '12 10 13 14' },
+                { input: 'F A B E', output: '14 11 10 15' },
+            ],
+            enabled: true,
         },
     ]);
     const [serverStatus, setServerStatus] = useState<'loading' | 'stop' | 'start'>('loading');
@@ -48,7 +69,7 @@ export default function Host() {
         { name: 'Team4', password: 'password4', points: 299, status: true },
         { name: 'Team5', password: 'password5', points: 0, status: true },
         { name: 'Team6', password: 'password6', points: 5, status: false },
-        { name: 'Team7', password: 'password7handleCopyPassword', points: 125, status: true },
+        { name: 'Team7', password: 'password7', points: 125, status: true },
     ]);
 
     useEffect(() => {
@@ -73,9 +94,9 @@ export default function Host() {
         setTeamList((prev) => prev.filter((team) => team.name !== teamName));
     };
 
-    const handleRemoveQuestion = (questionToRemove: string) => {
-        setQuestions((prevQuestions) =>
-            prevQuestions.filter((q) => q.question !== questionToRemove)
+    const handleQuestionSwitch = (question: string) => {
+        setQuestions((prev) => 
+            prev.map((q) => (q.question === question ? { ...q, enabled: !q.enabled} : q))
         );
     };
 
@@ -225,7 +246,7 @@ export default function Host() {
                     <ul className="mt-2.5 flex flex-col">
                         <QuestionAccordion
                             questions={questions}
-                            onRemoveQuestion={handleRemoveQuestion}
+                            handleQuestionSwitch={handleQuestionSwitch}
                         />
                     </ul>
                 </div>
