@@ -122,7 +122,7 @@ export default function Host() {
                         </DropdownMenuContent>
                     </DropdownMenu>
                 </div>
-                <Separator className="mt-2" />
+                <Separator />
                 <div className="flex flex-col gap-1.5 overflow-y-auto p-2.5">
                     {teamList
                         .sort((a, b) => b.points - a.points)

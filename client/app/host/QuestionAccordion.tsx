@@ -34,13 +34,13 @@ const QuestionAccordion: React.FC<QuestionAccordionProps> = ({
                     value={`question-${index}`}
                     className={`mb-1 rounded border px-2.5 ${q.enabled ? '' : 'bg-[#666a] opacity-50'}`}
                 >
-                    <AccordionTrigger className="flex max-w-full px-1.5">
-                        <p className="w-2/3 truncate px-1.5">
+                    <AccordionTrigger className="flex max-w-full">
+                        <p className="w-2/3 truncate">
                             {index + 1}. {q.question}
                         </p>
                         <p>{q.points} pts</p>
                     </AccordionTrigger>
-                    <AccordionContent>
+                    <AccordionContent className="px-1.5">
                         <div>
                             <div className="flex justify-between">
                                 <p className="text-sm text-muted-foreground">{q.description}</p>
