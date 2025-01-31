@@ -25,7 +25,7 @@ export default function Host() {
         {
             question: 'Sort an Array of Integers',
             description: 'Sort an array of integers in ascending order and return it.',
-            language: 'py, java, rs',
+            languages: null,
             points: '10',
             tests: [
                 { input: '2 11 15 0', output: '0 2 11 15' },
@@ -38,7 +38,7 @@ export default function Host() {
             question: 'Sort an Array of Characters Alphabetically',
             description:
                 'Sort an array of characters alphabetically and return them as a single string.',
-            language: 'java, py',
+            languages: ['rs'],
             points: '15',
             tests: [
                 { input: 'a e h f', output: 'aefh' },
@@ -51,7 +51,7 @@ export default function Host() {
             question: 'Hexidecimal in Reverse Order',
             description:
                 'Convert characters to hexadecimal values and return them in reverse order.',
-            language: 'rs, java',
+            languages: ['rs', 'java'],
             points: '25',
             tests: [
                 { input: 'A B C D', output: '13 12 11 10' },
@@ -122,7 +122,7 @@ export default function Host() {
                         </DropdownMenuContent>
                     </DropdownMenu>
                 </div>
-                <Separator className="mt-2mt-2" />
+                <Separator className="mt-2" />
                 <div className="flex flex-col gap-1.5 overflow-y-auto p-2.5">
                     {teamList
                         .sort((a, b) => b.points - a.points)
@@ -177,7 +177,7 @@ export default function Host() {
                                                     }}
                                                 >
                                                     <Copy />
-                                                    Password
+                                                    Copy Password
                                                 </DropdownMenuItem>
                                                 <DropdownMenuSeparator />
                                                 <DropdownMenuItem

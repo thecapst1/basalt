@@ -11,7 +11,7 @@ interface QuestionAccordionProps {
     questions: {
         question: string;
         description: string;
-        language: string;
+        languages: string[] | null;
         points: string;
         tests: {
             input: string;
@@ -32,24 +32,33 @@ const QuestionAccordion: React.FC<QuestionAccordionProps> = ({
                 <AccordionItem
                     key={index}
                     value={`question-${index}`}
-                    className={`px-2.5} mb-1 rounded border`}
+                    className={`mb-1 rounded border px-2.5 ${q.enabled ? '' : 'bg-[#666a] opacity-50'}`}
                 >
-                    <AccordionTrigger
-                        className={`flex max-w-full px-1.5 ${q.enabled ? '' : 'bg-[#666a] opacity-50'}`}
-                    >
-                        <p className="w-2/3 truncate">
+                    <AccordionTrigger className="flex max-w-full px-1.5">
+                        <p className="w-2/3 truncate px-1.5">
                             {index + 1}. {q.question}
                         </p>
                         <p>{q.points} pts</p>
                     </AccordionTrigger>
                     <AccordionContent>
                         <div>
-                            <p className="text-sm text-muted-foreground">
-                                <strong>Description:</strong> {q.description}
-                            </p>
-                            <p className="text-sm text-muted-foreground">
-                                <strong>Language(s):</strong> {q.language.toUpperCase()}
-                            </p>
+                            <div className="flex justify-between">
+                                <p className="text-sm text-muted-foreground">{q.description}</p>
+                                <Switch
+                                    checked={q.enabled}
+                                    onCheckedChange={() => handleQuestionSwitch(q.question)}
+                                />
+                            </div>
+
+                            {q.languages !== null && (
+                                <p className="text-sm text-muted-foreground">
+                                    <strong>
+                                        {q.languages.length > 1 ? 'Languages:' : 'Language:'}
+                                    </strong>{' '}
+                                    {q.languages.toString().toUpperCase()}
+                                </p>
+                            )}
+
                             <div className="flex flex-col text-sm text-muted-foreground">
                                 <Accordion type="single" collapsible>
                                     {q.tests.map((test, testNum) => (
@@ -78,12 +87,6 @@ const QuestionAccordion: React.FC<QuestionAccordionProps> = ({
                                         </AccordionItem>
                                     ))}
                                 </Accordion>
-                            </div>
-                            <div className="mt-4 flex justify-end px-2">
-                                <Switch
-                                    checked={q.enabled}
-                                    onCheckedChange={() => handleQuestionSwitch(q.question)}
-                                />
                             </div>
                         </div>
                     </AccordionContent>
