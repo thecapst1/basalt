@@ -41,9 +41,7 @@ const QuestionAccordion: React.FC<QuestionAccordionProps> = ({
                         </p>
                         <p>{q.points} pts</p>
                     </AccordionTrigger>
-                    <AccordionContent
-                        className="pr-1.5"
-                    >
+                    <AccordionContent className="pr-1.5">
                         <div>
                             <div className="flex justify-between">
                                 <p className="text-sm">{q.description}</p>
