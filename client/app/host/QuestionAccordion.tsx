@@ -35,18 +35,20 @@ const QuestionAccordion: React.FC<QuestionAccordionProps> = ({
                     value={`question-${index}`}
                     className={`mb-1 rounded border px-2.5 ${q.enabled ? '' : 'bg-[#666a] opacity-50'}`}
                 >
-                    <AccordionTrigger className="flex max-w-full">
+                    <AccordionTrigger className="text-md flex max-w-full">
                         <p className="w-2/3 truncate">
                             {index + 1}. {q.question}
                         </p>
                         <p>{q.points} pts</p>
                     </AccordionTrigger>
-                    <AccordionContent className="px-1.5">
+                    <AccordionContent
+                        className={`px-1.5 ${q.enabled ? 'text-muted-foreground' : 'dark:text-muted-foreground'}`}
+                    >
                         <div>
                             <div className="flex justify-between">
-                                <p className="text-sm text-muted-foreground">{q.description}</p>
+                                <p className="text-sm">{q.description}</p>
                                 <span className="flex items-center gap-1">
-                                    <Label>{q.enabled ? 'Visible' : 'Hidden'}</Label>
+                                    <Label className="text-black dark:text-white">Visibility</Label>
                                     <Switch
                                         checked={q.enabled}
                                         onCheckedChange={() => handleQuestionSwitch(q.question)}
@@ -55,7 +57,7 @@ const QuestionAccordion: React.FC<QuestionAccordionProps> = ({
                             </div>
 
                             {q.languages !== null && (
-                                <p className="text-sm text-muted-foreground">
+                                <p className="text-sm">
                                     <strong>
                                         {q.languages.length !== 1 ? 'Languages: ' : 'Language: '}
                                     </strong>{' '}
@@ -63,7 +65,7 @@ const QuestionAccordion: React.FC<QuestionAccordionProps> = ({
                                 </p>
                             )}
 
-                            <div className="flex flex-col text-sm text-muted-foreground">
+                            <div className="flex flex-col text-sm">
                                 <Accordion type="single" collapsible>
                                     {q.tests.map((test, testNum) => (
                                         <AccordionItem key={testNum} value={`test-${testNum}`}>
