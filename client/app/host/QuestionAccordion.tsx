@@ -6,6 +6,7 @@ import {
     AccordionItem,
     AccordionTrigger,
 } from '@/components/ui/accordion';
+import { Label } from '@/components/ui/label';
 
 interface QuestionAccordionProps {
     questions: {
@@ -27,7 +28,7 @@ const QuestionAccordion: React.FC<QuestionAccordionProps> = ({
     handleQuestionSwitch,
 }) => {
     return (
-        <Accordion type="single" collapsible className="w-full pl-2 pr-2">
+        <Accordion type="single" collapsible className="w-full px-2">
             {questions.map((q, index) => (
                 <AccordionItem
                     key={index}
@@ -44,18 +45,21 @@ const QuestionAccordion: React.FC<QuestionAccordionProps> = ({
                         <div>
                             <div className="flex justify-between">
                                 <p className="text-sm text-muted-foreground">{q.description}</p>
-                                <Switch
-                                    checked={q.enabled}
-                                    onCheckedChange={() => handleQuestionSwitch(q.question)}
-                                />
+                                <span className="flex items-center gap-1">
+                                    <Label>{q.enabled ? 'Visible' : 'Hidden'}</Label>
+                                    <Switch
+                                        checked={q.enabled}
+                                        onCheckedChange={() => handleQuestionSwitch(q.question)}
+                                    />
+                                </span>
                             </div>
 
                             {q.languages !== null && (
                                 <p className="text-sm text-muted-foreground">
                                     <strong>
-                                        {q.languages.length > 1 ? 'Languages:' : 'Language:'}
+                                        {q.languages.length !== 1 ? 'Languages: ' : 'Language: '}
                                     </strong>{' '}
-                                    {q.languages.toString().toUpperCase()}
+                                    {q.languages.join(', ').toUpperCase()}
                                 </p>
                             )}
 
