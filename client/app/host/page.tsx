@@ -48,7 +48,7 @@ export default function Host() {
             enabled: false,
         },
         {
-            question: 'Hexidecimal in Reverse Order',
+            question: 'Hexadecimal in Reverse Order',
             description:
                 'Convert characters to hexadecimal values and return them in reverse order.',
             languages: ['rs', 'java'],
