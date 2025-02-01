@@ -33,7 +33,7 @@ const QuestionAccordion: React.FC<QuestionAccordionProps> = ({
                 <AccordionItem
                     key={index}
                     value={`question-${index}`}
-                    className={`mb-1 rounded border px-2.5 ${q.enabled ? '' : 'bg-[#666a] opacity-50'}`}
+                    className={`mb-1 rounded border px-2.5 ${q.enabled ? '' : 'bg-[#6664] text-[#333] dark:text-muted-foreground'}`}
                 >
                     <AccordionTrigger className="text-md flex max-w-full">
                         <p className="w-2/3 truncate">
@@ -42,13 +42,13 @@ const QuestionAccordion: React.FC<QuestionAccordionProps> = ({
                         <p>{q.points} pts</p>
                     </AccordionTrigger>
                     <AccordionContent
-                        className={`pr-1.5 ${q.enabled ? 'text-muted-foreground' : 'dark:text-muted-foreground'}`}
+                        className="pr-1.5"
                     >
                         <div>
                             <div className="flex justify-between">
                                 <p className="text-sm">{q.description}</p>
                                 <span className="flex items-center gap-1">
-                                    <Label className="text-black dark:text-white">Enabled</Label>
+                                    <Label>Enabled</Label>
                                     <Switch
                                         checked={q.enabled}
                                         onCheckedChange={() => handleQuestionSwitch(q.question)}

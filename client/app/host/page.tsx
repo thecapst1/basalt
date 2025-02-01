@@ -155,7 +155,7 @@ export default function Host() {
                                                                 }}
                                                             >
                                                                 <Copy />
-                                                                Password
+                                                                Copy Password
                                                             </DropdownMenuItem>
                                                         </DropdownMenuSubContent>
                                                     </DropdownMenuPortal>
