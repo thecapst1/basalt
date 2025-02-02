@@ -1,4 +1,5 @@
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from '@/components/ui/resizable';
+import Timer from '@/components/Timer';
 import { Button } from '@/components/ui/button';
 import { PropsWithChildren } from 'react';
 import CompetitorNavbar from '@/components/CompetitorNavbar';
@@ -10,6 +11,7 @@ import {
     AccordionTrigger,
 } from '@/components/ui/accordion';
 import { ScrollArea } from '@/components/ui/scroll-area';
+import { Separator } from '@/components/ui/separator';
 
 const Code = ({ children }: PropsWithChildren) => (
     <p>
@@ -245,12 +247,16 @@ export default function Competitor() {
                             className="border-black-300 h-full border-t"
                         >
                             <ResizablePanelGroup direction="vertical" className="h-full">
-                                <div className="flex h-full flex-col justify-between py-8">
+                                <div className="flex h-full flex-col pt-8">
                                     <div className="box-border flex flex-col p-4">
                                         <GetCurrentQuestion />
                                     </div>
-                                    <div className="flex w-full flex-row justify-center">
+                                    <div className="mt-auto flex w-full flex-row justify-center">
                                         <RunTest />
+                                    </div>
+                                    <div className="py-2.5">
+                                        <Separator className="mb-2.5 mt-2.5" />
+                                        <Timer isHost={false} />
                                     </div>
                                 </div>
                             </ResizablePanelGroup>

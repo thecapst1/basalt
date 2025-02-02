@@ -1,5 +1,5 @@
 'use client';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useTheme } from 'next-themes';
 import QuestionAccordion from './QuestionAccordion';
 import { Separator } from '@/components/ui/separator';
@@ -62,7 +62,6 @@ export default function Host() {
             enabled: true,
         },
     ]);
-    const [serverStatus, setServerStatus] = useState<'loading' | 'stop' | 'start'>('loading');
     const [teamList, setTeamList] = useState([
         { name: 'Team1', password: 'password1', points: 300, status: true },
         { name: 'Team2', password: 'password2', points: 126, status: true },
@@ -72,10 +71,6 @@ export default function Host() {
         { name: 'Team6', password: 'password6', points: 5, status: false },
         { name: 'Team7', password: 'password7', points: 125, status: true },
     ]);
-
-    useEffect(() => {
-        setServerStatus('stop');
-    }, []);
 
     const disconnectAllTeams = () => {
         const updatedTeams = teamList.map((team) => ({
@@ -99,11 +94,6 @@ export default function Host() {
         setQuestions((prev) =>
             prev.map((q) => (q.question === question ? { ...q, enabled: !q.enabled } : q))
         );
-    };
-
-    const handleToggleServer = () => {
-        setServerStatus((prev) => (prev === 'start' ? 'stop' : 'start'));
-        disconnectAllTeams();
     };
 
     return (
@@ -195,16 +185,8 @@ export default function Host() {
                 </div>
 
                 <div className="mb-2.5 mt-auto flex flex-col items-center justify-center">
-                    <Separator className="mt-2" />
+                    <Separator className="mb-2.5" />
                     <Timer isHost={true} />
-                    <Separator />
-                    <p className="mx-auto my-2.5 text-2xl uppercase">Server</p>
-                    <Button
-                        className={`h-fit w-fit px-5 py-3 text-2xl font-bold uppercase text-black ${serverStatus === 'loading' ? 'bg-gray-500' : serverStatus === 'stop' ? 'bg-red-600 hover:bg-red-500' : 'bg-green-600 hover:bg-green-500'}`}
-                        onClick={handleToggleServer}
-                    >
-                        {serverStatus}
-                    </Button>
                 </div>
             </ResizablePanel>
 

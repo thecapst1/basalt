@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react';
 import { Button } from './ui/button';
 import { Pause, Play, Wrench } from 'lucide-react';
+import { toast } from '@/hooks/use-toast';
 
 interface TimerProps {
     isHost: boolean;
@@ -47,40 +48,39 @@ const Timer: React.FC<TimerProps> = ({ isHost }) => {
     };
 
     return (
-        <div className="flex w-full flex-col items-center gap-1 p-1.5">
-            <h2 className="text-xl uppercase">
-                <strong>Time Remaining</strong>
-            </h2>
-            <span className="flex gap-2 items-center">
+        <div className="flex w-full flex-col items-center gap-1">
+            <span className="flex items-center gap-2">
                 {isHost && (
                     <div>
-                        {timerIsActive ?
-                            <Button 
-                                variant={'ghost'}
-                                onClick={handleStopTimer}
-                            >
-                                <Pause />
+                        {timerIsActive ? (
+                            <Button variant={'ghost'} onClick={handleStopTimer}>
+                                <Pause strokeWidth={0} fill="currentColor" />
                             </Button>
-                            : 
-                            <Button 
-                                variant={'ghost'}
-                                onClick={handleStartTimer}
-                            >
-                                <Play />
+                        ) : (
+                            <Button variant={'ghost'} onClick={handleStartTimer}>
+                                <Play strokeWidth={0} fill="currentColor" />
                             </Button>
-                        }
+                        )}
                     </div>
                 )}
                 <p className={`text-3xl ${timerIsActive ? `text-red-500` : `text-gray-500`}`}>
                     {formatTime(time)}
                 </p>
                 {isHost && (
-                    <Button variant={'ghost'}>
-                        <Wrench />
+                    <Button
+                        variant={'ghost'}
+                        onClick={() => {
+                            toast({
+                                title: 'Coming Soon',
+                                description: 'This feature is coming soon!',
+                                variant: 'destructive',
+                            });
+                        }}
+                    >
+                        <Wrench strokeWidth={0} fill="currentColor" />
                     </Button>
                 )}
             </span>
-            
         </div>
     );
 };
