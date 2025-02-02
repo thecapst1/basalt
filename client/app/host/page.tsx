@@ -18,6 +18,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { Ellipsis, Moon, Sun, SunMoon, Copy } from 'lucide-react';
 import HeaderMenu from './HeaderMenu';
+import Timer from '@/components/Timer';
 
 export default function Host() {
     const { setTheme } = useTheme();
@@ -193,8 +194,10 @@ export default function Host() {
                         ))}
                 </div>
 
-                <div className="mb-5 mt-auto flex flex-col items-center justify-center">
+                <div className="mb-2.5 mt-auto flex flex-col items-center justify-center">
                     <Separator className="mt-2" />
+                    <Timer isHost={true} />
+                    <Separator />
                     <p className="mx-auto my-2.5 text-2xl uppercase">Server</p>
                     <Button
                         className={`h-fit w-fit px-5 py-3 text-2xl font-bold uppercase text-black ${serverStatus === 'loading' ? 'bg-gray-500' : serverStatus === 'stop' ? 'bg-red-600 hover:bg-red-500' : 'bg-green-600 hover:bg-green-500'}`}
@@ -202,11 +205,6 @@ export default function Host() {
                     >
                         {serverStatus}
                     </Button>
-                    <p
-                        className={`mt-1 text-xl ${serverStatus === 'loading' || serverStatus === 'start' ? 'text-gray-400' : 'text-green-500'}`}
-                    >
-                        00:00:00
-                    </p>
                 </div>
             </ResizablePanel>
 
