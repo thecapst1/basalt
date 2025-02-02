@@ -1,7 +1,7 @@
 'use client';
 import { useState, useEffect } from 'react';
 import { Button } from './ui/button';
-import { Pause, Play, Settings } from 'lucide-react';
+import { Pause, Play, Wrench } from 'lucide-react';
 
 interface TimerProps {
     isHost: boolean;
@@ -51,25 +51,36 @@ const Timer: React.FC<TimerProps> = ({ isHost }) => {
             <h2 className="text-xl uppercase">
                 <strong>Time Remaining</strong>
             </h2>
-            <p className={`text-xl ${timerIsActive ? `text-red-500` : `text-gray-500`}`}>
-                {formatTime(time)}
-            </p>
-            {isHost && (
-                <span className="flex items-center">
-                    {timerIsActive ? (
-                        <Button variant={'outline'} onClick={handleStopTimer}>
-                            <Pause />
-                        </Button>
-                    ) : (
-                        <Button variant={'outline'} onClick={handleStartTimer}>
-                            <Play />
-                        </Button>
-                    )}
-                    <Button variant={'outline'}>
-                        <Settings />
+            <span className="flex gap-2 items-center">
+                {isHost && (
+                    <div>
+                        {timerIsActive ?
+                            <Button 
+                                variant={'ghost'}
+                                onClick={handleStopTimer}
+                            >
+                                <Pause />
+                            </Button>
+                            : 
+                            <Button 
+                                variant={'ghost'}
+                                onClick={handleStartTimer}
+                            >
+                                <Play />
+                            </Button>
+                        }
+                    </div>
+                )}
+                <p className={`text-3xl ${timerIsActive ? `text-red-500` : `text-gray-500`}`}>
+                    {formatTime(time)}
+                </p>
+                {isHost && (
+                    <Button variant={'ghost'}>
+                        <Wrench />
                     </Button>
-                </span>
-            )}
+                )}
+            </span>
+            
         </div>
     );
 };
