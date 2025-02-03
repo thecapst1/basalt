@@ -86,10 +86,8 @@ export default function Home() {
                             )}
                         />
 
-                        <div className='flex justify-center'>
-                            <Button className='mt-2 w-[6vw]'>
-                                Login
-                            </Button>
+                        <div className="flex justify-center">
+                            <Button className="mt-2 w-[6vw]">Login</Button>
                         </div>
                     </form>
                 </Form>
@@ -97,12 +95,11 @@ export default function Home() {
                 {message && <p>{message}</p>}
             </div>
 
-            <div className='flex height-20 justify-center items-center'>
-                <Button onClick={() => router.push("/leaderboard")} className='w-[6vw]'>
+            <div className="height-20 flex items-center justify-center">
+                <Button onClick={() => router.push('/leaderboard')} className="w-[6vw]">
                     Leaderboard
                 </Button>
             </div>
-
         </div>
     );
 }
