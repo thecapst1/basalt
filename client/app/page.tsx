@@ -15,6 +15,7 @@ import {
     FormLabel,
     FormMessage,
 } from '@/components/ui/form';
+import { useRouter } from 'next/navigation';
 
 const LoginFormSchema = z.object({
     username: z.string().min(4, { message: 'Username must be at least 4 characters.' }),
@@ -23,7 +24,7 @@ const LoginFormSchema = z.object({
 type LoginFormValues = z.infer<typeof LoginFormSchema>;
 
 export default function Home() {
-    const [isHostLogin, setIsHostLogin] = useState<boolean>(false);
+    const router = useRouter();
     const [message, setMessage] = useState<string>('');
 
     const form = useForm<LoginFormValues>({
@@ -34,28 +35,24 @@ export default function Home() {
         },
     });
 
-    const toggleHostLogin = () => {
-        setMessage('');
-        setIsHostLogin((prev) => !prev);
-    };
-
     const onSubmit = () => {
-        if (isHostLogin) {
-            setMessage('Host Logged In');
-        } else if (!isHostLogin) {
-            setMessage('Competitor Logged In');
-        } else {
+        let username = form.getValues().username;
+        if (username == "admin") {
+            router.push('host');
+        }
+        else if (username == "Team1") {
+            router.push('competitor')
+        }
+        else {
             setMessage('Login Failed');
         }
-
         form.reset();
     };
 
     return (
         <div className="login-container">
             <div className="login-page">
-                <h1>{isHostLogin ? 'Host Login' : 'Login'}</h1>
-
+                <h1>Login</h1>
                 <h2 style={{ marginBottom: '5px' }}>
                     Please enter a username and password to get started!
                 </h2>
@@ -89,19 +86,23 @@ export default function Home() {
                             )}
                         />
 
-                        <div style={{ display: 'flex', justifyContent: 'center' }}>
-                            <Button asChild style={{ marginTop: '10px' }}>
-                                <Link href={isHostLogin ? '/host' : '/competitor'}>Login</Link>
+                        <div className='flex justify-center'>
+                            <Button className='mt-2 w-[6vw]'>
+                                Login
                             </Button>
                         </div>
                     </form>
                 </Form>
 
                 {message && <p>{message}</p>}
-                <button className="login-view" onClick={toggleHostLogin}>
-                    {isHostLogin ? 'Login As Competitor' : 'Login As Host'}
-                </button>
             </div>
+
+            <div className='flex height-20 justify-center items-center'>
+                <Button onClick={() => router.push("/leaderboard")} className='w-[6vw]'>
+                    Leaderboard
+                </Button>
+            </div>
+
         </div>
     );
 }
