@@ -1,7 +1,6 @@
 'use client';
 import './home.css';
 import { useState } from 'react';
-import Link from 'next/link';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -36,15 +35,16 @@ export default function Home() {
     });
 
     const onSubmit = () => {
-        let username = form.getValues().username;
-        if (username == "admin") {
-            router.push('host');
-        }
-        else if (username == "Team1") {
-            router.push('competitor')
-        }
-        else {
-            setMessage('Login Failed');
+        const { username } = form.getValues();
+        const users: Record<string, string> = {
+            'host': 'host',
+            'team1': 'competitor',
+        };
+        let path: string;
+        if ((path = users[username])) {
+            router.push(path);
+        } else {
+            setMessage('Invalid username or password.');
         }
         form.reset();
     };
