@@ -1,6 +1,7 @@
 import React from 'react';
 import { Card, CardHeader } from '@/components/ui/card';
 import { Circle, Trophy } from 'lucide-react';
+import Timer from '@/components/Timer';
 
 type TestState = 'pass' | 'fail' | 'in-progress' | 'not-attempted';
 
@@ -139,7 +140,7 @@ const TeamRank = () => {
         <div className="flex min-h-screen flex-col items-center justify-center gap-10 p-6">
             <Card className="w-full">
                 <CardHeader className="w-full items-center justify-center">
-                    <h2 className="font-oswald text-3xl">Leaderboard</h2>
+                    <Timer isActive={true} isLarge={true} />
                 </CardHeader>
             </Card>
 

@@ -6,16 +6,19 @@ import { toast } from '@/hooks/use-toast';
 
 interface TimerProps {
     isHost: boolean;
+    isActive?: boolean;
+    isLarge?: boolean;
 }
 
-const Timer: React.FC<TimerProps> = ({ isHost }) => {
+const Timer: React.FC<TimerProps> = ({ isHost = false, isActive = false, isLarge = false }) => {
     const [time, setTime] = useState(0);
-    const [timerIsActive, setTimerIsActive] = useState(false);
+    const [timerIsActive, setTimerIsActive] = useState(isActive);
     const [intervalId, setIntervalId] = useState<NodeJS.Timeout | null>(null);
 
     useEffect(() => {
         setTime(4500);
-        setTimerIsActive(false);
+        // setTimerIsActive(isActive);
+        handleStartTimer();
     }, []);
 
     const formatTime = (secondsRemaining: number) => {
@@ -63,7 +66,7 @@ const Timer: React.FC<TimerProps> = ({ isHost }) => {
                         )}
                     </div>
                 )}
-                <p className={`text-3xl ${timerIsActive ? `text-red-500` : `text-gray-500`}`}>
+                <p className={`${timerIsActive ? isLarge ? 'text-slate-500' : 'text-red-500' : 'text-gray-500'} ${isLarge ? 'text-9xl font-thin' : 'text-3xl'}`}>
                     {formatTime(time)}
                 </p>
                 {isHost && (
