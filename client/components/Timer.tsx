@@ -6,16 +6,21 @@ import { toast } from '@/hooks/use-toast';
 
 interface TimerProps {
     isHost: boolean;
+    startingTime: number;
+    isActive?: boolean;
 }
 
-const Timer: React.FC<TimerProps> = ({ isHost }) => {
-    const [time, setTime] = useState(0);
-    const [timerIsActive, setTimerIsActive] = useState(false);
+const Timer: React.FC<TimerProps> = ({ isHost = false, startingTime, isActive = false }) => {
+    const [time, setTime] = useState(startingTime);
+    const [timerIsActive, setTimerIsActive] = useState(isActive);
     const [intervalId, setIntervalId] = useState<NodeJS.Timeout | null>(null);
 
     useEffect(() => {
-        setTime(4500);
-        setTimerIsActive(false);
+        if (isActive) {
+            handleStartTimer();
+        } else {
+            handleStopTimer();
+        }
     }, []);
 
     const formatTime = (secondsRemaining: number) => {
@@ -52,23 +57,28 @@ const Timer: React.FC<TimerProps> = ({ isHost }) => {
             <span className="flex items-center gap-2">
                 {isHost && (
                     <div>
-                        {timerIsActive ? (
-                            <Button variant={'ghost'} onClick={handleStopTimer}>
+                        <Button
+                            variant={'ghost'}
+                            size="icon"
+                            onClick={timerIsActive ? handleStopTimer : handleStartTimer}
+                        >
+                            {timerIsActive ? (
                                 <Pause strokeWidth={0} fill="currentColor" />
-                            </Button>
-                        ) : (
-                            <Button variant={'ghost'} onClick={handleStartTimer}>
+                            ) : (
                                 <Play strokeWidth={0} fill="currentColor" />
-                            </Button>
-                        )}
+                            )}
+                        </Button>
                     </div>
                 )}
-                <p className={`text-3xl ${timerIsActive ? `text-red-500` : `text-gray-500`}`}>
+                <p
+                    className={`my-2 text-[8vmin] font-thin ${timerIsActive ? `` : `text-muted-foreground`}`}
+                >
                     {formatTime(time)}
                 </p>
                 {isHost && (
                     <Button
                         variant={'ghost'}
+                        size="icon"
                         onClick={() => {
                             toast({
                                 title: 'Coming Soon',

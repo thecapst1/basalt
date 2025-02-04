@@ -186,7 +186,7 @@ export default function Host() {
 
                 <div className="mb-2.5 mt-auto flex flex-col items-center justify-center">
                     <Separator className="mb-2.5" />
-                    <Timer isHost={true} />
+                    <Timer isHost={true} startingTime={4500} isActive={true} />
                 </div>
             </ResizablePanel>
 

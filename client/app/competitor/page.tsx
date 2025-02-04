@@ -256,7 +256,7 @@ export default function Competitor() {
                                     </div>
                                     <div className="py-2.5">
                                         <Separator className="mb-2.5 mt-2.5" />
-                                        <Timer isHost={false} />
+                                        <Timer isHost={false} startingTime={4500} />
                                     </div>
                                 </div>
                             </ResizablePanelGroup>
