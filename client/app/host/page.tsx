@@ -4,6 +4,7 @@ import { useTheme } from 'next-themes';
 import QuestionAccordion from './QuestionAccordion';
 import { Separator } from '@/components/ui/separator';
 import { Button } from '@/components/ui/button';
+import { toast } from '@/hooks/use-toast';
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from '@/components/ui/resizable';
 import {
     DropdownMenu,
@@ -107,7 +108,7 @@ export default function Host() {
                             <Ellipsis />
                         </DropdownMenuTrigger>
                         <DropdownMenuContent>
-                            <DropdownMenuItem onClick={() => disconnectAllTeams()}>
+                            <DropdownMenuItem onClick={disconnectAllTeams}>
                                 Kick All
                             </DropdownMenuItem>
                         </DropdownMenuContent>
@@ -143,6 +144,11 @@ export default function Host() {
                                                                     navigator.clipboard.writeText(
                                                                         team.password
                                                                     );
+                                                                    toast({
+                                                                        title: 'Password Copied',
+                                                                        description: `The password for '${team.name}' has been saved to your clipboard`,
+                                                                        variant: 'default',
+                                                                    });
                                                                 }}
                                                             >
                                                                 <Copy />
@@ -165,6 +171,11 @@ export default function Host() {
                                                         navigator.clipboard.writeText(
                                                             team.password
                                                         );
+                                                        toast({
+                                                            title: 'Password Copied',
+                                                            description: `The password for '${team.name}' has been saved to your clipboard`,
+                                                            variant: 'default',
+                                                        });
                                                     }}
                                                 >
                                                     <Copy />

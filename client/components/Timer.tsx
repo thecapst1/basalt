@@ -1,5 +1,5 @@
 'use client';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Button } from './ui/button';
 import { Pause, Play, Wrench } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
@@ -11,17 +11,10 @@ interface TimerProps {
 }
 
 const Timer: React.FC<TimerProps> = ({ isHost = false, startingTime, isActive = false }) => {
+    const hasInitialized = useRef(false);
     const [time, setTime] = useState(startingTime);
     const [timerIsActive, setTimerIsActive] = useState(isActive);
     const [intervalId, setIntervalId] = useState<NodeJS.Timeout | null>(null);
-
-    useEffect(() => {
-        if (isActive) {
-            handleStartTimer();
-        } else {
-            handleStopTimer();
-        }
-    }, []);
 
     const formatTime = (secondsRemaining: number) => {
         const hours = Math.floor(secondsRemaining / 3600);
@@ -29,6 +22,13 @@ const Timer: React.FC<TimerProps> = ({ isHost = false, startingTime, isActive = 
         const seconds = secondsRemaining % 60;
         return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
     };
+
+    useEffect(() => {
+        if (isActive && !hasInitialized.current) {
+            hasInitialized.current = true;
+            handleStartTimer();
+        }
+    });
 
     const handleStartTimer = async () => {
         setTimerIsActive(true);
