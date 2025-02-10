@@ -36,18 +36,20 @@ export default function Home() {
 
     const onSubmit = () => {
         const { username } = form.getValues();
-        const users = {
-            host: 'host',
-            team1: 'competitor',
+        const users: Record<string, string> = {
+            host: '/host',
+            team1: '/competitor',
         };
-        
+
         if (users[username]) {
             router.push(users[username]);
         } else {
             setMessage('Invalid username or password.');
         }
+
         form.reset();
     };
+
 
     return (
         <div className="login-container">
@@ -96,7 +98,7 @@ export default function Home() {
             </div>
 
             <div className="height-20 flex items-center justify-center">
-                <a  onClick={r => router.push('/leaderboard')} className='text-blue-500 hover:underline cursor-pointer'>
+                <a onClick={r => router.push('/leaderboard')} className='text-blue-500 hover:underline cursor-pointer'>
                     Leaderboard
                 </a>
             </div>
