@@ -1,9 +1,10 @@
 'use client';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useTheme } from 'next-themes';
 import QuestionAccordion from './QuestionAccordion';
 import { Separator } from '@/components/ui/separator';
 import { Button } from '@/components/ui/button';
+import { toast } from '@/hooks/use-toast';
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from '@/components/ui/resizable';
 import {
     DropdownMenu,
@@ -18,6 +19,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { Ellipsis, Moon, Sun, SunMoon, Copy } from 'lucide-react';
 import HeaderMenu from './HeaderMenu';
+import Timer from '@/components/Timer';
 
 export default function Host() {
     const { setTheme } = useTheme();
@@ -61,7 +63,6 @@ export default function Host() {
             enabled: true,
         },
     ]);
-    const [serverStatus, setServerStatus] = useState<'loading' | 'stop' | 'start'>('loading');
     const [teamList, setTeamList] = useState([
         { name: 'Team1', password: 'password1', points: 300, status: true },
         { name: 'Team2', password: 'password2', points: 126, status: true },
@@ -71,10 +72,6 @@ export default function Host() {
         { name: 'Team6', password: 'password6', points: 5, status: false },
         { name: 'Team7', password: 'password7', points: 125, status: true },
     ]);
-
-    useEffect(() => {
-        setServerStatus('stop');
-    }, []);
 
     const disconnectAllTeams = () => {
         const updatedTeams = teamList.map((team) => ({
@@ -100,11 +97,6 @@ export default function Host() {
         );
     };
 
-    const handleToggleServer = () => {
-        setServerStatus((prev) => (prev === 'start' ? 'stop' : 'start'));
-        disconnectAllTeams();
-    };
-
     return (
         <ResizablePanelGroup direction="horizontal" className="flex max-h-screen flex-grow">
             <ResizablePanel className="flex flex-col justify-center" defaultSize={30} maxSize={50}>
@@ -116,7 +108,7 @@ export default function Host() {
                             <Ellipsis />
                         </DropdownMenuTrigger>
                         <DropdownMenuContent>
-                            <DropdownMenuItem onClick={() => disconnectAllTeams()}>
+                            <DropdownMenuItem onClick={disconnectAllTeams}>
                                 Kick All
                             </DropdownMenuItem>
                         </DropdownMenuContent>
@@ -152,6 +144,11 @@ export default function Host() {
                                                                     navigator.clipboard.writeText(
                                                                         team.password
                                                                     );
+                                                                    toast({
+                                                                        title: 'Password Copied',
+                                                                        description: `The password for '${team.name}' has been saved to your clipboard`,
+                                                                        variant: 'default',
+                                                                    });
                                                                 }}
                                                             >
                                                                 <Copy />
@@ -174,6 +171,11 @@ export default function Host() {
                                                         navigator.clipboard.writeText(
                                                             team.password
                                                         );
+                                                        toast({
+                                                            title: 'Password Copied',
+                                                            description: `The password for '${team.name}' has been saved to your clipboard`,
+                                                            variant: 'default',
+                                                        });
                                                     }}
                                                 >
                                                     <Copy />
@@ -193,20 +195,9 @@ export default function Host() {
                         ))}
                 </div>
 
-                <div className="mb-5 mt-auto flex flex-col items-center justify-center">
-                    <Separator className="mt-2" />
-                    <p className="mx-auto my-2.5 text-2xl uppercase">Server</p>
-                    <Button
-                        className={`h-fit w-fit px-5 py-3 text-2xl font-bold uppercase text-black ${serverStatus === 'loading' ? 'bg-gray-500' : serverStatus === 'stop' ? 'bg-red-600 hover:bg-red-500' : 'bg-green-600 hover:bg-green-500'}`}
-                        onClick={handleToggleServer}
-                    >
-                        {serverStatus}
-                    </Button>
-                    <p
-                        className={`mt-1 text-xl ${serverStatus === 'loading' || serverStatus === 'start' ? 'text-gray-400' : 'text-green-500'}`}
-                    >
-                        00:00:00
-                    </p>
+                <div className="mb-2.5 mt-auto flex flex-col items-center justify-center">
+                    <Separator className="mb-2.5" />
+                    <Timer isHost={true} startingTime={4500} isActive={true} />
                 </div>
             </ResizablePanel>
 
