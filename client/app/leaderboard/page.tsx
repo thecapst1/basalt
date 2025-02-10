@@ -11,10 +11,10 @@ interface Data {
     tests: TestState[];
 }
 
-const TrophyColor = (rank: number) =>
+const trophyColor = (rank: number) =>
     ['text-yellow-500', 'text-gray-500', 'text-amber-600'][rank - 1];
 
-const ResultColor = (result: TestState): string => {
+const resultColor = (result: TestState): string => {
     switch (result) {
         case 'pass':
             return 'bg-green-500';
@@ -137,20 +137,14 @@ const TeamRank = () => {
 
     return (
         <div className="flex min-h-screen flex-col items-center justify-center gap-10 p-6">
-            <Card className="w-full">
-                <CardHeader className="w-full items-center justify-center">
-                    <h2 className="font-oswald text-3xl">Leaderboard</h2>
-                </CardHeader>
-            </Card>
-
-            <div className="flex w-full flex-row flex-wrap justify-center gap-4">
+            <div className="flex min- w-full flex-row flex-wrap justify-center gap-4 min-w-[1.5rem]">
                 {data.map((player) => (
-                    <Card key={player.rank} className="w-[50vw] rounded-xl shadow-md">
-                        <CardHeader className="flex w-full flex-row items-center justify-between gap-4">
+                    <Card key={player.rank} className="w-1/2 h-full rounded-xl shadow-md min-w-[max-content]">
+                        <CardHeader className="flex w-full min-w-[max-content] flex-row items-center justify-between gap-4">
                             <div className="flex w-1/3 flex-row items-center gap-2">
                                 <b>{player.name}</b>
                                 {player.rank <= 3 && (
-                                    <span color="yellow" className={TrophyColor(player.rank)}>
+                                    <span className={trophyColor(player.rank)}>
                                         <Trophy fill="currentColor" />
                                     </span>
                                 )}
@@ -161,7 +155,7 @@ const TeamRank = () => {
                                     <Circle
                                         strokeWidth={0}
                                         key={index}
-                                        className={`flex h-6 w-6 items-center justify-center rounded-full ${ResultColor(testResult)}`}
+                                        className={`flex items-center justify-center rounded-full min-w-[1.5rem] aspect-square ${resultColor(testResult)}`}
                                     />
                                 ))}
                             </div>
@@ -178,5 +172,12 @@ const TeamRank = () => {
 };
 
 export default function Leaderboard() {
-    return <TeamRank />;
+    return (
+        <div className='h-full'>
+            <div className='flex w-full justify-center  pt-4'>
+                <h2 className="font-oswald text-3xl">Leaderboard</h2>
+            </div>
+            <TeamRank />
+        </div>
+    );
 }

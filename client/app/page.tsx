@@ -1,7 +1,6 @@
 'use client';
 import './home.css';
 import { useState } from 'react';
-import Link from 'next/link';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -85,7 +84,7 @@ export default function Home() {
                         />
 
                         <div className="flex justify-center">
-                            <Button className="mt-2 w-[6vw]">Login</Button>
+                            <Button className="mt-2 w-full">Login</Button>
                         </div>
                     </form>
                 </Form>
@@ -94,9 +93,9 @@ export default function Home() {
             </div>
 
             <div className="height-20 flex items-center justify-center">
-                <Button onClick={() => router.push('/leaderboard')} className="w-[6vw]">
+                <a  onClick={r => router.push('/leaderboard')} className='text-blue-500 hover:underline cursor-pointer'>
                     Leaderboard
-                </Button>
+                </a>
             </div>
         </div>
     );
