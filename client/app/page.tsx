@@ -1,5 +1,4 @@
 'use client';
-import './home.css';
 import { useState } from 'react';
 import Link from 'next/link';
 import { useForm } from 'react-hook-form';
@@ -52,13 +51,11 @@ export default function Home() {
     };
 
     return (
-        <div className="login-container">
-            <div className="login-page">
-                <h1>{isHostLogin ? 'Host Login' : 'Login'}</h1>
+        <div className="flex h-screen items-center justify-center">
+            <div className="flex flex-col flex-wrap items-center">
+                <h1 className="mb-1 text-6xl font-bold">{isHostLogin ? 'Host Login' : 'Login'}</h1>
 
-                <h2 style={{ marginBottom: '5px' }}>
-                    Please enter a username and password to get started!
-                </h2>
+                <h2 className="mb-1.5">Please enter a username and password to get started!</h2>
 
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
@@ -89,8 +86,8 @@ export default function Home() {
                             )}
                         />
 
-                        <div style={{ display: 'flex', justifyContent: 'center' }}>
-                            <Button asChild style={{ marginTop: '10px' }}>
+                        <div className="flex justify-center">
+                            <Button asChild variant={'default'} className="mt-2">
                                 <Link href={isHostLogin ? '/host' : '/competitor'}>Login</Link>
                             </Button>
                         </div>
@@ -98,7 +95,7 @@ export default function Home() {
                 </Form>
 
                 {message && <p>{message}</p>}
-                <button className="login-view" onClick={toggleHostLogin}>
+                <button className="mt-2 hover:text-purple-800" onClick={toggleHostLogin}>
                     {isHostLogin ? 'Login As Competitor' : 'Login As Host'}
                 </button>
             </div>
