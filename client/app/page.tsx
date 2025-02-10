@@ -35,13 +35,16 @@ export default function Home() {
     });
 
     const onSubmit = () => {
-        let username = form.getValues().username;
-        if (username == 'admin') {
-            router.push('host');
-        } else if (username == 'Team1') {
-            router.push('competitor');
+        const { username } = form.getValues();
+        const users = {
+            host: 'host',
+            team1: 'competitor',
+        };
+        
+        if (users[username]) {
+            router.push(users[username]);
         } else {
-            setMessage('Login Failed');
+            setMessage('Invalid username or password.');
         }
         form.reset();
     };
