@@ -10,6 +10,10 @@ export default {
     theme: {
         extend: {
             colors: {
+                'test-pass': 'green-500',
+                'test-fail': 'red-500',
+                'test-in-progress': 'blue-500',
+                'test-not-attempted': 'gray-500',
                 background: 'hsl(var(--background))',
                 foreground: 'hsl(var(--foreground))',
                 card: {

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Card, CardHeader } from '@/components/ui/card';
 import { Circle, Trophy } from 'lucide-react';
+import Timer from '@/components/Timer';
 
 type TestState = 'pass' | 'fail' | 'in-progress' | 'not-attempted';
 
@@ -136,10 +137,10 @@ const TeamRank = () => {
     ];
 
     return (
-        <div className="flex min-h-screen flex-col items-center justify-center gap-10 p-6">
-            <div className="flex min- w-full flex-row flex-wrap justify-center gap-4 min-w-[1.5rem]">
+        <div className="flex h-full flex-col items-center justify-center gap-10 p-6">
+            <div className="flex flex-row flex-wrap justify-center gap-4 min-w-[1.5rem]">
                 {data.map((player) => (
-                    <Card key={player.rank} className="w-1/2 h-full rounded-xl shadow-md min-w-[max-content]">
+                    <Card key={player.rank} className="w-1/2 h-full rounded-xl shadow-md min-w-[600px]">
                         <CardHeader className="flex w-full min-w-[max-content] flex-row items-center justify-between gap-4">
                             <div className="flex w-1/3 flex-row items-center gap-2">
                                 <b>{player.name}</b>
@@ -174,8 +175,8 @@ const TeamRank = () => {
 export default function Leaderboard() {
     return (
         <div className='h-full'>
-            <div className='flex w-full justify-center  pt-4'>
-                <h2 className="font-oswald text-3xl">Leaderboard</h2>
+            <div className='flex w-full justify-center pt-8'>
+                <Timer isActive={true} startingTime={4500} />
             </div>
             <TeamRank />
         </div>

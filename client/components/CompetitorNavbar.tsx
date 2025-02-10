@@ -1,3 +1,5 @@
+"use client";
+
 import {
     NavigationMenu,
     NavigationMenuItem,
@@ -22,9 +24,20 @@ import {
     MenubarSeparator,
     MenubarTrigger,
 } from '@/components/ui/menubar';
-import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { useRouter } from 'next/dist/client/components/navigation';
+import { useState } from 'react';
 
 export default function CompetitorNavbar() {
+    const router = useRouter();
+    const [tabValue, setTabValue] = useState('text-Editor');
+
+    const handleTabChange = (value: string) => {
+        setTabValue(value);
+        if (value === 'Leaderboard') {
+            router.push('/leaderboard');
+        }
+    };
     return (
         <div className="item-center flex min-w-full justify-between p-1.5">
             <Menubar>
@@ -64,12 +77,15 @@ export default function CompetitorNavbar() {
             <NavigationMenu>
                 <NavigationMenuList>
                     <NavigationMenuItem>
-                        <Tabs>
+                        <Tabs defaultValue="text-Editor" value={tabValue} onValueChange={handleTabChange}>
                             <TabsList>
-                                <TabsTrigger value="Text Editor">Text Editor</TabsTrigger>
+                                <TabsTrigger value="text-Editor">Text Editor</TabsTrigger>
                                 <TabsTrigger value="Leaderboard">Leaderboard</TabsTrigger>
                             </TabsList>
+                            <TabsContent value="text-Editor">
+                            </TabsContent>
                         </Tabs>
+
                     </NavigationMenuItem>
                 </NavigationMenuList>
             </NavigationMenu>
