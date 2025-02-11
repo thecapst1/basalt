@@ -101,7 +101,7 @@ export default function Host() {
         <ResizablePanelGroup direction="horizontal" className="flex max-h-screen flex-grow">
             <ResizablePanel className="flex flex-col justify-center" defaultSize={30} maxSize={50}>
                 <div className="flex h-fit items-center justify-between p-2">
-                    <div></div>
+                    <div />
                     <p className="text-2xl uppercase">Teams</p>
                     <DropdownMenu>
                         <DropdownMenuTrigger>
@@ -212,7 +212,7 @@ export default function Host() {
                     <div className="ml-auto">
                         <DropdownMenu>
                             <DropdownMenuTrigger asChild>
-                                <Button variant={'outline'}>
+                                <Button variant="outline">
                                     <SunMoon />
                                     Theme
                                 </Button>
