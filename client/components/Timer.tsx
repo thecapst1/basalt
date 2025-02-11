@@ -46,7 +46,7 @@ const Timer: React.FC<TimerProps> = ({ isHost = false, startingTime, isActive = 
                 {isHost && (
                     <div>
                         <Button
-                            variant={'ghost'}
+                            variant="ghost"
                             size="icon"
                             onClick={() => setTimerIsActive(!timerIsActive)}
                         >
@@ -65,7 +65,7 @@ const Timer: React.FC<TimerProps> = ({ isHost = false, startingTime, isActive = 
                 </p>
                 {isHost && (
                     <Button
-                        variant={'ghost'}
+                        variant="ghost"
                         size="icon"
                         onClick={() => {
                             toast({
