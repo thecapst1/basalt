@@ -87,7 +87,7 @@ export default function Home() {
                         />
 
                         <div className="flex justify-center">
-                            <Button asChild variant='default' className="mt-2">
+                            <Button asChild variant="default" className="mt-2">
                                 <Link href={isHostLogin ? '/host' : '/competitor'}>Login</Link>
                             </Button>
                         </div>
