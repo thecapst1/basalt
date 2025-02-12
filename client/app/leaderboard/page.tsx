@@ -138,9 +138,12 @@ const TeamRank = () => {
 
     return (
         <div className="flex h-full flex-col items-center justify-center gap-10 p-6">
-            <div className="flex flex-row flex-wrap justify-center gap-4 min-w-[1.5rem]">
+            <div className="flex min-w-[1.5rem] flex-row flex-wrap justify-center gap-4">
                 {data.map((player) => (
-                    <Card key={player.rank} className="w-1/2 h-full rounded-xl shadow-md min-w-[600px]">
+                    <Card
+                        key={player.rank}
+                        className="h-full w-1/2 min-w-[600px] rounded-xl shadow-md"
+                    >
                         <CardHeader className="flex w-full min-w-[max-content] flex-row items-center justify-between gap-4">
                             <div className="flex w-1/3 flex-row items-center gap-2">
                                 <b>{player.name}</b>
@@ -156,7 +159,7 @@ const TeamRank = () => {
                                     <Circle
                                         strokeWidth={0}
                                         key={index}
-                                        className={`flex items-center justify-center rounded-full min-w-[1.5rem] aspect-square ${resultColor(testResult)}`}
+                                        className={`flex aspect-square min-w-[1.5rem] items-center justify-center rounded-full ${resultColor(testResult)}`}
                                     />
                                 ))}
                             </div>
@@ -174,8 +177,8 @@ const TeamRank = () => {
 
 export default function Leaderboard() {
     return (
-        <div className='h-full'>
-            <div className='flex w-full justify-center pt-8'>
+        <div className="h-full">
+            <div className="flex w-full justify-center pt-8">
                 <Timer isActive={true} startingTime={4500} />
             </div>
             <TeamRank />

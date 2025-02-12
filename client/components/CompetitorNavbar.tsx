@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import {
     NavigationMenu,
@@ -24,20 +24,24 @@ import {
     MenubarSeparator,
     MenubarTrigger,
 } from '@/components/ui/menubar';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { useRouter } from 'next/dist/client/components/navigation';
-import { useState } from 'react';
+import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { useState, useEffect } from 'react';
+import { EventEmitter } from 'events';
+
+const tabChangeEmitter = new EventEmitter();
 
 export default function CompetitorNavbar() {
-    const router = useRouter();
-    const [tabValue, setTabValue] = useState('text-Editor');
+    const [tabValue, setTabValue] = useState('Text-Editor');
 
     const handleTabChange = (value: string) => {
         setTabValue(value);
-        if (value === 'Leaderboard') {
-            router.push('/leaderboard');
-        }
+        tabChangeEmitter.emit('tabChange', value);
     };
+
+    useEffect(() => {
+        tabChangeEmitter.emit('tabChange', tabValue);
+    }, [tabValue]);
+
     return (
         <div className="item-center flex min-w-full justify-between p-1.5">
             <Menubar>
@@ -77,15 +81,16 @@ export default function CompetitorNavbar() {
             <NavigationMenu>
                 <NavigationMenuList>
                     <NavigationMenuItem>
-                        <Tabs defaultValue="text-Editor" value={tabValue} onValueChange={handleTabChange}>
+                        <Tabs
+                            defaultValue="Text-Editor"
+                            value={tabValue}
+                            onValueChange={handleTabChange}
+                        >
                             <TabsList>
-                                <TabsTrigger value="text-Editor">Text Editor</TabsTrigger>
+                                <TabsTrigger value="Text-Editor">Text Editor</TabsTrigger>
                                 <TabsTrigger value="Leaderboard">Leaderboard</TabsTrigger>
                             </TabsList>
-                            <TabsContent value="text-Editor">
-                            </TabsContent>
                         </Tabs>
-
                     </NavigationMenuItem>
                 </NavigationMenuList>
             </NavigationMenu>
@@ -108,3 +113,5 @@ export default function CompetitorNavbar() {
         </div>
     );
 }
+
+export { tabChangeEmitter };

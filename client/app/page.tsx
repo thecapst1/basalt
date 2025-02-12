@@ -50,7 +50,6 @@ export default function Home() {
         form.reset();
     };
 
-
     return (
         <div className="login-container">
             <div className="login-page">
@@ -98,7 +97,7 @@ export default function Home() {
             </div>
 
             <div className="height-20 flex items-center justify-center">
-                <a onClick={r => router.push('/leaderboard')} className='text-blue-500 hover:underline cursor-pointer'>
+                <a href="/leaderboard" className="cursor-pointer text-blue-500 hover:underline">
                     Leaderboard
                 </a>
             </div>
