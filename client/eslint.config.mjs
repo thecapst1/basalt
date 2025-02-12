@@ -1,6 +1,7 @@
 import { dirname } from 'path';
 import { fileURLToPath } from 'url';
 import { FlatCompat } from '@eslint/eslintrc';
+import stylistic from '@stylistic/eslint-plugin';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -11,6 +12,37 @@ const compat = new FlatCompat({
 
 const eslintConfig = [
     ...compat.extends('next/core-web-vitals', 'next/typescript', 'prettier'),
+    {
+        plugins: {
+            '@stylistic': stylistic,
+        },
+        rules: {
+            '@stylistic/jsx-quotes': ['error', 'prefer-double'],
+            '@stylistic/jsx-curly-brace-presence': [
+                'error',
+                {
+                    props: 'never',
+                    children: 'never',
+                    propElementValues: 'never',
+                },
+            ],
+            '@stylistic/jsx-pascal-case': [
+                'error',
+                {
+                    allowAllCaps: false,
+                    allowNamespace: true,
+                    allowLeadingUnderscore: false,
+                },
+            ],
+            '@stylistic/jsx-self-closing-comp': [
+                'error',
+                {
+                    component: true,
+                    html: true,
+                },
+            ],
+        },
+    },
     {
         rules: {
             camelcase: [
