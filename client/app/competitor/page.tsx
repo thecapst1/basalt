@@ -16,14 +16,14 @@ import { Separator } from '@/components/ui/separator';
 import Leaderboard from '../leaderboard/page';
 
 const ObserveLeaderboardTab = () => {
-    const [IsLeaderBoard, setIsLeaderBoard] = useState(false);
+    const [isLeaderboard, setIsLeaderboard] = useState(false);
 
     useEffect(() => {
         const handleTabChange = (value: string) => {
             if (value === 'Leaderboard') {
-                setIsLeaderBoard(true);
+                setIsLeaderboard(true);
             } else {
-                setIsLeaderBoard(false);
+                setIsLeaderboard(false);
             }
         };
 
@@ -34,19 +34,13 @@ const ObserveLeaderboardTab = () => {
         };
     }, []);
 
-    return (
-        <ScrollArea className="h-full w-full">
-            <div className="h-full">
-                {IsLeaderBoard ? (
-                    <div className="border-black-300 h-full border-t">
-                        <Leaderboard />
-                    </div>
-                ) : (
-                    <Textarea className="h-full" />
-                )}
-            </div>
+    if (isLeaderboard) {
+        return <ScrollArea className="h-full w-full">
+            <Leaderboard />
         </ScrollArea>
-    );
+    } else {
+        return <Textarea />
+    }
 };
 
 const Code = ({ children }: PropsWithChildren) => (
@@ -59,7 +53,6 @@ const Code = ({ children }: PropsWithChildren) => (
 
 // TODO: need to bring in Question Information from host component as am input for this func
 const GetCurrentQuestion = () => {
-    ObserveLeaderboardTab();
     return (
         <div className="flex flex-col items-center justify-center gap-2">
             <h1>
@@ -303,7 +296,7 @@ export default function Competitor() {
                         <ResizablePanel className="">
                             <ResizablePanelGroup direction="vertical" className="h-full">
                                 <ResizablePanel defaultSize={400} className="h-full">
-                                    <div className="h-full">
+                                    <div className="flex h-full">
                                         <ObserveLeaderboardTab />
                                     </div>
                                 </ResizablePanel>
