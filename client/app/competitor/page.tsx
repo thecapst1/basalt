@@ -35,11 +35,13 @@ const ObserveLeaderboardTab = () => {
     }, []);
 
     if (isLeaderboard) {
-        return <ScrollArea className="h-full w-full">
-            <Leaderboard />
-        </ScrollArea>
+        return (
+            <ScrollArea className="h-full w-full">
+                <Leaderboard />
+            </ScrollArea>
+        );
     } else {
-        return <Textarea />
+        return <Textarea />;
     }
 };
 

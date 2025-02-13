@@ -12,14 +12,13 @@ interface Data {
     tests: TestState[];
 }
 
-const trophyColor = (rank: number) =>
-    ['text-yellow-500', 'text-gray-500', 'text-amber-600'][rank];
+const trophyColor = (rank: number) => ['text-yellow-500', 'text-gray-500', 'text-amber-600'][rank];
 
 const testColor = (testOutput: TestState) => {
     // See: https://tailwindcss.com/docs/detecting-classes-in-source-files#dynamic-class-names
     const classMap: Record<TestState, string> = {
-        'pass': 'text-pass',
-        'fail': 'text-fail',
+        pass: 'text-pass',
+        fail: 'text-fail',
         'in-progress': 'text-in-progress',
         'not-attempted': 'text-not-attempted',
     };
