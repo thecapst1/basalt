@@ -13,45 +13,42 @@ interface Data {
 }
 
 const trophyColor = (rank: number) =>
-    ['text-yellow-500', 'text-gray-500', 'text-amber-600'][rank - 1];
+    ['text-yellow-500', 'text-gray-500', 'text-amber-600'][rank];
 
-const resultColor = (result: TestState): string => {
-    switch (result) {
-        case 'pass':
-            return 'bg-green-500';
-        case 'fail':
-            return 'bg-red-500';
-        case 'in-progress':
-            return 'bg-blue-500';
-        case 'not-attempted':
-            return 'bg-gray-500';
-        default:
-            return '';
-    }
+const testColor = (testOutput: TestState) => {
+    // See: https://tailwindcss.com/docs/detecting-classes-in-source-files#dynamic-class-names
+    const classMap: Record<TestState, string> = {
+        'pass': 'text-pass',
+        'fail': 'text-fail',
+        'in-progress': 'text-in-progress',
+        'not-attempted': 'text-not-attempted',
+    };
+
+    return classMap[testOutput];
 };
 
 const TeamRank = () => {
     const data: Data[] = [
         {
-            rank: 1,
+            rank: 0,
             name: 'Team 1',
             score: 980,
             tests: ['pass', 'pass', 'pass', 'pass', 'pass', 'pass', 'pass'],
         },
         {
-            rank: 2,
+            rank: 1,
             name: 'Team 2',
             score: 870,
             tests: ['pass', 'pass', 'pass', 'pass', 'pass', 'pass', 'in-progress'],
         },
         {
-            rank: 3,
+            rank: 2,
             name: 'Team 3',
             score: 760,
             tests: ['pass', 'pass', 'pass', 'pass', 'pass', 'fail', 'fail'],
         },
         {
-            rank: 4,
+            rank: 3,
             name: 'Team 4',
             score: 650,
             tests: [
@@ -65,7 +62,7 @@ const TeamRank = () => {
             ],
         },
         {
-            rank: 5,
+            rank: 4,
             name: 'Team 5',
             score: 540,
             tests: [
@@ -79,7 +76,7 @@ const TeamRank = () => {
             ],
         },
         {
-            rank: 6,
+            rank: 5,
             name: 'Team 6',
             score: 530,
             tests: [
@@ -93,7 +90,7 @@ const TeamRank = () => {
             ],
         },
         {
-            rank: 7,
+            rank: 6,
             name: 'Team 7',
             score: 520,
             tests: [
@@ -107,7 +104,7 @@ const TeamRank = () => {
             ],
         },
         {
-            rank: 8,
+            rank: 7,
             name: 'Team 8',
             score: 510,
             tests: [
@@ -121,7 +118,7 @@ const TeamRank = () => {
             ],
         },
         {
-            rank: 9,
+            rank: 8,
             name: 'Team 9',
             score: 500,
             tests: [
@@ -147,7 +144,7 @@ const TeamRank = () => {
                         <CardHeader className="flex w-full min-w-[max-content] flex-row items-center justify-between gap-4">
                             <div className="flex w-1/3 flex-row items-center gap-2">
                                 <b>{player.name}</b>
-                                {player.rank <= 3 && (
+                                {player.rank < 3 && (
                                     <span className={trophyColor(player.rank)}>
                                         <Trophy fill="currentColor" />
                                     </span>
@@ -157,9 +154,11 @@ const TeamRank = () => {
                             <div className="flex w-1/3 items-center justify-center gap-2">
                                 {player.tests.map((testResult, index) => (
                                     <Circle
+                                        className={testColor(testResult)}
                                         strokeWidth={0}
                                         key={index}
-                                        className={`flex aspect-square min-w-[1.5rem] items-center justify-center rounded-full ${resultColor(testResult)}`}
+                                        color="currentColor"
+                                        fill="currentColor"
                                     />
                                 ))}
                             </div>
