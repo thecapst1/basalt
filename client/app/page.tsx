@@ -15,6 +15,7 @@ import {
     FormMessage,
 } from '@/components/ui/form';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 const LoginFormSchema = z.object({
     username: z.string().min(4, { message: 'Username must be at least 4 characters.' }),
@@ -97,9 +98,11 @@ export default function Home() {
             </div>
 
             <div className="height-20 flex items-center justify-center">
-                <a href="/leaderboard" className="cursor-pointer text-blue-500 hover:underline">
-                    Leaderboard
-                </a>
+                <Button asChild variant={'link'}>
+                    <Link href="/leaderboard">
+                        Leaderboard
+                    </Link>
+                </Button>
             </div>
         </div>
     );

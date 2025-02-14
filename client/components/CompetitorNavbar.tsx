@@ -31,7 +31,7 @@ import { EventEmitter } from 'events';
 const tabChangeEmitter = new EventEmitter();
 
 export default function CompetitorNavbar() {
-    const [tabValue, setTabValue] = useState('Text-Editor');
+    const [tabValue, setTabValue] = useState('text-editor');
 
     const handleTabChange = (value: string) => {
         setTabValue(value);
@@ -82,13 +82,13 @@ export default function CompetitorNavbar() {
                 <NavigationMenuList>
                     <NavigationMenuItem>
                         <Tabs
-                            defaultValue="Text-Editor"
+                            defaultValue="text-editor"
                             value={tabValue}
                             onValueChange={handleTabChange}
                         >
                             <TabsList>
-                                <TabsTrigger value="Text-Editor">Text Editor</TabsTrigger>
-                                <TabsTrigger value="Leaderboard">Leaderboard</TabsTrigger>
+                                <TabsTrigger value="text-editor">Text Editor</TabsTrigger>
+                                <TabsTrigger value="leaderboard">Leaderboard</TabsTrigger>
                             </TabsList>
                         </Tabs>
                     </NavigationMenuItem>

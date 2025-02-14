@@ -15,29 +15,21 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { Separator } from '@/components/ui/separator';
 import Leaderboard from '../leaderboard/page';
 
-const ObserveLeaderboardTab = () => {
-    const [isLeaderboard, setIsLeaderboard] = useState(false);
+const TabContent = () => {
+    const [selectedTab, setSelectedTab] = useState<'text-editor' | 'leaderboard'>('text-editor');
 
     useEffect(() => {
-        const handleTabChange = (value: string) => {
-            if (value === 'Leaderboard') {
-                setIsLeaderboard(true);
-            } else {
-                setIsLeaderboard(false);
-            }
-        };
-
-        tabChangeEmitter.on('tabChange', handleTabChange);
+        tabChangeEmitter.on('tabChange', setSelectedTab);
 
         return () => {
-            tabChangeEmitter.off('tabChange', handleTabChange);
+            tabChangeEmitter.off('tabChange', setSelectedTab);
         };
     }, []);
 
-    if (isLeaderboard) {
+    if (selectedTab === 'leaderboard') {
         return (
-            <ScrollArea className="h-full w-full">
-                <Leaderboard />
+            <ScrollArea className="h-full w-full border">
+                <Leaderboard showTimer={false} />
             </ScrollArea>
         );
     } else {
@@ -299,7 +291,7 @@ export default function Competitor() {
                             <ResizablePanelGroup direction="vertical" className="h-full">
                                 <ResizablePanel defaultSize={400} className="h-full">
                                     <div className="flex h-full">
-                                        <ObserveLeaderboardTab />
+                                        <TabContent />
                                     </div>
                                 </ResizablePanel>
                                 <ResizableHandle />
