@@ -140,7 +140,7 @@ const TeamRank = () => {
                         key={player.rank}
                         className="h-full w-1/2 min-w-[600px] rounded-xl shadow-md"
                     >
-                        <CardHeader className="flex w-full min-h-full min-w-[max-content] flex-row items-center justify-between gap-4">
+                        <CardHeader className="flex min-h-full w-full min-w-[max-content] flex-row items-center justify-between gap-4">
                             <div className="flex w-1/3 flex-row gap-2">
                                 <b>{player.name}</b>
                                 {player.rank < 3 && (
@@ -176,11 +176,11 @@ const TeamRank = () => {
 export default function Leaderboard({ showTimer = true }) {
     return (
         <div className="h-full">
-            { showTimer &&
+            {showTimer && (
                 <div className="flex w-full justify-center pt-8">
                     <Timer isActive={true} startingTime={4500} />
                 </div>
-            }
+            )}
             <TeamRank />
         </div>
     );
