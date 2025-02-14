@@ -137,9 +137,9 @@ const TeamRank = () => {
             {data.map((player) => (
                 <Card
                     key={player.rank}
-                    className="w-1/2 min-w-[600px] shadow-md flex flex-row p-6 text-xl"
+                    className="flex w-1/2 min-w-[600px] flex-row p-6 text-xl shadow-md"
                 >
-                    <div className="flex w-1/3 flex-row gap-2 items-center">
+                    <div className="flex w-1/3 flex-row items-center gap-2">
                         <b>{player.name}</b>
                         {player.rank < 3 && (
                             <span className={trophyColor(player.rank)}>
@@ -148,7 +148,7 @@ const TeamRank = () => {
                         )}
                     </div>
 
-                    <div className="flex w-1/3 gap-2 items-center justify-center">
+                    <div className="flex w-1/3 items-center justify-center gap-2">
                         {player.tests.map((testResult, index) => (
                             <Circle
                                 className={testColor(testResult)}
@@ -160,9 +160,7 @@ const TeamRank = () => {
                         ))}
                     </div>
 
-                    <span className="w-1/3 text-end align-middle">
-                        {player.score} pts
-                    </span>
+                    <span className="w-1/3 text-end align-middle">{player.score} pts</span>
                 </Card>
             ))}
         </div>
