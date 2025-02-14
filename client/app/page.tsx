@@ -98,7 +98,7 @@ export default function Home() {
             </div>
 
             <div className="height-20 flex items-center justify-center">
-                <Button asChild variant={'link'}>
+                <Button asChild variant="link">
                     <Link href="/leaderboard">Leaderboard</Link>
                 </Button>
             </div>
