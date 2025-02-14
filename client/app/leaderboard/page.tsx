@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, CardHeader } from '@/components/ui/card';
+import { Card } from '@/components/ui/card';
 import { Circle, Trophy } from 'lucide-react';
 import Timer from '@/components/Timer';
 
@@ -133,42 +133,38 @@ const TeamRank = () => {
     ];
 
     return (
-        <div className="flex h-full flex-col items-center justify-center gap-10 p-6">
-            <div className="flex min-w-[1.5rem] flex-row flex-wrap justify-center gap-4">
-                {data.map((player) => (
-                    <Card
-                        key={player.rank}
-                        className="h-full w-1/2 min-w-[600px] rounded-xl shadow-md"
-                    >
-                        <CardHeader className="flex min-h-full w-full min-w-[max-content] flex-row items-center justify-between gap-4">
-                            <div className="flex w-1/3 flex-row gap-2">
-                                <b>{player.name}</b>
-                                {player.rank < 3 && (
-                                    <span className={trophyColor(player.rank)}>
-                                        <Trophy fill="currentColor" />
-                                    </span>
-                                )}
-                            </div>
-
-                            <div className="flex w-1/3 items-center justify-center gap-2">
-                                {player.tests.map((testResult, index) => (
-                                    <Circle
-                                        className={testColor(testResult)}
-                                        strokeWidth={0}
-                                        key={index}
-                                        color="currentColor"
-                                        fill="currentColor"
-                                    />
-                                ))}
-                            </div>
-
-                            <span className="w-1/3 text-end text-lg font-medium">
-                                {player.score} pts
+        <div className="flex flex-col items-center gap-4">
+            {data.map((player) => (
+                <Card
+                    key={player.rank}
+                    className="w-1/2 min-w-[600px] shadow-md flex flex-row p-6 text-xl"
+                >
+                    <div className="flex w-1/3 flex-row gap-2 items-center">
+                        <b>{player.name}</b>
+                        {player.rank < 3 && (
+                            <span className={trophyColor(player.rank)}>
+                                <Trophy fill="currentColor" size="1em" />
                             </span>
-                        </CardHeader>
-                    </Card>
-                ))}
-            </div>
+                        )}
+                    </div>
+
+                    <div className="flex w-1/3 gap-2 items-center justify-center">
+                        {player.tests.map((testResult, index) => (
+                            <Circle
+                                className={testColor(testResult)}
+                                strokeWidth={0}
+                                key={index}
+                                color="currentColor"
+                                fill="currentColor"
+                            />
+                        ))}
+                    </div>
+
+                    <span className="w-1/3 text-end align-middle">
+                        {player.score} pts
+                    </span>
+                </Card>
+            ))}
         </div>
     );
 };
