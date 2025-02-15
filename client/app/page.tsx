@@ -51,7 +51,7 @@ export default function Home() {
     };
 
     return (
-        <div className="flex flex-col h-screen items-center justify-center">
+        <div className="flex h-screen flex-col items-center justify-center">
             <div className="flex flex-col flex-wrap items-center">
                 <h1 className="mb-1 text-6xl font-bold">Login</h1>
                 <h2 className="mb-1.5">Please enter a username and password to get started!</h2>
