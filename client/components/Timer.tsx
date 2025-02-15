@@ -5,9 +5,9 @@ import { Pause, Play, Wrench } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
 
 interface TimerProps {
-    isHost: boolean;
+    isHost?: boolean;
     startingTime: number;
-    isActive?: boolean;
+    isActive: boolean;
 }
 
 const Timer: React.FC<TimerProps> = ({ isHost = false, startingTime, isActive = false }) => {
