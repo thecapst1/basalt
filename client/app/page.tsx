@@ -53,7 +53,7 @@ export default function Home() {
     return (
         <div className="flex h-screen flex-col items-center justify-center">
             <div className="flex flex-col flex-wrap items-center">
-                <h1 className="mb-1 text-6xl font-bold">Login</h1>
+                <h1 className="mb-1 text-6xl font-bold">Log In</h1>
                 <h2 className="mb-1.5">Please enter a username and password to get started!</h2>
 
                 <Form {...form}>
@@ -86,7 +86,7 @@ export default function Home() {
                         />
 
                         <div className="flex justify-center">
-                            <Button className="mt-2 w-full">Login</Button>
+                            <Button className="mt-2 w-full">Log In</Button>
                         </div>
                     </form>
                 </Form>

@@ -27,7 +27,7 @@ import {
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useState, useEffect } from 'react';
 import { EventEmitter } from 'events';
-import SettingsMenu from './SettingsMenu';
+import UserMenu from './UserMenu';
 
 const tabChangeEmitter = new EventEmitter();
 
@@ -110,7 +110,7 @@ export default function CompetitorNavbar() {
                         </SelectGroup>
                     </SelectContent>
                 </Select>
-                <SettingsMenu />
+                <UserMenu />
             </div>
         </div>
     );
