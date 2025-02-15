@@ -1,8 +1,9 @@
+'use client';
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from '@/components/ui/resizable';
 import Timer from '@/components/Timer';
 import { Button } from '@/components/ui/button';
-import { PropsWithChildren } from 'react';
-import CompetitorNavbar from '@/components/CompetitorNavbar';
+import { PropsWithChildren, useEffect, useState } from 'react';
+import CompetitorNavbar, { tabChangeEmitter } from '@/components/CompetitorNavbar';
 import { Textarea } from '@/components/ui/textarea';
 import {
     Accordion,
@@ -12,6 +13,29 @@ import {
 } from '@/components/ui/accordion';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Separator } from '@/components/ui/separator';
+import Leaderboard from '../leaderboard/page';
+
+const TabContent = () => {
+    const [selectedTab, setSelectedTab] = useState<'text-editor' | 'leaderboard'>('text-editor');
+
+    useEffect(() => {
+        tabChangeEmitter.on('tabChange', setSelectedTab);
+
+        return () => {
+            tabChangeEmitter.off('tabChange', setSelectedTab);
+        };
+    }, []);
+
+    if (selectedTab === 'leaderboard') {
+        return (
+            <ScrollArea className="h-full w-full border">
+                <Leaderboard showTimer={false} />
+            </ScrollArea>
+        );
+    } else {
+        return <Textarea />;
+    }
+};
 
 const Code = ({ children }: PropsWithChildren) => (
     <p>
@@ -238,6 +262,7 @@ export default function Competitor() {
             <div>
                 <CompetitorNavbar />
             </div>
+
             <div className="flex h-[95vh]">
                 <div className="flex-grow">
                     <ResizablePanelGroup direction="horizontal">
@@ -266,7 +291,7 @@ export default function Competitor() {
                             <ResizablePanelGroup direction="vertical" className="h-full">
                                 <ResizablePanel defaultSize={400} className="h-full">
                                     <div className="flex h-full">
-                                        <Textarea />
+                                        <TabContent />
                                     </div>
                                 </ResizablePanel>
                                 <ResizableHandle />

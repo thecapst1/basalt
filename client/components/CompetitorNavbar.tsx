@@ -1,3 +1,5 @@
+'use client';
+
 import {
     NavigationMenu,
     NavigationMenuItem,
@@ -23,8 +25,23 @@ import {
     MenubarTrigger,
 } from '@/components/ui/menubar';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { useState, useEffect } from 'react';
+import { EventEmitter } from 'events';
+
+const tabChangeEmitter = new EventEmitter();
 
 export default function CompetitorNavbar() {
+    const [tabValue, setTabValue] = useState('text-editor');
+
+    const handleTabChange = (value: string) => {
+        setTabValue(value);
+        tabChangeEmitter.emit('tabChange', value);
+    };
+
+    useEffect(() => {
+        tabChangeEmitter.emit('tabChange', tabValue);
+    }, [tabValue]);
+
     return (
         <div className="item-center flex min-w-full justify-between p-1.5">
             <Menubar>
@@ -64,10 +81,14 @@ export default function CompetitorNavbar() {
             <NavigationMenu>
                 <NavigationMenuList>
                     <NavigationMenuItem>
-                        <Tabs>
+                        <Tabs
+                            defaultValue="text-editor"
+                            value={tabValue}
+                            onValueChange={handleTabChange}
+                        >
                             <TabsList>
-                                <TabsTrigger value="Text Editor">Text Editor</TabsTrigger>
-                                <TabsTrigger value="Leaderboard">Leaderboard</TabsTrigger>
+                                <TabsTrigger value="text-editor">Text Editor</TabsTrigger>
+                                <TabsTrigger value="leaderboard">Leaderboard</TabsTrigger>
                             </TabsList>
                         </Tabs>
                     </NavigationMenuItem>
@@ -92,3 +113,5 @@ export default function CompetitorNavbar() {
         </div>
     );
 }
+
+export { tabChangeEmitter };

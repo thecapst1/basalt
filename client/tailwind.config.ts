@@ -10,6 +10,10 @@ export default {
     theme: {
         extend: {
             colors: {
+                pass: '#03dd70',
+                fail: '#d8464b',
+                'in-progress': '#5995ed',
+                'not-attempted': 'hsl(var(--muted))',
                 background: 'hsl(var(--background))',
                 foreground: 'hsl(var(--foreground))',
                 card: {
