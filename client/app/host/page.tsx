@@ -17,7 +17,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { Ellipsis, Copy } from 'lucide-react';
 import Timer from '@/components/Timer';
-import HostNavbar from './HostNavbar';
+import HostNavbar from '@/components/HostNavbar';
 
 export default function Host() {
     const [questions, setQuestions] = useState([

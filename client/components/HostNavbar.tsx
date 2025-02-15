@@ -3,7 +3,7 @@ import UserMenu from '@/components/UserMenu';
 import { Button } from '@/components/ui/button';
 import { FileDown } from 'lucide-react';
 
-const HostNavbar = () => {
+export default function HostNavbar() {
     return (
         <div className="flex w-full">
             <span>
@@ -16,6 +16,4 @@ const HostNavbar = () => {
             </span>
         </div>
     );
-};
-
-export default HostNavbar;
+}

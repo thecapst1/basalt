@@ -15,7 +15,7 @@ import {
     DropdownMenuTrigger,
 } from './ui/dropdown-menu';
 
-const UserMenu = () => {
+export default function UserMenu() {
     const { setTheme } = useTheme();
 
     return (
@@ -46,16 +46,12 @@ const UserMenu = () => {
                         </DropdownMenuPortal>
                     </DropdownMenuSub>
                     <DropdownMenuSeparator />
-                    <Button className="w-full" variant="default" asChild>
-                        <Link href="/">
-                            <LogOut />
-                            Log Out
-                        </Link>
-                    </Button>
+                    <DropdownMenuItem>
+                        <LogOut />
+                        <Link href="/">Log Out</Link>
+                    </DropdownMenuItem>
                 </DropdownMenuContent>
             </DropdownMenuPortal>
         </DropdownMenu>
     );
-};
-
-export default UserMenu;
+}
