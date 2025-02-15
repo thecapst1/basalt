@@ -5,15 +5,14 @@ import { Pause, Play, Wrench } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
 
 interface TimerProps {
-    isHost: boolean;
+    isHost?: boolean;
     startingTime: number;
-    isActive?: boolean;
+    isActive: boolean;
 }
 
 const Timer: React.FC<TimerProps> = ({ isHost = false, startingTime, isActive = false }) => {
     const [time, setTime] = useState(startingTime);
     const [timerIsActive, setTimerIsActive] = useState(isActive);
-    const [intervalId, setIntervalId] = useState<NodeJS.Timeout | null>(null);
 
     const formatTime = (secondsRemaining: number) => {
         const hours = Math.floor(secondsRemaining / 3600);
@@ -23,32 +22,23 @@ const Timer: React.FC<TimerProps> = ({ isHost = false, startingTime, isActive = 
     };
 
     useEffect(() => {
-        if (isActive) {
-            handleStartTimer();
+        if (timerIsActive) {
+            const id = setInterval(() => {
+                setTime((prev) => {
+                    if (prev <= 0) {
+                        clearInterval(id);
+                        setTimerIsActive(false);
+                        return 0;
+                    } else {
+                        return prev - 1;
+                    }
+                });
+            }, 1000);
+            return () => clearInterval(id);
+        } else {
+            return () => null;
         }
-    }, [isActive]);
-
-    const handleStartTimer = async () => {
-        setTimerIsActive(true);
-        const id = setInterval(() => {
-            setTime((prev) => {
-                if (prev <= 0) {
-                    clearInterval(id);
-                    setTimerIsActive(false);
-                    return 0;
-                }
-                return prev - 1;
-            });
-        }, 1000);
-        setIntervalId(id);
-    };
-
-    const handleStopTimer = () => {
-        if (intervalId) {
-            clearInterval(intervalId);
-            setTimerIsActive(false);
-        }
-    };
+    }, [timerIsActive]);
 
     return (
         <div className="flex w-full flex-col items-center gap-1">
@@ -58,7 +48,7 @@ const Timer: React.FC<TimerProps> = ({ isHost = false, startingTime, isActive = 
                         <Button
                             variant="ghost"
                             size="icon"
-                            onClick={timerIsActive ? handleStopTimer : handleStartTimer}
+                            onClick={() => setTimerIsActive(!timerIsActive)}
                         >
                             {timerIsActive ? (
                                 <Pause strokeWidth={0} fill="currentColor" />

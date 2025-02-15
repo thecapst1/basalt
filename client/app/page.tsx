@@ -1,7 +1,5 @@
 'use client';
-import './home.css';
 import { useState } from 'react';
-import Link from 'next/link';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -15,6 +13,8 @@ import {
     FormLabel,
     FormMessage,
 } from '@/components/ui/form';
+import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 const LoginFormSchema = z.object({
     username: z.string().min(4, { message: 'Username must be at least 4 characters.' }),
@@ -23,7 +23,7 @@ const LoginFormSchema = z.object({
 type LoginFormValues = z.infer<typeof LoginFormSchema>;
 
 export default function Home() {
-    const [isHostLogin, setIsHostLogin] = useState<boolean>(false);
+    const router = useRouter();
     const [message, setMessage] = useState<string>('');
 
     const form = useForm<LoginFormValues>({
@@ -34,31 +34,27 @@ export default function Home() {
         },
     });
 
-    const toggleHostLogin = () => {
-        setMessage('');
-        setIsHostLogin((prev) => !prev);
-    };
-
     const onSubmit = () => {
-        if (isHostLogin) {
-            setMessage('Host Logged In');
-        } else if (!isHostLogin) {
-            setMessage('Competitor Logged In');
+        const { username } = form.getValues();
+        const users: Record<string, string> = {
+            host: '/host',
+            team1: '/competitor',
+        };
+
+        if (users[username]) {
+            router.push(users[username]);
         } else {
-            setMessage('Login Failed');
+            setMessage('Invalid username or password.');
         }
 
         form.reset();
     };
 
     return (
-        <div className="login-container">
-            <div className="login-page">
-                <h1>{isHostLogin ? 'Host Login' : 'Login'}</h1>
-
-                <h2 style={{ marginBottom: '5px' }}>
-                    Please enter a username and password to get started!
-                </h2>
+        <div className="flex h-screen flex-col items-center justify-center">
+            <div className="flex flex-col flex-wrap items-center">
+                <h1 className="mb-1 text-6xl font-bold">Login</h1>
+                <h2 className="mb-1.5">Please enter a username and password to get started!</h2>
 
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
@@ -89,18 +85,19 @@ export default function Home() {
                             )}
                         />
 
-                        <div style={{ display: 'flex', justifyContent: 'center' }}>
-                            <Button asChild style={{ marginTop: '10px' }}>
-                                <Link href={isHostLogin ? '/host' : '/competitor'}>Login</Link>
-                            </Button>
+                        <div className="flex justify-center">
+                            <Button className="mt-2 w-full">Login</Button>
                         </div>
                     </form>
                 </Form>
 
                 {message && <p>{message}</p>}
-                <button className="login-view" onClick={toggleHostLogin}>
-                    {isHostLogin ? 'Login As Competitor' : 'Login As Host'}
-                </button>
+            </div>
+
+            <div className="height-20 flex items-center justify-center">
+                <Button asChild variant="link">
+                    <Link href="/leaderboard">Leaderboard</Link>
+                </Button>
             </div>
         </div>
     );
