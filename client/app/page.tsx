@@ -1,5 +1,4 @@
 'use client';
-import './home.css';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -52,12 +51,10 @@ export default function Home() {
     };
 
     return (
-        <div className="login-container">
-            <div className="login-page">
-                <h1>Login</h1>
-                <h2 style={{ marginBottom: '5px' }}>
-                    Please enter a username and password to get started!
-                </h2>
+        <div className="flex h-screen flex-col items-center justify-center">
+            <div className="flex flex-col flex-wrap items-center">
+                <h1 className="mb-1 text-6xl font-bold">Login</h1>
+                <h2 className="mb-1.5">Please enter a username and password to get started!</h2>
 
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
