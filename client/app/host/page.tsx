@@ -16,9 +16,8 @@ import {
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Ellipsis, Copy } from 'lucide-react';
-import HeaderMenu from './HeaderMenu';
 import Timer from '@/components/Timer';
-import SettingsMenu from '@/components/SettingsMenu';
+import HostNavbar from './HostNavbar';
 
 export default function Host() {
     const [questions, setQuestions] = useState([
@@ -206,10 +205,7 @@ export default function Host() {
                 defaultSize={70}
             >
                 <span className="flex w-full justify-start p-1.5">
-                    <HeaderMenu />
-                    <div className="ml-auto">
-                        <SettingsMenu />
-                    </div>
+                    <HostNavbar />
                 </span>
 
                 <Separator />

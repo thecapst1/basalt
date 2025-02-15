@@ -1,7 +1,7 @@
 'use client';
 import { useTheme } from 'next-themes';
 import { Button } from './ui/button';
-import { Settings, Sun, Moon, SunMoon } from 'lucide-react';
+import { User, Sun, Moon, SunMoon } from 'lucide-react';
 import Link from 'next/link';
 import {
     DropdownMenu,
@@ -22,7 +22,7 @@ const SettingsMenu = () => {
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
                 <Button variant="outline">
-                    <Settings />
+                    <User />
                 </Button>
             </DropdownMenuTrigger>
             <DropdownMenuPortal>
