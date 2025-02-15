@@ -1,7 +1,7 @@
-"use client";
+'use client';
 import { useTheme } from 'next-themes';
-import { Button } from "./ui/button";
-import { Settings, Sun, Moon, SunMoon } from "lucide-react";
+import { Button } from './ui/button';
+import { Settings, Sun, Moon, SunMoon } from 'lucide-react';
 import Link from 'next/link';
 import {
     DropdownMenu,
@@ -28,7 +28,10 @@ const SettingsMenu = () => {
             <DropdownMenuPortal>
                 <DropdownMenuContent>
                     <DropdownMenuSub>
-                        <DropdownMenuSubTrigger><SunMoon />Theme</DropdownMenuSubTrigger>
+                        <DropdownMenuSubTrigger>
+                            <SunMoon />
+                            Theme
+                        </DropdownMenuSubTrigger>
                         <DropdownMenuPortal>
                             <DropdownMenuSubContent>
                                 <DropdownMenuItem onClick={() => setTheme('light')}>
@@ -43,16 +46,13 @@ const SettingsMenu = () => {
                         </DropdownMenuPortal>
                     </DropdownMenuSub>
                     <DropdownMenuSeparator />
-                    <Button 
-                        className="w-full"
-                        variant={"destructive"}
-                    >
+                    <Button className="w-full" variant="destructive">
                         <Link href="/">Logout</Link>
                     </Button>
                 </DropdownMenuContent>
             </DropdownMenuPortal>
         </DropdownMenu>
     );
-}
+};
 
 export default SettingsMenu;
