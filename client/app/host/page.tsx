@@ -1,9 +1,7 @@
 'use client';
 import React, { useState } from 'react';
-import { useTheme } from 'next-themes';
 import QuestionAccordion from './QuestionAccordion';
 import { Separator } from '@/components/ui/separator';
-import { Button } from '@/components/ui/button';
 import { toast } from '@/hooks/use-toast';
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from '@/components/ui/resizable';
 import {
@@ -17,12 +15,11 @@ import {
     DropdownMenuSubTrigger,
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { Ellipsis, Moon, Sun, SunMoon, Copy } from 'lucide-react';
-import HeaderMenu from './HeaderMenu';
+import { Ellipsis, Copy } from 'lucide-react';
 import Timer from '@/components/Timer';
+import HostNavbar from '@/components/HostNavbar';
 
 export default function Host() {
-    const { setTheme } = useTheme();
     const [questions, setQuestions] = useState([
         {
             question: 'Sort an Array of Integers',
@@ -208,27 +205,7 @@ export default function Host() {
                 defaultSize={70}
             >
                 <span className="flex w-full justify-start p-1.5">
-                    <HeaderMenu />
-                    <div className="ml-auto">
-                        <DropdownMenu>
-                            <DropdownMenuTrigger asChild>
-                                <Button variant="outline">
-                                    <SunMoon />
-                                    Theme
-                                </Button>
-                            </DropdownMenuTrigger>
-                            <DropdownMenuContent>
-                                <DropdownMenuItem onClick={() => setTheme('light')}>
-                                    <Sun className="pr-0.5" />
-                                    Light
-                                </DropdownMenuItem>
-                                <DropdownMenuItem onClick={() => setTheme('dark')}>
-                                    <Moon className="pr-0.5" />
-                                    Dark
-                                </DropdownMenuItem>
-                            </DropdownMenuContent>
-                        </DropdownMenu>
-                    </div>
+                    <HostNavbar />
                 </span>
 
                 <Separator />

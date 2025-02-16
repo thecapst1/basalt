@@ -27,6 +27,7 @@ import {
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useState, useEffect } from 'react';
 import { EventEmitter } from 'events';
+import UserMenu from './UserMenu';
 
 const tabChangeEmitter = new EventEmitter();
 
@@ -95,7 +96,7 @@ export default function CompetitorNavbar() {
                 </NavigationMenuList>
             </NavigationMenu>
 
-            <div className="min-w-[10vw]">
+            <div className="flex min-w-[10vw] gap-1">
                 <Select>
                     <SelectTrigger>
                         <SelectValue placeholder="Programming Language" />
@@ -109,6 +110,7 @@ export default function CompetitorNavbar() {
                         </SelectGroup>
                     </SelectContent>
                 </Select>
+                <UserMenu />
             </div>
         </div>
     );

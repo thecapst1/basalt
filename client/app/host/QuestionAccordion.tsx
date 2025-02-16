@@ -23,10 +23,10 @@ interface QuestionAccordionProps {
     handleQuestionSwitch: (question: string) => void;
 }
 
-const QuestionAccordion: React.FC<QuestionAccordionProps> = ({
+export default function QuestionAccordion({
     questions,
     handleQuestionSwitch,
-}) => {
+}: QuestionAccordionProps) {
     return (
         <Accordion type="single" collapsible className="w-full px-2">
             {questions.map((q, index) => (
@@ -98,6 +98,4 @@ const QuestionAccordion: React.FC<QuestionAccordionProps> = ({
             ))}
         </Accordion>
     );
-};
-
-export default QuestionAccordion;
+}

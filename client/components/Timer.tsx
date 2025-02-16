@@ -10,7 +10,7 @@ interface TimerProps {
     isActive: boolean;
 }
 
-const Timer: React.FC<TimerProps> = ({ isHost = false, startingTime, isActive = false }) => {
+export default function Timer({ isHost = false, startingTime, isActive = false }: TimerProps) {
     const [time, setTime] = useState(startingTime);
     const [timerIsActive, setTimerIsActive] = useState(isActive);
 
@@ -81,6 +81,4 @@ const Timer: React.FC<TimerProps> = ({ isHost = false, startingTime, isActive = 
             </span>
         </div>
     );
-};
-
-export default Timer;
+}
