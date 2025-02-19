@@ -57,17 +57,31 @@ export default function QuestionNavbar({
             status: '',
         },
     ]);
+    const [selectedQuestion, setSelectedQuestion] = useState<Question>(questions[0]);
 
     const getStatusColor = (status: string) => {
         switch (status) {
             case 'complete':
-                return 'bg-green-500 hover:bg-green-300';
+                return 'border-green-500 hover:border-green-300';
             case 'in-progress':
-                return 'bg-blue-500 hover:bg-blue-300';
+                return 'border-blue-500 hover:border-blue-300';
             case 'failed':
-                return 'bg-red-500 hover:bg-red-300';
+                return 'border-red-500 hover:border-red-300';
             default:
-                return 'bg-gray-500 hover:bg-gray-300';
+                return 'border-gray-500 hover:border-gray-300';
+        }
+    };
+
+    const getActiveColor = (status: string) => {
+        switch (status) {
+            case 'complete':
+                return 'bg-green-300 dark:bg-green-700';
+            case 'in-progress':
+                return 'bg-blue-300 dark:bg-blue-700';
+            case 'failed':
+                return 'bg-red-300 dark:bg-red-700';
+            default:
+                return 'bg-gray-300 dark:bg-gray-700';
         }
     };
 
@@ -79,8 +93,11 @@ export default function QuestionNavbar({
                         variant="ghost"
                         size="icon"
                         key={index}
-                        onClick={() => setCurrentQuestion(q)}
-                        className={`rounded-full border p-1 ${getStatusColor(q.status)} size-9`}
+                        onClick={() => {
+                            setCurrentQuestion(q);
+                            setSelectedQuestion(q);
+                        }}
+                        className={`rounded-full border-2 p-1 font-bold ${getStatusColor(q.status)} ${q === selectedQuestion ? getActiveColor(q.status) : ''} size-9`}
                     >
                         {index + 1}
                     </Button>

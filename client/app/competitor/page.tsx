@@ -38,45 +38,41 @@ const TabContent = () => {
     }
 };
 
-/*const Code = ({ children }: PropsWithChildren) => (
-    <p>
-        <code className="py-1/2 m-1 rounded-sm bg-slate-800 px-2 font-mono text-white">
-            {children}
-        </code>
-    </p>
-);*/
-
 // TODO: need to bring in Question Information from host component as am input for this func
-const GetCurrentQuestion = ({
+const QuestionDetails = ({
     questionDetails,
 }: {
-    questionDetails: [string, string, string, string];
+    questionDetails: {
+        question: string;
+        description: string;
+        input: string;
+        output: string;
+        status: string;
+    };
 }) => {
+    const { question, description, input, output } = questionDetails;
     return (
         <div className="flex flex-col items-center justify-center gap-2">
             <h1>
                 <b>Question Title</b>
             </h1>
-            <h1>{questionDetails[0]}</h1>
+            <h1>{question}</h1>
             <div>
-                <p>{questionDetails[1]}</p>
+                <p>{description}</p>
 
                 <div className="flex flex-col gap-2">
                     <div>
                         <strong>Input</strong>
                         <pre className="rounded-sm bg-slate-800 px-4 py-2 font-mono text-white">
-                            {questionDetails[2]}
+                            {input}
                         </pre>
                     </div>
                     <div>
                         <strong>Output</strong>
                         <pre className="rounded-sm bg-slate-800 px-4 py-2 font-mono text-white">
-                            {questionDetails[3]}
+                            {output}
                         </pre>
                     </div>
-                    {/*<div>
-                        <strong>Explanation</strong>
-                    </div>*/}
                 </div>
             </div>
         </div>
@@ -281,14 +277,7 @@ export default function Competitor() {
                             <ResizablePanelGroup direction="vertical" className="h-full">
                                 <div className="flex h-full flex-col pt-8">
                                     <div className="box-border flex flex-col p-4">
-                                        <GetCurrentQuestion
-                                            questionDetails={[
-                                                currentQuestion.question,
-                                                currentQuestion.description,
-                                                currentQuestion.input,
-                                                currentQuestion.output,
-                                            ]}
-                                        />
+                                        <QuestionDetails questionDetails={currentQuestion} />
                                     </div>
                                     <div className="mt-auto flex w-full flex-row justify-center">
                                         <RunTest />
