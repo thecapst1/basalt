@@ -2,7 +2,7 @@
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from '@/components/ui/resizable';
 import Timer from '@/components/Timer';
 import { Button } from '@/components/ui/button';
-import { PropsWithChildren, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import CompetitorNavbar, { tabChangeEmitter } from '@/components/CompetitorNavbar';
 import { Textarea } from '@/components/ui/textarea';
 import {
@@ -14,6 +14,7 @@ import {
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Separator } from '@/components/ui/separator';
 import Leaderboard from '../leaderboard/page';
+import QuestionNavbar from './QuestionNavbar';
 
 const TabContent = () => {
     const [selectedTab, setSelectedTab] = useState<'text-editor' | 'leaderboard'>('text-editor');
@@ -37,47 +38,45 @@ const TabContent = () => {
     }
 };
 
-const Code = ({ children }: PropsWithChildren) => (
+/*const Code = ({ children }: PropsWithChildren) => (
     <p>
         <code className="py-1/2 m-1 rounded-sm bg-slate-800 px-2 font-mono text-white">
             {children}
         </code>
     </p>
-);
+);*/
 
 // TODO: need to bring in Question Information from host component as am input for this func
-const GetCurrentQuestion = () => {
+const GetCurrentQuestion = ({
+    questionDetails,
+}: {
+    questionDetails: [string, string, string, string];
+}) => {
     return (
         <div className="flex flex-col items-center justify-center gap-2">
             <h1>
                 <b>Question Title</b>
             </h1>
-            <h1>Sort</h1>
+            <h1>{questionDetails[0]}</h1>
             <div>
-                <p>Given an array of integers, sort the array and return it</p>
+                <p>{questionDetails[1]}</p>
 
                 <div className="flex flex-col gap-2">
                     <div>
                         <strong>Input</strong>
                         <pre className="rounded-sm bg-slate-800 px-4 py-2 font-mono text-white">
-                            2 11 15 0
+                            {questionDetails[2]}
                         </pre>
                     </div>
                     <div>
                         <strong>Output</strong>
                         <pre className="rounded-sm bg-slate-800 px-4 py-2 font-mono text-white">
-                            0 2 11 15
+                            {questionDetails[3]}
                         </pre>
                     </div>
-                    <div>
+                    {/*<div>
                         <strong>Explanation</strong>
-                        <div>
-                            The expected output is
-                            <Code>0 2 11 15</Code>
-                            because
-                            <Code>0 &lt; 2 &lt; 11 &lt; 15</Code>
-                        </div>
-                    </div>
+                    </div>*/}
                 </div>
             </div>
         </div>
@@ -257,6 +256,14 @@ const TestResults = () => {
 };
 
 export default function Competitor() {
+    const [currentQuestion, setCurrentQuestion] = useState({
+        question: 'Sort an Array of Integers',
+        description: 'Sort an array of integers in ascending order and return it.',
+        input: '2 11 15 0',
+        output: '0 2 11 15',
+        status: 'complete',
+    });
+
     return (
         <div className="h-screen">
             <div>
@@ -274,7 +281,14 @@ export default function Competitor() {
                             <ResizablePanelGroup direction="vertical" className="h-full">
                                 <div className="flex h-full flex-col pt-8">
                                     <div className="box-border flex flex-col p-4">
-                                        <GetCurrentQuestion />
+                                        <GetCurrentQuestion
+                                            questionDetails={[
+                                                currentQuestion.question,
+                                                currentQuestion.description,
+                                                currentQuestion.input,
+                                                currentQuestion.output,
+                                            ]}
+                                        />
                                     </div>
                                     <div className="mt-auto flex w-full flex-row justify-center">
                                         <RunTest />
@@ -288,9 +302,12 @@ export default function Competitor() {
                         </ResizablePanel>
                         <ResizableHandle withHandle />
                         <ResizablePanel className="">
+                            <span className="max-w-screen w-full">
+                                <QuestionNavbar setCurrentQuestion={setCurrentQuestion} />
+                            </span>
                             <ResizablePanelGroup direction="vertical" className="h-full">
                                 <ResizablePanel defaultSize={400} className="h-full">
-                                    <div className="flex h-full">
+                                    <div className="max-w-screen flex h-full">
                                         <TabContent />
                                     </div>
                                 </ResizablePanel>
